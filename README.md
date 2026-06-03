@@ -26,18 +26,17 @@ O FoodShare é uma aplicação web que conecta doadores e receptores de alimento
 
 ```
 foodshare/
-├── backend/
-│   ├── config/          # Configurações
-│   ├── controllers/      # Lógica de negócio
-│   ├── middlewares/      # Middlewares customizados
-│   ├── models/          # Schemas de dados
-│   ├── routes/          # Definição de rotas
-│   ├── views/           # Templates EJS
-│   ├── public/          # Arquivos estáticos (CSS, JS, imagens)
-│   ├── app.js           # Configuração do Express
-│   ├── server.js        # Ponto de entrada
-│   └── package.json     # Dependências
-└── README.md            # Este arquivo
+├── config/          # Configurações
+├── controllers/     # Lógica de negócio
+├── middlewares/     # Middlewares customizados
+├── models/          # Schemas de dados
+├── routes/          # Definição de rotas
+├── views/           # Templates EJS
+├── public/          # Arquivos estáticos (CSS, JS, imagens)
+├── app.js           # Configuração do Express
+├── server.js        # Ponto de entrada
+├── package.json     # Dependências
+└── README.md        # Este arquivo
 ```
 
 ## ⚙️ Instalação
@@ -50,12 +49,11 @@ cd foodshare
 
 2. Instale as dependências:
 ```bash
-cd backend
 npm install
 ```
 
 3. Configure as variáveis de ambiente:
-Crie um arquivo `.env` na pasta `backend`:
+Crie um arquivo `.env` na raiz do projeto:
 ```
 PORT=3000
 JWT_SECRET=sua_chave_secreta_aqui
