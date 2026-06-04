@@ -8,12 +8,12 @@
     </ul>
 
     <div class="nav-auth">
-      <% if (locals.user) { %>
+      <% if (locals.usuario) { %>
         <span class="nav-user">
-          <span class="nav-badge nav-badge--<%= locals.user.role %>">
-            <%= locals.user.role === 'doador' ? '🎁' : locals.user.role === 'beneficiario' ? '🙏' : '⚙️' %>
+          <span class="nav-badge nav-badge--<%= locals.usuario.role %>">
+            <%= locals.usuario.role === 'doador' ? '🎁' : locals.usuario.role === 'receptor' ? '🙏' : '⚙️' %>
           </span>
-          <%= locals.user.nome.split(' ')[0] %>
+          <%= locals.usuario.nome.split(' ')[0] %>
         </span>
         <form action="/auth/logout" method="POST" style="display:inline">
           <button type="submit" class="btn-outline btn-sm">Sair</button>
