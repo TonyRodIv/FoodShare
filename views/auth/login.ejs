@@ -1,5 +1,62 @@
-<!-- Login View -->
-<div class="login-container">
-  <h1>Login</h1>
-  <!-- Login form here -->
+<%- include('../partials/base', { body: `
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-icon">🤝</span>
+      <h1>FoodShare</h1>
+    </div>
+    <h2>Entrar</h2>
+    <p class="auth-subtitle">Bem-vindo de volta</p>
+
+    <% if (registered) { %>
+      <div class="alert alert-success">
+        ✅ Conta criada com sucesso! Faça login para continuar.
+      </div>
+    <% } %>
+
+    <% if (errors.some(e => !e.field)) { %>
+      <div class="alert alert-error">
+        <%= errors.find(e => !e.field)?.message %>
+      </div>
+    <% } %>
+
+    <form action="/auth/login" method="POST" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="<%= old.email || '' %>"
+          placeholder="seu@email.com"
+          class="<%= errors.some(e => e.field === 'email') ? 'input-error' : '' %>"
+          required
+          autofocus
+        />
+        <% const emailErr = errors.find(e => e.field === 'email'); %>
+        <% if (emailErr) { %><span class="field-error"><%= emailErr.message %></span><% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Sua senha"
+          class="<%= errors.some(e => e.field === 'senha') ? 'input-error' : '' %>"
+          required
+        />
+        <% const senhaErr = errors.find(e => e.field === 'senha'); %>
+        <% if (senhaErr) { %><span class="field-error"><%= senhaErr.message %></span><% } %>
+      </div>
+
+      <button type="submit" class="btn-primary btn-block">Entrar</button>
+    </form>
+
+    <p class="auth-footer">
+      Não tem uma conta? <a href="/auth/register">Criar conta</a>
+    </p>
+  </div>
 </div>
+`) %>
