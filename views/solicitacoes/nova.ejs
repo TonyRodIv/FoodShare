@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>Nova Solicitação</h2>
+  <form method="POST" action="/solicitacoes/nova">
+    <div class="mb-3">
+      <label class="form-label">Doação</label>
+      <select name="doacaoId" class="form-select" required>
+        <% doacoes.forEach(d => { %>
+          <option value="<%= d.id %>"><%= d.nome %> (disponível: <%= d.quantidade %>)</option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Quantidade</label>
+      <input type="number" name="quantidade" class="form-control" min="1" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Observações</label>
+      <textarea name="observacoes" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Solicitar</button>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,5 +1,44 @@
-<!-- Solicitacoes Recebidas View -->
-<div class="solicitacoes-recebidas-container">
-  <h1>Solicitações Recebidas</h1>
-  <!-- Received requests here -->
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>Solicitações Recebidas</h2>
+  <% if (solicitacoes.length === 0) { %>
+    <p>Nenhuma solicitação recebida ainda.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Solicitante</th>
+          <th>Doação</th>
+          <th>Quantidade</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% solicitacoes.forEach(s => { %>
+          <tr>
+            <td><%= s.usuario.nome %></td>
+            <td><%= s.doacao.nome %></td>
+            <td><%= s.quantidade %></td>
+            <td><%= s.status %></td>
+            <td>
+              <% if (s.status === 'pendente') { %>
+                <form method="POST" action="/solicitacoes/<%= s.id %>/aceitar" style="display:inline">
+                  <button class="btn btn-sm btn-success">Aceitar</button>
+                </form>
+                <form method="POST" action="/solicitacoes/<%= s.id %>/recusar" style="display:inline">
+                  <button class="btn btn-sm btn-danger">Recusar</button>
+                </form>
+              <% } else { %>
+                <%= s.status %>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
 </div>
+
+<%- include('../partials/footer') %>

@@ -1,5 +1,39 @@
-<!-- Minhas Solicitacoes View -->
-<div class="minhas-solicitacoes-container">
-  <h1>Minhas Solicitações</h1>
-  <!-- User requests here -->
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>Minhas Solicitações</h2>
+  <% if (solicitacoes.length === 0) { %>
+    <p>Você ainda não fez nenhuma solicitação.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Doação</th>
+          <th>Quantidade</th>
+          <th>Status</th>
+          <th>Data</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% solicitacoes.forEach(s => { %>
+          <tr>
+            <td><%= s.doacao.nome %></td>
+            <td><%= s.quantidade %></td>
+            <td><%= s.status %></td>
+            <td><%= s.createdAt.toLocaleDateString('pt-BR') %></td>
+            <td>
+              <% if (s.status === 'pendente') { %>
+                <form method="POST" action="/solicitacoes/<%= s.id %>/cancelar">
+                  <button class="btn btn-sm btn-danger">Cancelar</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
 </div>
+
+<%- include('../partials/footer') %>
