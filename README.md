@@ -85,8 +85,8 @@ JWT_SECRET="sua_chave_acesso_secreta"
 JWT_REFRESH_SECRET="sua_chave_refresh_secreta"
 ```
 
-### 4. Rodar Migrações do Banco
-Para subir as tabelas de `Usuario` e `RefreshToken` no Supabase:
+### 4. Rodar Migrações do Banco (Apenas na Primeira Instalação)
+Se for a sua primeira vez configurando o projeto, aplique as migrações para criar as tabelas (`Usuario`, `RefreshToken`, `Doacao`, `Solicitacao`) no Supabase:
 ```bash
 npx prisma migrate dev
 ```
