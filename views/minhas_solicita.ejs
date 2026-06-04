@@ -1,0 +1,9 @@
+<h2>Minhas Solicitações</h2>
+<ul>
+    <% solicitacoes.forEach(function(solicitacao) { %>
+        <li>
+            Pedido para o item: <%= solicitacao.doacaoId.nome %> 
+            Status: <strong><%= solicitacao.status %></strong>
+        </li>
+    <% }); %>
+</ul>
