@@ -1,5 +1,101 @@
-<!-- Register View -->
-<div class="register-container">
-  <h1>Registrar</h1>
-  <!-- Register form here -->
+<%- include('../partials/header') %>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-icon">🤝</span>
+      <h1>FoodShare</h1>
+    </div>
+    <h2>Criar Conta</h2>
+    <p class="auth-subtitle">Junte-se à nossa comunidade de doações</p>
+
+    <% if (errors.some(e => !e.field)) { %>
+      <div class="alert alert-error">
+        <%= errors.find(e => !e.field)?.message %>
+      </div>
+    <% } %>
+
+    <form action="/auth/register" method="POST" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="nome">Nome completo</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          value="<%= old.nome || '' %>"
+          placeholder="Seu nome"
+          class="<%= errors.some(e => e.field === 'nome') ? 'input-error' : '' %>"
+          required
+        />
+        <% const nomeErr = errors.find(e => e.field === 'nome'); %>
+        <% if (nomeErr) { %><span class="field-error"><%= nomeErr.message %></span><% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="<%= old.email || '' %>"
+          placeholder="seu@email.com"
+          class="<%= errors.some(e => e.field === 'email') ? 'input-error' : '' %>"
+          required
+        />
+        <% const emailErr = errors.find(e => e.field === 'email'); %>
+        <% if (emailErr) { %><span class="field-error"><%= emailErr.message %></span><% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Mínimo 6 caracteres"
+          class="<%= errors.some(e => e.field === 'senha') ? 'input-error' : '' %>"
+          required
+        />
+        <% const senhaErr = errors.find(e => e.field === 'senha'); %>
+        <% if (senhaErr) { %><span class="field-error"><%= senhaErr.message %></span><% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone / WhatsApp</label>
+        <input
+          type="tel"
+          id="telefone"
+          name="telefone"
+          value="<%= old.telefone || '' %>"
+          placeholder="(11) 91234-5678"
+          class="<%= errors.some(e => e.field === 'telefone') ? 'input-error' : '' %>"
+          required
+        />
+        <% const telErr = errors.find(e => e.field === 'telefone'); %>
+        <% if (telErr) { %><span class="field-error"><%= telErr.message %></span><% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Quero participar como</label>
+        <select
+          id="role"
+          name="role"
+          class="<%= errors.some(e => e.field === 'role') ? 'input-error' : '' %>"
+          required
+        >
+          <option value="" disabled <%= !old.role ? 'selected' : '' %>>Selecione...</option>
+          <option value="doador" <%= old.role === 'doador' ? 'selected' : '' %>>🎁 Doador — quero doar alimentos</option>
+          <option value="receptor" <%= old.role === 'receptor' ? 'selected' : '' %>>🙏 Receptor — preciso de alimentos</option>
+        </select>
+        <% const roleErr = errors.find(e => e.field === 'role'); %>
+        <% if (roleErr) { %><span class="field-error"><%= roleErr.message %></span><% } %>
+      </div>
+
+      <button type="submit" class="btn-primary btn-block">Criar minha conta</button>
+    </form>
+
+    <p class="auth-footer">
+      Já tem uma conta? <a href="/auth/login">Entrar</a>
+    </p>
+  </div>
 </div>
+<%- include('../partials/footer') %>
