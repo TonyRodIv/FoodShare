@@ -84,7 +84,7 @@
         >
           <option value="" disabled <%= !old.role ? 'selected' : '' %>>Selecione...</option>
           <option value="doador" <%= old.role === 'doador' ? 'selected' : '' %>>🎁 Doador — quero doar alimentos</option>
-          <option value="beneficiario" <%= old.role === 'beneficiario' ? 'selected' : '' %>>🙏 Beneficiário — preciso de alimentos</option>
+          <option value="receptor" <%= old.role === 'receptor' ? 'selected' : '' %>>🙏 Receptor — preciso de alimentos</option>
         </select>
         <% const roleErr = errors.find(e => e.field === 'role'); %>
         <% if (roleErr) { %><span class="field-error"><%= roleErr.message %></span><% } %>
