@@ -1,3 +1,27 @@
 <nav class="navbar">
-  <!-- Navbar content here -->
+  <div class="nav-container">
+    <a href="/" class="nav-brand">🤝 FoodShare</a>
+
+    <ul class="nav-links">
+      <li><a href="/doacoes">Doações</a></li>
+      <li><a href="/solicitacoes">Solicitações</a></li>
+    </ul>
+
+    <div class="nav-auth">
+      <% if (locals.usuario) { %>
+        <span class="nav-user">
+          <span class="nav-badge nav-badge--<%= locals.usuario.role %>">
+            <%= locals.usuario.role === 'doador' ? '🎁' : locals.usuario.role === 'receptor' ? '🙏' : '⚙️' %>
+          </span>
+          <%= locals.usuario.nome.split(' ')[0] %>
+        </span>
+        <form action="/auth/logout" method="POST" style="display:inline">
+          <button type="submit" class="btn-outline btn-sm">Sair</button>
+        </form>
+      <% } else { %>
+        <a href="/auth/login" class="btn-outline btn-sm">Entrar</a>
+        <a href="/auth/register" class="btn-primary btn-sm">Criar conta</a>
+      <% } %>
+    </div>
+  </div>
 </nav>

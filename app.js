@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 // View engine setup
@@ -12,6 +13,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Middleware global: disponibiliza res.locals.usuario para todas as views EJS
+app.use((req, res, next) => {
+  const token = req.cookies?.token;
+  if (token) {
+    try {
+      res.locals.usuario = jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      res.locals.usuario = null;
+    }
+  } else {
+    res.locals.usuario = null;
+  }
+  next();
+});
 
 // Routes
 const authRoutes = require('./routes/auth');

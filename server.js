@@ -1,6 +1,6 @@
+require('dotenv').config();
 const app = require('./app');
 const http = require('http');
-require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,3 +18,5 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
+
+// Nodemon trigger comment
