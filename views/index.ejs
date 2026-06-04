@@ -1,0 +1,19 @@
+<%- include('partials/base', { body: `
+<div class="home-hero">
+  <h1>Compartilhe alimentos. <br>Transforme vidas.</h1>
+  <p>O FoodShare conecta quem tem com quem precisa, reduzindo o desperdício de alimentos na nossa comunidade.</p>
+  <div class="hero-actions">
+    <% if (locals.user) { %>
+      <% if (locals.user.role === 'doador' || locals.user.role === 'admin') { %>
+        <a href="/doacoes/nova" class="btn-primary">🎁 Fazer uma doação</a>
+      <% } %>
+      <% if (locals.user.role === 'beneficiario' || locals.user.role === 'admin') { %>
+        <a href="/solicitacoes/nova" class="btn-outline">🙏 Solicitar alimentos</a>
+      <% } %>
+    <% } else { %>
+      <a href="/auth/register" class="btn-primary">Começar agora</a>
+      <a href="/auth/login" class="btn-outline">Já tenho conta</a>
+    <% } %>
+  </div>
+</div>
+`) %>

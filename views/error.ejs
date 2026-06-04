@@ -1,0 +1,10 @@
+<%- include('partials/base', { body: `
+<div class="error-page">
+  <div class="error-card">
+    <span class="error-icon"><%= error && error.status === 403 ? '🚫' : '⚠️' %></span>
+    <h1><%= error && error.status ? error.status : '500' %></h1>
+    <p><%= message || 'Ocorreu um erro inesperado.' %></p>
+    <a href="/" class="btn-primary">Voltar ao início</a>
+  </div>
+</div>
+`) %>
