@@ -13,7 +13,7 @@ app.locals.buildAuthFeedback = buildAuthFeedback;
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Middleware global: disponibiliza res.locals.usuario para todas as views EJS
@@ -29,6 +29,37 @@ app.use((req, res, next) => {
     res.locals.usuario = null;
   }
   next();
+});
+
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'FoodShare API',
+      version: '1.0.0',
+      description: 'Documentação da API do FoodShare',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor Local',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+app.get('/api-docs/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
+app.get('/api-docs', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'api-docs.html'));
 });
 
 // Routes
