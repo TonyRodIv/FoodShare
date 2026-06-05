@@ -1,101 +1,107 @@
-<%- include('../partials/header') %>
-<div class="auth-page">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <span class="logo-icon">🤝</span>
-      <h1>FoodShare</h1>
+<%- include('../partials/auth-header') %>
+<div class="auth-screen auth-screen--form auth-screen--register">
+  <%- include('../partials/auth-back-btn') %>
+  <%- include('../partials/auth-hero') %>
+
+  <section class="auth-panel auth-panel--register">
+    <div class="auth-panel__inner">
+      <header class="auth-panel__header">
+        <p class="auth-panel__greeting auth-show-desktop">Junte-se à comunidade,</p>
+        <p class="auth-panel__greeting auth-show-mobile">Seja bem vindo,</p>
+        <h2 class="auth-panel__title">Crie sua conta</h2>
+      </header>
+
+      <form action="/auth/register" method="POST" class="auth-form" novalidate>
+        <div class="auth-form__fields">
+          <div class="auth-field">
+            <label for="nome" class="auth-field__label">Nome:</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              value="<%= old.nome || '' %>"
+              placeholder="Ex.: Maria Silva"
+              class="auth-field__input<%= errors.some(e => e.field === 'nome') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'nome')) { %>aria-invalid="true" aria-describedby="nome-hint"<% } %>
+              required
+              autofocus
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'nome' }) %>
+          </div>
+
+          <div class="auth-field">
+            <label for="email" class="auth-field__label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= old.email || '' %>"
+              placeholder="nome@email.com"
+              class="auth-field__input<%= errors.some(e => e.field === 'email') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'email')) { %>aria-invalid="true" aria-describedby="email-hint"<% } %>
+              required
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'email' }) %>
+          </div>
+
+          <div class="auth-field">
+            <label for="senha" class="auth-field__label">Senha:</label>
+            <input
+              type="password"
+              id="senha"
+              name="senha"
+              placeholder="Mínimo de 6 caracteres"
+              class="auth-field__input<%= errors.some(e => e.field === 'senha') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'senha')) { %>aria-invalid="true" aria-describedby="senha-hint"<% } %>
+              required
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'senha' }) %>
+          </div>
+
+          <div class="auth-field">
+            <label for="telefone" class="auth-field__label">Telefone:</label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              value="<%= old.telefone || '' %>"
+              placeholder="(82) 91234-5678"
+              class="auth-field__input<%= errors.some(e => e.field === 'telefone') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'telefone')) { %>aria-invalid="true" aria-describedby="telefone-hint"<% } %>
+              required
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'telefone' }) %>
+          </div>
+
+          <div class="auth-field">
+            <label for="role" class="auth-field__label">Participar como:</label>
+            <select
+              id="role"
+              name="role"
+              data-custom-select
+              class="auth-field__input auth-field__select<%= errors.some(e => e.field === 'role') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'role')) { %>aria-invalid="true" aria-describedby="role-hint"<% } %>
+              required
+            >
+              <option value="" disabled <%= !old.role ? 'selected' : '' %>>Selecione seu perfil</option>
+              <option value="doador" <%= old.role === 'doador' ? 'selected' : '' %>>Doador</option>
+              <option value="receptor" <%= old.role === 'receptor' ? 'selected' : '' %>>Receptor</option>
+            </select>
+            <%- include('../partials/auth-field-hint', { errors, field: 'role' }) %>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn auth-btn--mobile">
+          Criar conta
+        </button>
+      </form>
+
+      <p class="auth-panel__footer">
+        Já tem uma conta? <a href="/auth/login" data-nav-direction="back">Entrar</a>
+      </p>
     </div>
-    <h2>Criar Conta</h2>
-    <p class="auth-subtitle">Junte-se à nossa comunidade de doações</p>
-
-    <% if (errors.some(e => !e.field)) { %>
-      <div class="alert alert-error">
-        <%= errors.find(e => !e.field)?.message %>
-      </div>
-    <% } %>
-
-    <form action="/auth/register" method="POST" class="auth-form" novalidate>
-      <div class="form-group">
-        <label for="nome">Nome completo</label>
-        <input
-          type="text"
-          id="nome"
-          name="nome"
-          value="<%= old.nome || '' %>"
-          placeholder="Seu nome"
-          class="<%= errors.some(e => e.field === 'nome') ? 'input-error' : '' %>"
-          required
-        />
-        <% const nomeErr = errors.find(e => e.field === 'nome'); %>
-        <% if (nomeErr) { %><span class="field-error"><%= nomeErr.message %></span><% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value="<%= old.email || '' %>"
-          placeholder="seu@email.com"
-          class="<%= errors.some(e => e.field === 'email') ? 'input-error' : '' %>"
-          required
-        />
-        <% const emailErr = errors.find(e => e.field === 'email'); %>
-        <% if (emailErr) { %><span class="field-error"><%= emailErr.message %></span><% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <input
-          type="password"
-          id="senha"
-          name="senha"
-          placeholder="Mínimo 6 caracteres"
-          class="<%= errors.some(e => e.field === 'senha') ? 'input-error' : '' %>"
-          required
-        />
-        <% const senhaErr = errors.find(e => e.field === 'senha'); %>
-        <% if (senhaErr) { %><span class="field-error"><%= senhaErr.message %></span><% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="telefone">Telefone / WhatsApp</label>
-        <input
-          type="tel"
-          id="telefone"
-          name="telefone"
-          value="<%= old.telefone || '' %>"
-          placeholder="(11) 91234-5678"
-          class="<%= errors.some(e => e.field === 'telefone') ? 'input-error' : '' %>"
-          required
-        />
-        <% const telErr = errors.find(e => e.field === 'telefone'); %>
-        <% if (telErr) { %><span class="field-error"><%= telErr.message %></span><% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="role">Quero participar como</label>
-        <select
-          id="role"
-          name="role"
-          class="<%= errors.some(e => e.field === 'role') ? 'input-error' : '' %>"
-          required
-        >
-          <option value="" disabled <%= !old.role ? 'selected' : '' %>>Selecione...</option>
-          <option value="doador" <%= old.role === 'doador' ? 'selected' : '' %>>🎁 Doador — quero doar alimentos</option>
-          <option value="receptor" <%= old.role === 'receptor' ? 'selected' : '' %>>🙏 Receptor — preciso de alimentos</option>
-        </select>
-        <% const roleErr = errors.find(e => e.field === 'role'); %>
-        <% if (roleErr) { %><span class="field-error"><%= roleErr.message %></span><% } %>
-      </div>
-
-      <button type="submit" class="btn-primary btn-block">Criar minha conta</button>
-    </form>
-
-    <p class="auth-footer">
-      Já tem uma conta? <a href="/auth/login">Entrar</a>
-    </p>
-  </div>
+  </section>
 </div>
-<%- include('../partials/footer') %>
+
+<%- include('../partials/auth-feedback-modal', { errors, formType: 'register' }) %>
+<%- include('../partials/auth-footer') %>
