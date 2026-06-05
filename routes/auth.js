@@ -89,7 +89,7 @@ router.get('/welcome', showWelcome);
  *                       message:
  *                         type: string
  */
-router.get('/register', showRegister);
+router.get('/register', showRegister); /*ESSE DAQUI É UM TESTE*/
 router.post('/register', register);
 
 /**
