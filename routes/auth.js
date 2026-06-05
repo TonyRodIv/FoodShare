@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
+  showWelcome,
   showRegister,
   register,
   showLogin,
@@ -8,6 +9,9 @@ const {
   refresh,
   logout,
 } = require('../controllers/authController');
+
+router.get('/', showWelcome);
+router.get('/welcome', showWelcome);
 
 router.get('/register', showRegister);
 router.post('/register', register);
