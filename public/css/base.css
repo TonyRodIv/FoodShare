@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Onest', sans-serif;
+  font-optical-sizing: auto;
+}
+
+body {
+  font-family: inherit;
+  font-style: normal;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-optical-sizing: auto;
+}
+
+::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+  font-weight: 400;
+}

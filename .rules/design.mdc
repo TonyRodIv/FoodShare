@@ -1,0 +1,482 @@
+---
+description: Identidade visual e design system FoodShare. Consultar antes de implementar telas, componentes ou estilos.
+globs: views/**/*.ejs,public/css/**/*.css,public/js/**/*.js
+alwaysApply: false
+---
+# DESIGN — FoodShare
+
+Guia de identidade visual do projeto. Consulte antes de implementar qualquer tela.
+
+> **Regra de implementação web:** valores do Figma (tipografia 10–12px, modal 320px etc.) são **referência visual**, não tamanhos literais no browser. Escale proporcionalmente para legibilidade e toque confortável (mín. ~14px corpo, ~44px alvos de toque).
+
+---
+
+## Figma
+
+### App (dashboard)
+
+| Tela | Link |
+|---|---|
+| Login/Cadastro — Desktop | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=27-766&m=dev) |
+| Home Doador — Desktop | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=27-794&m=dev) |
+| Home Doador — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=66-2992&m=dev) |
+| Modal | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=90-371&m=dev) |
+
+### Auth (implementado)
+
+| Tela | Link | Arquivo |
+|---|---|---|
+| Login — Desktop (split) | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=61-2460&m=dev) | `views/auth/login.ejs` |
+| Boas-vindas — Desktop | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=86-331&m=dev) | `views/auth/welcome.ejs` |
+| Boas-vindas — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=61-2131&m=dev) | `views/partials/auth-mobile-welcome.ejs` |
+| Login — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=61-2303&m=dev) | `views/auth/login.ejs` |
+| Cadastro — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=61-2381&m=dev) | `views/auth/register.ejs` |
+| Botão voltar — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=88-356&m=dev) | `views/partials/auth-back-btn.ejs` |
+
+---
+
+## Cores
+
+```css
+/* ── Marca e superfícies ── */
+--green-dark:      #0A1A12;
+--green-mid:       #1D9E75;   /* primária — botões, "Share", destaques */
+--green-light:     #5DCAA5;
+--green-pale:      #E1F5EE;
+--surface-green:   #F0F5F3;   /* painéis auth, botão secundário, hover */
+
+--amber-pale:      #FAEEDA;   /* container ícone modal erro */
+--amber-mid:       #EF9F27;
+--amber-text:      #633806;   /* ícone mão (modal erro), pills reservado/pendente */
+--red-pale:        #FCEBEB;
+--red-mid:         #E24B4A;
+--blue-pale:       #E6F1FB;
+
+--bg:              #F5F5F0;   /* fundo geral das páginas logadas */
+--auth-bg:         #121212;   /* moldura externa auth desktop */
+--card:            #FFFFFF;
+--surface:         #F0F0EA;   /* inputs dashboard (não auth) */
+--border:          #E0E0DA;
+--text:            #1A1A1A;
+--text-muted:      rgba(26, 26, 26, 0.7);
+--muted:           #888780;
+--label:           #414651;   /* labels auth */
+--placeholder:     #717680;   /* placeholders auth (Gray/500 Figma) */
+```
+
+Tokens CSS em `public/css/tokens.css` (importados via `public/css/style.css`).
+
+---
+
+## Tipografia
+
+Fonte: **Onest** — Google Fonts. Pesos: `400` · `500` · `600` · `700`
+
+```css
+font-family: 'Onest', sans-serif;
+```
+
+### Escala Figma (referência)
+
+| Token | Figma | Uso |
+|---|---|---|
+| `--text-xs` | 10px | pills, labels auxiliares |
+| `--text-sm` | 11px | meta, tabela header |
+| `--text-base` | 11.5px | linhas de tabela |
+| `--text-md` | 12.5px | subtexto, descrição modal (Figma) |
+| `--text-lg` | 13px | corpo de lista |
+| `--text-xl` | 16px | título de card/modal (Figma) |
+| `--text-2xl` | 18px | título de seção |
+| `--text-3xl` | 22px | headline desktop |
+| `--text-4xl` | 24px | métrica desktop |
+| `--text-5xl` | 26px | métrica mobile |
+
+### Escala web (implementação)
+
+Use estes tamanhos no código, mantendo **proporção e hierarquia** do Figma:
+
+| Contexto | Desktop | Mobile |
+|---|---|---|
+| Título auth painel | 32px / 600 | 36px |
+| Greeting auth | 22px / 600 | 24px |
+| Botão auth | 12–14px / 700 | 14–16px |
+| Label de campo auth | 12px / 500 | 14px |
+| Input auth | 12px / 400 | 14px |
+| Título modal | 22px / 600 | 20px |
+| Descrição modal | 15px / 500 | 14px |
+| Botão modal | 14px / 600 | 15px |
+
+---
+
+## Bordas, Raios e Sombras
+
+```css
+--radius-sm:     10px;   /* pills */
+--radius-md:     12px;   /* botões, icon buttons, inputs auth desktop */
+--radius-lg:     16px;   /* inputs auth mobile, botão hero mobile */
+--radius-xl:     24px;   /* cards/painéis desktop */
+--radius-modal:  28px;   /* modal, cards mobile grandes */
+--radius-icon:   50px;   /* icon container circular (Figma) */
+--radius-full:   9999px; /* avatars */
+
+--shadow-card:   0 1px 3px rgba(0, 0, 0, 0.06);
+--shadow-modal:  0 20px 60px rgba(18, 18, 18, 0.2);
+```
+
+---
+
+## Breakpoints
+
+Dois contextos convivem no projeto:
+
+| Contexto | Breakpoint | Uso |
+|---|---|---|
+| **Auth** | `960px` | Split desktop ↔ layout mobile; transições de página; modal bottom sheet |
+| **App logado** | `1024px` / `767px` | Sidebar, bottom bar, dashboard (Figma) |
+
+```css
+/* Auth — implementado */
+@media (max-width: 960px) { /* mobile auth */ }
+
+/* App — alvo Figma */
+@media (min-width: 1024px) { /* desktop */ }
+@media (max-width: 767px)  { /* mobile app */ }
+```
+
+---
+
+## Módulo Auth
+
+Rota inicial de visitantes: `/` → `/auth` (boas-vindas).
+
+### Desktop (`> 960px`)
+
+- Layout **split**: hero esquerdo + painel direito (520px)
+- Fundo externo `#121212`, painéis `#F0F5F3`, radius 24px
+- Hero: logo 56px, tagline em **2 linhas** (`Doe o que sobra.` / `Alimente quem precisa.`)
+
+### Mobile (`≤ 960px`)
+
+| Tela | Layout |
+|---|---|
+| Boas-vindas | Tela cheia, logo topo, tagline + botões no rodapé |
+| Login / Cadastro | Tela cheia, sem hero; botão voltar → `/auth` |
+| Modal de erro | Bottom sheet, largura total |
+
+### Inputs auth (diferente do dashboard)
+
+```css
+background:    #FFFFFF;      /* não #F0F0EA */
+border:        1px solid transparent;
+border-radius: 12px;        /* desktop — 16px mobile */
+padding:       16px;        /* 18px mobile */
+font-size:     12px;        /* 14px mobile */
+color:         #1A1A1A;
+/* focus */
+border-color:  #1D9E75;
+box-shadow:    0 0 0 3px rgba(29, 158, 117, 0.15);
+/* erro */
+border-color:  #E24B4A;
+```
+
+Erros de formulário → **modal de feedback** (não texto inline). Campos errados mantêm borda vermelha.
+
+### Sistemas reutilizáveis
+
+| Sistema | Arquivos | Uso |
+|---|---|---|
+| Transições de página | `public/js/page-transitions.js` | `data-nav-direction="forward\|back"` em links |
+| Modal de feedback | `views/partials/feedback-modal.ejs`, `public/js/feedback-modal.js` | Erros, avisos, confirmações |
+
+```html
+<!-- Transições -->
+<body class="page-transitions-enabled">
+  <div class="page-transition-root">...</div>
+</body>
+<a href="..." data-nav-direction="forward">Avançar</a>
+
+<!-- Modal -->
+<%- include('partials/feedback-modal', {
+  modal: { variant: 'error', title: '...', description: '...', primaryLabel: 'Entendi' }
+}) %>
+```
+
+Transições slide ativas **apenas em mobile (`≤ 960px`)**.
+
+---
+
+## Componentes
+
+### Card base
+
+```css
+/* Desktop */
+background:    #FFFFFF;
+border-radius: 24px;
+padding:       16px;
+overflow:      hidden;
+
+/* Mobile */
+border-radius: 28px;
+padding:       16px;
+```
+
+> Cards não têm border por padrão no Figma.
+
+---
+
+### Card de métrica
+
+```
+Estrutura (gap 10px):
+  [Ícone circular — 45×45px Figma / ~56–72px web se destaque]
+  [Label — Medium 12.5px #888780]
+  [Número — SemiBold 24px desktop / 26px mobile]
+  [Subtexto — Medium 12.5px #888780]
+
+Variantes de icon bg:
+  verde:  #E1F5EE
+  amber:  #FAEEDA
+  azul:   #E6F1FB
+  roxo:   #EEEDFE
+```
+
+---
+
+### Card hero (impacto do mês)
+
+```css
+background:      #1D9E75;
+border-radius:   24px;   /* 28px mobile */
+padding:         16px;
+/* headline */   font: 600 22px #FFFFFF;   /* 24px mobile */
+/* subtexto */ font: 600 12.5px rgba(255,255,255,0.6);
+/* botão interno */
+background:      rgba(249,250,251,0.2);
+border-radius:   12px;
+padding:         10px 18px;
+font:            600 11px #FFFFFF;   /* 12px mobile */
+```
+
+---
+
+### Card tabela / solicitações
+
+Ver Figma nodes 27-794 (desktop) e 66-2992 (mobile). Manter hierarquia de tamanhos da escala Figma, ampliando ~1.2–1.5× na web se necessário.
+
+---
+
+### Pills de status
+
+```css
+border-radius: 10px;
+padding:       8px 12px;
+font:          600 10px 'Onest';   /* ~11–12px web */
+```
+
+| Status | Background | Texto |
+|---|---|---|
+| `ativo` / `aceito` | `#E1F5EE` | `#085041` |
+| `reservado` / `pendente` | `#FAEEDA` | `#633806` |
+| `expirado` / `recusado` | `#FCEBEB` | `#791F1F` |
+
+---
+
+### Botões
+
+**Primário**
+
+```css
+background:    #1D9E75;
+color:         #FFFFFF;
+border:        none;
+border-radius: 12px;        /* 20px botões hero auth mobile */
+padding:       10px 18px;   /* min-height 48–60px web */
+font:          600 12–14px 'Onest';
+```
+
+**Secundário**
+
+```css
+background:    #F0F5F3;
+color:         rgba(26, 26, 26, 0.7);
+border:        none;
+border-radius: 12px;
+padding:       10px 18px;
+font:          600 12px 'Onest';
+```
+
+**Voltar (mobile auth)**
+
+```css
+background:    #FFFFFF;
+border-radius: 12px;
+size:          40×40px;
+box-shadow:    0 1px 4px rgba(26, 26, 26, 0.08);
+position:      absolute; top 24px; left 24px;
+```
+
+---
+
+### Inputs (dashboard — páginas logadas)
+
+```css
+background:    #F0F0EA;
+border:        0.5px solid #E0E0DA;
+border-radius: 10px;
+padding:       8px 12px;
+font:          400 13px 'Onest';
+color:         #1A1A1A;
+width:         100%;
+```
+
+> Auth usa estilo próprio (fundo branco) — ver seção **Módulo Auth**.
+
+---
+
+### Modal de feedback
+
+Referência Figma: node 90-371. Ícone de mão em `public/images/auth/hand-icon.svg` (#633806 sobre #FAEEDA).
+
+```css
+/* Container */
+background:    #FFFFFF;
+border-radius: 28px;
+padding:       32px 28px 28px;   /* Figma: 16px — ampliado web */
+gap:           20px;
+max-width:     420px;            /* Figma: 320px — ampliado web */
+box-shadow:    var(--shadow-modal);
+
+/* Overlay */
+background:    rgba(18, 18, 18, 0.45);
+backdrop-filter: blur(2px);
+z-index:       1000;
+
+/* Ícone */
+container:     72×72px, border-radius 50%, bg #FAEEDA;   /* Figma: 45px */
+icon:          36×38px;
+
+/* Texto */
+title:         22px / 600 #1A1A1A;    /* Figma: 16px */
+description:   15px / 500 #888780;    /* Figma: 12.5px */
+
+/* Botões */
+min-height:    48px;
+border-radius: 14px;
+font:          600 14px;
+gap:           10px;
+```
+
+**Mobile (`≤ 960px`):** bottom sheet, largura total, `border-radius: 28px 28px 0 0`.
+
+Variantes futuras de ícone/container:
+
+| Variante | Container | Ícone | Animação ao abrir |
+|---|---|---|---|
+| `error` | `#FAEEDA` | mão `#633806` | tremor leve (`feedbackIconShake`, 0.55s após modal) |
+| `success` | `#E1F5EE` | — | — |
+| `info` | `#E6F1FB` | — | — |
+
+---
+
+### Sidebar (Desktop — app logado)
+
+```css
+width:         60px;
+background:    #121212;
+padding:       20px 12px;
+
+/* Logo FS */
+background:    #1D9E75;
+border-radius: 12px;
+height:        36px;
+font:          700 12px #FFFFFF;
+
+/* Ícone ativo */   bg #1D9E75, 36×36px, radius 12px
+/* Ícone inativo */ transparent, ícone #5DCAA5
+gap ícones: 6px · ícone: 20×20px
+```
+
+---
+
+### Bottom Bar (Mobile — app logado)
+
+```css
+height:        72px;
+background:    #FFFFFF;
+border-top:    0.5px solid #E0E0DA;
+padding:       10px 0 12px;
+
+/* ativo */   bg #E1F5EE, 36×36px, cor #085041, label 500 9px #0F6E56
+/* inativo */ label 400 9px #888780
+```
+
+---
+
+## Layout geral
+
+### Desktop app (`≥ 1024px`)
+
+```
+Sidebar 60px (#121212) + conteúdo (#F5F5F0, padding 16px)
+```
+
+### Mobile app (`≤ 767px`)
+
+```
+Sem sidebar · bottom bar 72px · fundo #F5F5F0
+```
+
+### Auth desktop (`> 960px`)
+
+```
+Moldura #121212 · split hero + painel · gap 10px · padding 20px
+```
+
+### Auth mobile (`≤ 960px`)
+
+```
+Tela cheia #F0F5F3 · sem moldura escura
+```
+
+---
+
+## Identidade
+
+```
+Logo:     "Food" SemiBold #1A1A1A  +  "Share" SemiBold #1D9E75
+Greeting: "Olá, [Nome] 👋" — nome em #1D9E75
+Avatar:   circular, bg #1D9E75, inicial branca, 32×32px
+Tagline:  "Doe o que sobra." / "Alimente quem precisa." (quebra intencional)
+```
+
+---
+
+## Organização CSS
+
+```
+public/css/
+├── style.css                      ← único link nas views (entry point)
+├── tokens.css                     ← variáveis (:root)
+├── base.css                       ← reset, body
+├── app.css                        ← navbar, forms, cards (páginas logadas)
+├── auth/
+│   ├── layout.css                 ← auth desktop + componentes
+│   └── mobile.css                 ← auth responsivo (≤960px)
+└── components/
+    ├── page-transitions.css
+    └── feedback-modal.css
+```
+
+Novos estilos: coloque no módulo correspondente. Componentes reutilizáveis vão em `components/`.
+
+---
+
+## Checklist ao implementar nova tela
+
+1. Consultar node Figma correspondente (tabela acima)
+2. Usar tokens de cor deste documento — não inventar hex
+3. Aplicar escala **web**, não copiar px do Figma literalmente
+4. Respeitar breakpoint correto (auth 960px vs app 767/1024px)
+5. Erros → modal de feedback; navegação auth mobile → `data-nav-direction`
+6. Ícones do Figma → salvar em `public/images/` como SVG (preferir sobre icon fonts)
