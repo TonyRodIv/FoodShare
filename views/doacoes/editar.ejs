@@ -1,5 +1,176 @@
-<!-- Editar Doacao View -->
-<div class="editar-doacao-container">
-  <h1>Editar Doação</h1>
-  <!-- Form to edit donation here -->
+<%- include('../partials/header') %>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <div class="bg-white dark:bg-[#111111] rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 md:p-8 shadow-sm">
+
+    <!-- Cabeçalho -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="/doacoes" class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </a>
+        <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">Editar Doação</h1>
+      </div>
+      <p class="text-neutral-500 text-sm ml-9">Atualize as informações da sua doação abaixo.</p>
+    </div>
+
+    <!-- Alertas de erro -->
+    <% if (errors && errors.length > 0) { %>
+      <div class="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 p-4 rounded-xl mb-6">
+        <div class="flex items-center gap-2 mb-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+          <span class="text-sm font-medium">Corrija os campos abaixo:</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1">
+          <% errors.forEach(err => { %>
+            <li><%= err.message %></li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/doacoes/<%= doacao.id %>/editar" id="editarDoacaoForm">
+
+      <!-- Grid principal -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+
+        <!-- Nome do alimento -->
+        <div class="md:col-span-2">
+          <label for="nome" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Nome do Alimento <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            value="<%= doacao.nome %>"
+            required
+            class="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+            placeholder="Ex: Arroz Integral 5kg"
+          >
+        </div>
+
+        <!-- Categoria -->
+        <div>
+          <label for="categoria" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Categoria <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="categoria"
+            name="categoria"
+            required
+            class="w-full bg-white dark:bg-[#1a1a1a] border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          >
+            <option value="">Selecione...</option>
+            <option value="grãos"       <%= doacao.categoria === 'grãos'            ? 'selected' : '' %>>Grãos e Cereais</option>
+            <option value="laticínios"  <%= doacao.categoria === 'laticínios'       ? 'selected' : '' %>>Laticínios</option>
+            <option value="frutas"      <%= doacao.categoria === 'frutas'           ? 'selected' : '' %>>Frutas e Vegetais</option>
+            <option value="carnes"      <%= doacao.categoria === 'carnes'           ? 'selected' : '' %>>Carnes e Proteínas</option>
+            <option value="industrializados" <%= doacao.categoria === 'industrializados' ? 'selected' : '' %>>Industrializados</option>
+            <option value="outros"      <%= doacao.categoria === 'outros'           ? 'selected' : '' %>>Outros</option>
+          </select>
+        </div>
+
+        <!-- Quantidade -->
+        <div>
+          <label for="quantidade" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Quantidade <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="number"
+            id="quantidade"
+            name="quantidade"
+            value="<%= doacao.quantidade %>"
+            min="1"
+            required
+            class="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+            placeholder="Ex: 5"
+          >
+        </div>
+
+        <!-- Validade -->
+        <div>
+          <label for="validade" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Data de Validade <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            id="validade"
+            name="validade"
+            value="<%= new Date(doacao.validade).toISOString().split('T')[0] %>"
+            required
+            class="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          >
+        </div>
+
+        <!-- Status -->
+        <div>
+          <label for="status" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            class="w-full bg-white dark:bg-[#1a1a1a] border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          >
+            <option value="disponivel" <%= doacao.status === 'disponivel' ? 'selected' : '' %>>✅ Disponível</option>
+            <option value="reservado"  <%= doacao.status === 'reservado'  ? 'selected' : '' %>>🔒 Reservado</option>
+            <option value="entregue"   <%= doacao.status === 'entregue'   ? 'selected' : '' %>>📦 Entregue</option>
+          </select>
+        </div>
+
+        <!-- Observações -->
+        <div class="md:col-span-2">
+          <label for="observacoes" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            Observações <span class="text-neutral-400 font-normal">(Opcional)</span>
+          </label>
+          <textarea
+            id="observacoes"
+            name="observacoes"
+            rows="3"
+            class="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-none"
+            placeholder="Ex: Embalagem fechada, retirar em até 3 dias..."
+          ><%= doacao.observacoes || '' %></textarea>
+        </div>
+
+      </div>
+
+      <!-- Info: criada em -->
+      <div class="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-100 dark:border-neutral-800 rounded-xl px-4 py-3 mb-8 flex items-center gap-2 text-xs text-neutral-500">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Doação criada em <strong class="ml-1 text-neutral-700 dark:text-neutral-300"><%= new Date(doacao.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }) %></strong>
+      </div>
+
+      <!-- Botões -->
+      <div class="pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row justify-end gap-3">
+        <a href="/doacoes" class="px-5 py-2.5 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-neutral-200 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 rounded-xl transition-colors text-center">
+          Cancelar
+        </a>
+        <button
+          type="submit"
+          id="btnSalvar"
+          class="px-6 py-2.5 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
+
+<script>
+  // Feedback visual no submit
+  document.getElementById('editarDoacaoForm').addEventListener('submit', function () {
+    const btn = document.getElementById('btnSalvar');
+    btn.disabled = true;
+    btn.innerHTML = `
+      <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+      </svg>
+      Salvando...
+    `;
+  });
+</script>
+
+<%- include('../partials/footer') %>
