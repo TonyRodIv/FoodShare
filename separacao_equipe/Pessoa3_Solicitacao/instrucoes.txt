@@ -1,0 +1,6 @@
+﻿Branch: feature/crud-solicitacoes
+
+Commits:
+1. feat(solicitacao): adiciona rotas para solicitar e acompanhar pedidos (dual-mode)
+2. feat(solicitacao): cria tela de nova solicitacao baseada em pacotes
+3. feat(solicitacao): implementa telas de aceitar/recusar solicitacoes recebidas
