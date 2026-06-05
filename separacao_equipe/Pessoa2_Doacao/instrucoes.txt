@@ -1,6 +1,0 @@
-﻿Branch: feature/crud-doacoes
-
-Commits:
-1. feat(doacao): cria model de doacoes e itens no Prisma
-2. feat(doacao): implementa rotas de listagem e criacao de doacoes com suporte a multiplos itens
-3. feat(doacao): cria views EJS do formulario dinamico de nova doacao e listagem
