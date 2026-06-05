@@ -1,0 +1,68 @@
+<%- include('../partials/auth-header') %>
+<div class="auth-screen auth-screen--form auth-screen--login">
+  <%- include('../partials/auth-back-btn') %>
+  <%- include('../partials/auth-hero') %>
+
+  <section class="auth-panel">
+    <div class="auth-panel__inner">
+      <header class="auth-panel__header">
+        <p class="auth-panel__greeting auth-show-desktop">Seja bem vindo,</p>
+        <p class="auth-panel__greeting auth-show-mobile">Seja bem vindo de volta,</p>
+        <h2 class="auth-panel__title">Entre em sua conta</h2>
+      </header>
+
+      <% if (registered) { %>
+        <div class="auth-alert auth-alert--success">
+          Conta criada com sucesso! Faça login para continuar.
+        </div>
+      <% } %>
+
+      <form action="/auth/login" method="POST" class="auth-form" novalidate>
+        <div class="auth-form__fields">
+          <div class="auth-field">
+            <label for="email" class="auth-field__label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= old.email || '' %>"
+              maxlength="254"
+              placeholder="nome@email.com"
+              class="auth-field__input<%= errors.some(e => e.field === 'email') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'email')) { %>aria-invalid="true" aria-describedby="email-hint"<% } %>
+              required
+              autofocus
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'email' }) %>
+          </div>
+
+          <div class="auth-field">
+            <label for="senha" class="auth-field__label">Senha:</label>
+            <input
+              type="password"
+              id="senha"
+              name="senha"
+              maxlength="72"
+              placeholder="Sua senha"
+              class="auth-field__input<%= errors.some(e => e.field === 'senha') ? ' auth-field__input--error' : '' %>"
+              <% if (errors.some(e => e.field === 'senha')) { %>aria-invalid="true" aria-describedby="senha-hint"<% } %>
+              required
+            />
+            <%- include('../partials/auth-field-hint', { errors, field: 'senha' }) %>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn auth-btn--mobile">
+          Entrar
+        </button>
+      </form>
+
+      <p class="auth-panel__footer">
+        Ainda não tem uma conta? <a href="/auth/register" data-nav-direction="forward">Criar conta</a>
+      </p>
+    </div>
+  </section>
+</div>
+
+<%- include('../partials/auth-feedback-modal', { errors, formType: 'login' }) %>
+<%- include('../partials/auth-footer') %>
