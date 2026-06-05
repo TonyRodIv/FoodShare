@@ -26,6 +26,7 @@
               id="email"
               name="email"
               value="<%= old.email || '' %>"
+              maxlength="254"
               placeholder="nome@email.com"
               class="auth-field__input<%= errors.some(e => e.field === 'email') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'email')) { %>aria-invalid="true" aria-describedby="email-hint"<% } %>
@@ -41,6 +42,7 @@
               type="password"
               id="senha"
               name="senha"
+              maxlength="72"
               placeholder="Sua senha"
               class="auth-field__input<%= errors.some(e => e.field === 'senha') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'senha')) { %>aria-invalid="true" aria-describedby="senha-hint"<% } %>
