@@ -1,5 +1,12 @@
 ﻿Branch: feature/ui-layout-base
 
+Entregas (Pessoa4 — Layout):
+- Swagger: app.js, package.json, public/api-docs.html
+- Auth UI: public/css/auth/, public/js/auth-form-inputs.js, public/images/auth/
+
+Na raiz do projeto, copiar os arquivos de public/ desta pasta para public/ do repositório.
+
 Commits:
 1. chore(setup): atualizacoes de dependencias (swagger, body-parser)
 2. feat(admin): configura app.js, urlencoded extendido e interface html do Swagger (api-docs)
+3. feat(auth): estilos e assets das telas de autenticacao (CSS, JS, imagens)
