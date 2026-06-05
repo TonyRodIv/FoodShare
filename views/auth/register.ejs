@@ -20,6 +20,7 @@
               id="nome"
               name="nome"
               value="<%= old.nome || '' %>"
+              maxlength="80"
               placeholder="Ex.: Maria Silva"
               class="auth-field__input<%= errors.some(e => e.field === 'nome') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'nome')) { %>aria-invalid="true" aria-describedby="nome-hint"<% } %>
@@ -36,6 +37,7 @@
               id="email"
               name="email"
               value="<%= old.email || '' %>"
+              maxlength="254"
               placeholder="nome@email.com"
               class="auth-field__input<%= errors.some(e => e.field === 'email') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'email')) { %>aria-invalid="true" aria-describedby="email-hint"<% } %>
@@ -50,6 +52,7 @@
               type="password"
               id="senha"
               name="senha"
+              maxlength="72"
               placeholder="Mínimo de 6 caracteres"
               class="auth-field__input<%= errors.some(e => e.field === 'senha') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'senha')) { %>aria-invalid="true" aria-describedby="senha-hint"<% } %>
@@ -63,13 +66,15 @@
             <input
               type="tel"
               id="telefone"
-              name="telefone"
-              value="<%= old.telefone || '' %>"
+              maxlength="15"
+              inputmode="numeric"
+              autocomplete="tel"
               placeholder="(82) 91234-5678"
               class="auth-field__input<%= errors.some(e => e.field === 'telefone') ? ' auth-field__input--error' : '' %>"
               <% if (errors.some(e => e.field === 'telefone')) { %>aria-invalid="true" aria-describedby="telefone-hint"<% } %>
               required
             />
+            <input type="hidden" name="telefone" id="telefone-value" value="<%= old.telefone || '' %>" />
             <%- include('../partials/auth-field-hint', { errors, field: 'telefone' }) %>
           </div>
 

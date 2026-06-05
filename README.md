@@ -1,10 +1,19 @@
-# 🤝 FoodShare
+# FoodShare
 
-Uma plataforma comunitária para compartilhamento de alimentos e gerenciamento de doações.
+> Doe o que sobra. Alimente quem precisa.
 
-## 📋 Descrição
+O **FoodShare** é uma plataforma web comunitária que conecta pessoas com excedente de alimentos a famílias e instituições que precisam. Por meio de um sistema simples de doações e solicitações, qualquer pessoa pode cadastrar itens disponíveis ou solicitar o que precisa — reduzindo o desperdício e fortalecendo redes de solidariedade locais.
 
-O FoodShare é uma aplicação web desenvolvida em Node.js com Express e EJS que conecta doadores e receptores de alimentos, facilitando a destinação de excedentes alimentares e ajudando comunidades a combater o desperdício.
+Desenvolvido como projeto acadêmico do curso de Engenharia de Software da UMJ (Centro Universitário Mário Pontes Jucá), utilizando Node.js, Express, EJS e PostgreSQL.
+
+---
+
+## 📋 Como funciona
+
+- **Doadores** cadastram alimentos disponíveis com quantidade, categoria e validade
+- **Receptores** visualizam o que está disponível e fazem solicitações
+- O doador aceita ou recusa cada solicitação diretamente pela plataforma
+- O status da doação avança automaticamente: `disponível → reservado → entregue`
 
 ---
 
@@ -142,9 +151,7 @@ Caso o Access Token expire, o middleware `authenticate` verifica a existência d
 Authorization: Bearer seu_token_aqui
 ```
 
-## 📝 Licença
-
-Este projeto é licenciado sob a MIT License - veja o arquivo LICENSE para detalhes.
+---
 
 ## 🤝 Contribuindo
 

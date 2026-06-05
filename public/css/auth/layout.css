@@ -289,6 +289,10 @@
   color: #c0392b;
 }
 
+.auth-field__hint--limit {
+  color: var(--auth-muted, #717680);
+}
+
 .auth-btn {
   display: flex;
   align-items: center;
