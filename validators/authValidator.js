@@ -12,9 +12,11 @@ const registerSchema = z.object({
     .min(6, 'A senha precisa ter pelo menos 6 caracteres.'),
   telefone: z
     .string({ message: 'Informe seu telefone ou WhatsApp.' })
-    .regex(
-      /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/,
-      'Use um telefone válido, como (82) 91234-5678.'
+    .transform((value) => value.replace(/\D/g, ''))
+    .pipe(
+      z
+        .string()
+        .regex(/^\d{10,11}$/, 'Use um telefone válido, como (82) 91234-5678.')
     ),
   role: z.enum(['doador', 'receptor'], {
     message: 'Selecione se você quer doar ou receber alimentos.',
