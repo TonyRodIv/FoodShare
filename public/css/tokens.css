@@ -89,13 +89,13 @@
   --error-card-px: 20px;
   --error-card-py: 16px;
   --error-code-color: rgba(255, 255, 255, 0.2);
-  --error-code-fs: clamp(260px, 52vw, 760px);
+  --error-code-fs: clamp(260px, 52vw, 860px);
   --error-code-fs-mobile: clamp(360px, 130vw, 680px);
   --error-page-gutter: 15px;
   --error-icon-size: 45px;
   --error-icon-glyph: 26px;
   --error-title-fs: var(--app-fs-xl);
-  --error-subtitle-fs: var(--app-fs-base);
+  --error-subtitle-fs: var(--app-fs-md);
   --error-subtitle-color: #8c8c8c;
   --error-subtitle-max-w: 254px;
   --error-btn-bg: var(--surface-green);

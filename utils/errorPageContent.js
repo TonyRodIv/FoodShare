@@ -58,7 +58,6 @@ const HTTP_VARIANTS = {
     retryAction: 'reload',
     icon: 'warning',
     variant: 'server',
-    useAlertIcon: true,
   },
   502: {
     title: 'Serviço indisponível',
@@ -156,7 +155,6 @@ function resolveErrorPage(options = {}) {
     retryHref,
     icon: base.icon,
     variant: base.variant,
-    useAlertIcon: base.useAlertIcon === true,
     pageTitle: options.pageTitle || `Erro ${code} — FoodShare`,
   };
 }
