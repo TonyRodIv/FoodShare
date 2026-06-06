@@ -181,7 +181,7 @@
 
 .auth-panel__inner {
   width: 100%;
-  max-width: 420px;
+  /* max-width: 420px; */
   display: flex;
   flex-direction: column;
   gap: 20px;

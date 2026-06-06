@@ -5,7 +5,10 @@ body.feedback-modal-open {
 }
 
 .feedback-modal-overlay {
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -17,7 +20,9 @@ body.feedback-modal-open {
 }
 
 .feedback-modal-overlay.is-open {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .feedback-modal {
@@ -31,7 +36,7 @@ body.feedback-modal-open {
   align-items: center;
   gap: 20px;
   box-shadow: 0 20px 60px rgba(18, 18, 18, 0.2);
-  animation: feedbackModalIn 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: feedbackModalIn 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes feedbackModalIn {
@@ -216,9 +221,15 @@ body.feedback-modal-open {
   }
 
   .feedback-modal__btn {
-    min-height: 52px;
-    font-size: 15px;
-    border-radius: 16px;
+    min-height: 60px;
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+  }
+
+  .feedback-modal__actions {
+    gap: 12px;
   }
 }
 
