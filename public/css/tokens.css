@@ -139,6 +139,14 @@
   --duration-normal: 180ms;
   --duration-slow: 280ms;
   --press-scale: 0.98;
+
+  /* Hover de linhas — tom neutro bem sutil (distinto de --surface-green dos botões) */
+  --hover-row-bg: color-mix(in srgb, var(--text) 2%, transparent);
+  --hover-btn-secondary-bg: color-mix(in srgb, var(--text) 8%, var(--surface-green));
+
+  /* Truncamento responsivo — nomes longos em tabelas/listas */
+  --truncate-table-item: none;
+  --truncate-list-title: none;
 }
 
 /* App — escala só da faixa superior (métricas) em telas grandes */
@@ -229,6 +237,8 @@
 
 @media (max-width: 1023px) {
   :root {
+    --truncate-table-item: clamp(16ch, 40vw, 28ch);
+    --truncate-list-title: clamp(18ch, 54vw, 36ch);
     --app-fs-greeting: 24px;
     --app-fs-hero-title: 24px;
     --app-fs-hero-subtitle: 13px;
@@ -261,6 +271,8 @@
 
 @media (max-width: 480px) {
   :root {
+    --truncate-table-item: clamp(14ch, 36vw, 22ch);
+    --truncate-list-title: clamp(16ch, 50vw, 30ch);
     --app-fs-greeting: 22px;
     --app-fs-metric-value: 24px;
     --error-code-fs-mobile: clamp(320px, 140vw, 620px);

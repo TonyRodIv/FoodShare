@@ -31,3 +31,10 @@ textarea {
   opacity: 1;
   font-weight: 400;
 }
+
+.app-text-truncate {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

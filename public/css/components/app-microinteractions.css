@@ -249,8 +249,14 @@
     .home-request:hover,
     .app-history-item:hover,
     .app-notifications-list__item:hover,
-    .app-dropdown__item:hover {
-      background: rgba(240, 245, 243, 0.65);
+    .app-dropdown__item:hover,
+    .app-settings__link-row:hover,
+    .app-profile-menu__link:hover {
+      background: var(--hover-row-bg);
+    }
+
+    .app-profile-menu__link--danger:hover {
+      background: color-mix(in srgb, #c0392b 6%, transparent);
     }
 
     .app-page-header__btn:hover,
@@ -266,8 +272,10 @@
   .home-request,
   .app-history-item,
   .app-notifications-list__item,
-  .app-dropdown__item {
-    transition: background var(--duration-fast) var(--ease-out);
+  .app-dropdown__item,
+  .app-settings__link-row,
+  .app-profile-menu__link {
+    transition: background var(--duration-normal) var(--ease-out);
   }
 
   .home-pill {
@@ -569,12 +577,9 @@
         background var(--duration-slow) var(--ease-out);
     }
 
-    .home-icon-action--accept:hover {
-      background: color-mix(in srgb, var(--green-mid) 12%, var(--surface-green));
-    }
-
+    .home-icon-action--accept:hover,
     .home-icon-action--reject:hover {
-      background: color-mix(in srgb, var(--red-text) 8%, var(--surface-green));
+      background: var(--hover-btn-secondary-bg);
     }
 
     .home-icon-action--accept:hover .app-svg-icon {

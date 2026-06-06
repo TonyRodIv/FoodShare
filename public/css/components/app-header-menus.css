@@ -131,15 +131,10 @@
   padding: 12px 16px;
   text-decoration: none;
   border-bottom: var(--divider);
-  transition: background var(--duration-fast) var(--ease-out);
 }
 
 .app-dropdown__item:last-child {
   border-bottom: none;
-}
-
-.app-dropdown__item:hover {
-  background: var(--surface-green);
 }
 
 .app-dropdown__item--unread {
@@ -274,19 +269,10 @@
   text-decoration: none;
   text-align: left;
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out);
-}
-
-.app-profile-menu__link:hover {
-  background: var(--surface-green);
 }
 
 .app-profile-menu__link--danger {
   color: #c0392b;
-}
-
-.app-profile-menu__link--danger:hover {
-  background: var(--red-pale);
 }
 
 .app-profile-menu__logout {
@@ -306,17 +292,12 @@
   margin-bottom: 7px;
   text-decoration: none;
   border-bottom: var(--divider);
-  transition: opacity var(--duration-fast) var(--ease-out);
 }
 
 .app-notifications-list__item:last-child {
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
-}
-
-.app-notifications-list__item:hover {
-  opacity: 0.85;
 }
 
 .app-notifications-list__item--unread {
@@ -450,11 +431,6 @@
   color: var(--text);
   text-align: left;
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out);
-}
-
-.app-settings__link-row:hover {
-  background: var(--surface-green);
 }
 
 .app-settings__chevron {
