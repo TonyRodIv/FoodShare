@@ -69,7 +69,18 @@ router.get('/nova', authenticate, authorize(['receptor', 'admin']), async (req, 
       include: { itens: true }
     });
     const preSelectedDoacaoId = req.query.doacaoId || null;
-    res.render('solicitacoes/nova', { title: 'Nova Solicitação - FoodShare', doacoes, preSelectedDoacaoId, errors: [], old: {} });
+    res.render('solicitacoes/nova', {
+      title: 'Nova Solicitação - FoodShare',
+      activeNav: 'solicitacoes',
+      pageHeadingPrefix: 'Faça sua',
+      pageHeadingHighlight: 'solicitação',
+      pageSubtitle: 'Escolha um pacote de doação disponível e envie seu pedido.',
+      featurePreview: true,
+      doacoes,
+      preSelectedDoacaoId,
+      errors: [],
+      old: {},
+    });
   } catch (err) {
     console.error('[solicitacoes] Erro ao carregar página de nova solicitação:', err);
     res.status(500).render('error', { statusCode: 500, context: 'solicitacoes_nova', error: err });
@@ -89,7 +100,18 @@ router.post('/nova', authenticate, authorize(['receptor', 'admin']), async (req,
     if (isApiRequest(req)) return res.status(400).json({ errors: erros });
     // Se for EJS, busca doacoes novamente para renderizar a view com erro
     const doacoes = await prisma.doacao.findMany({ where: { status: 'disponivel' }, include: { itens: true } });
-    return res.status(400).render('solicitacoes/nova', { title: 'Nova Solicitação - FoodShare', doacoes, preSelectedDoacaoId: doacaoId, errors: erros, old: req.body });
+    return res.status(400).render('solicitacoes/nova', {
+      title: 'Nova Solicitação - FoodShare',
+      activeNav: 'solicitacoes',
+      pageHeadingPrefix: 'Faça sua',
+      pageHeadingHighlight: 'solicitação',
+      pageSubtitle: 'Escolha um pacote de doação disponível e envie seu pedido.',
+      featurePreview: true,
+      doacoes,
+      preSelectedDoacaoId: doacaoId,
+      errors: erros,
+      old: req.body,
+    });
   }
 
   try {
@@ -108,7 +130,18 @@ router.post('/nova', authenticate, authorize(['receptor', 'admin']), async (req,
     console.error('[solicitacoes] Erro ao criar solicitação:', err);
     if (isApiRequest(req)) return res.status(500).json({ message: 'Erro interno ao criar solicitação' });
     const doacoes = await prisma.doacao.findMany({ where: { status: 'disponivel' }, include: { itens: true } });
-    return res.status(500).render('solicitacoes/nova', { title: 'Nova Solicitação - FoodShare', doacoes, preSelectedDoacaoId: doacaoId, errors: [{ field: null, message: 'Erro interno.' }], old: req.body });
+    return res.status(500).render('solicitacoes/nova', {
+      title: 'Nova Solicitação - FoodShare',
+      activeNav: 'solicitacoes',
+      pageHeadingPrefix: 'Faça sua',
+      pageHeadingHighlight: 'solicitação',
+      pageSubtitle: 'Escolha um pacote de doação disponível e envie seu pedido.',
+      featurePreview: true,
+      doacoes,
+      preSelectedDoacaoId: doacaoId,
+      errors: [{ field: null, message: 'Erro interno.' }],
+      old: req.body,
+    });
   }
 });
 
@@ -156,6 +189,7 @@ router.get('/minhas', authenticate, async (req, res) => {
       pageHeadingPrefix: 'Esse é seu',
       pageHeadingHighlight: 'acompanhamento',
       pageSubtitle: 'Veja o status dos alimentos que você solicitou.',
+      featurePreview: true,
       solicitacoes,
     });
   } catch (err) {
