@@ -71,9 +71,9 @@
 
     var actionsHtml = '<button type="button" class="feedback-modal__btn feedback-modal__btn--secondary" data-doacao-detail-close>Fechar</button>';
 
-    if (detail.solicitarUrl) {
+    if (detail.canSolicitar) {
       actionsHtml +=
-        '<a href="' + escapeHtml(detail.solicitarUrl) + '" class="feedback-modal__btn feedback-modal__btn--primary feedback-modal__btn--link">Solicitar</a>';
+        '<button type="button" class="feedback-modal__btn feedback-modal__btn--primary" data-solicitacao-open="' + escapeHtml(detail.id) + '">Solicitar</button>';
     } else if (detail.editarUrl) {
       actionsHtml +=
         '<a href="' + escapeHtml(detail.editarUrl) + '" class="feedback-modal__btn feedback-modal__btn--primary feedback-modal__btn--link">Editar doação</a>';
@@ -118,7 +118,7 @@
 
   function shouldIgnoreClick(target) {
     return Boolean(
-      target.closest('a, button, input, select, textarea, label, form, .home-table__edit, .receptor-food-card .app-btn-primary')
+      target.closest('a, button, input, select, textarea, label, form, .home-table__edit, .receptor-food-card .app-btn-primary, [data-solicitacao-open]')
     );
   }
 

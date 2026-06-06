@@ -43,6 +43,10 @@
   <% } else { %>
     <div class="receptor-dashboard">
       <div class="receptor-dashboard__main">
+        <% if (typeof query !== 'undefined' && query.solicitacao === 'ok') { %>
+          <p class="solicitacao-flash" role="status">Solicitação enviada com sucesso!</p>
+        <% } %>
+
         <div class="receptor-toolbar">
           <label class="app-search">
             <span class="app-search__icon" aria-hidden="true">

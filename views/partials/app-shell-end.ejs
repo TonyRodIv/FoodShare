@@ -15,6 +15,11 @@
     <script src="/js/doacao-detail-modal.js"></script>
   <% } %>
 
+  <% if (locals.usuario && (locals.usuario.role === 'receptor' || locals.usuario.role === 'admin')) { %>
+    <%- include('solicitacao-modal') %>
+    <script src="/js/solicitacao-modal.js"></script>
+  <% } %>
+
   <% if (locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin')) { %>
     <%- include('doacao-modal', {
       openDoacaoModal: typeof openDoacaoModal !== 'undefined' ? openDoacaoModal : false,

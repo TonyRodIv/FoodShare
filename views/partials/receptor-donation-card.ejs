@@ -32,12 +32,18 @@
   </p>
 
   <div class="app-meta-tags">
-    <span class="app-meta-tag">Val. <%= formatValidade(item.validade) %></span>
-    <span class="app-meta-tag"><%= item.localizacao %></span>
+    <span class="app-meta-tag">
+      <%- include('app-icon', { icon: 'calendar_today', size: 'meta' }) %>
+      Val. <%= formatValidade(item.validade) %>
+    </span>
+    <span class="app-meta-tag">
+      <%- include('app-icon', { icon: 'location_on', size: 'meta' }) %>
+      <%= item.localizacao %>
+    </span>
   </div>
 
   <div class="receptor-food-card__footer">
     <span class="receptor-food-card__donor"><%= item.doadorNome %></span>
-    <a href="/solicitacoes/nova?doacaoId=<%= item.doacaoId %>" class="app-btn-primary">Solicitar</a>
+    <button type="button" class="app-btn-primary" data-solicitacao-open="<%= item.doacaoId %>">Solicitar</button>
   </div>
 </article>
