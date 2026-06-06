@@ -1,0 +1,37 @@
+<%#
+  Dropdown do perfil — opções fictícias por enquanto
+%>
+<div class="app-dropdown app-dropdown--profile" id="profile-dropdown" hidden>
+  <div class="app-dropdown__panel app-dropdown__panel--profile" role="menu" aria-label="Menu do perfil">
+    <div class="app-profile-menu__user">
+      <div class="home-avatar app-profile-menu__avatar" aria-hidden="true"><%= inicial %></div>
+      <div>
+        <p class="app-profile-menu__name"><%= nomeUsuario %></p>
+        <p class="app-profile-menu__email"><%= locals.usuario.email %></p>
+      </div>
+    </div>
+
+    <ul class="app-profile-menu__list" role="none">
+      <li role="none">
+        <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Meu perfil</a>
+      </li>
+      <li role="none">
+        <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Editar conta</a>
+      </li>
+      <li role="none">
+        <a href="/configuracoes" class="app-profile-menu__link" role="menuitem">Preferências</a>
+      </li>
+      <li role="none">
+        <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Central de ajuda</a>
+      </li>
+      <li role="none" class="app-profile-menu__divider" aria-hidden="true"></li>
+      <li role="none">
+        <form action="/auth/logout" method="POST" class="app-profile-menu__logout">
+          <button type="submit" class="app-profile-menu__link app-profile-menu__link--danger" role="menuitem">
+            Sair da conta
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>

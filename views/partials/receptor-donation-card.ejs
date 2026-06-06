@@ -1,0 +1,45 @@
+<%
+  const iconVariant = categoryIconVariant(item.categoria);
+  const categoryIcons = {
+    green: 'grain',
+    amber: 'nutrition',
+    blue: 'inventory_2',
+  };
+  const iconName = categoryIcons[iconVariant] || 'grocery';
+%>
+<article
+  class="receptor-food-card"
+  data-receptor-card
+  data-category="<%= item.categoriaKey %>"
+  data-search="<%= (item.nome + ' ' + item.categoria + ' ' + item.doadorNome).toLowerCase() %>"
+>
+  <div class="receptor-food-card__top">
+    <div class="receptor-food-card__icon receptor-food-card__icon--<%= iconVariant %>" aria-hidden="true">
+      <%- include('app-icon', { icon: iconName, size: 'metric' }) %>
+    </div>
+    <span class="home-pill home-pill--<%= item.availabilityPill %>">
+      <%= item.availabilityPill === 'ultimas' ? 'últimas unid.' : 'disponível' %>
+    </span>
+  </div>
+
+  <h3 class="receptor-food-card__name"><%= item.nome %></h3>
+  <p class="receptor-food-card__category">
+    <%= formatCategoryLabel(item.categoria) %> · <%= item.quantidade %> un
+  </p>
+
+  <ul class="receptor-food-card__meta">
+    <li>
+      <%- include('app-icon', { icon: 'calendar_today', size: 'chevron' }) %>
+      Val: <%= formatValidade(item.validade) %>
+    </li>
+    <li>
+      <%- include('app-icon', { icon: 'location_on', size: 'chevron' }) %>
+      <%= item.localizacao %>
+    </li>
+  </ul>
+
+  <div class="receptor-food-card__footer">
+    <span class="receptor-food-card__donor"><%= item.doadorNome %></span>
+    <a href="/solicitacoes/nova?doacaoId=<%= item.doacaoId %>" class="receptor-food-card__btn">Solicitar</a>
+  </div>
+</article>

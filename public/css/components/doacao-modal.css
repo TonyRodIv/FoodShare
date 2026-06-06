@@ -1,0 +1,216 @@
+/* Modal de nova doação — estende feedback-modal */
+
+.auth-field__input--textarea {
+  min-height: 72px;
+  resize: vertical;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.feedback-modal--form {
+  max-width: 680px;
+  align-items: stretch;
+  text-align: left;
+  max-height: min(92vh, 840px);
+  overflow: hidden;
+  padding: 0;
+  gap: 0;
+}
+
+.doacao-modal__header {
+  flex-shrink: 0;
+  padding: 28px 28px 0;
+}
+
+.feedback-modal__content--form {
+  align-items: flex-start;
+  text-align: left;
+  padding: 0;
+  width: 100%;
+  gap: 6px;
+}
+
+.feedback-modal__actions--form {
+  flex-shrink: 0;
+  margin-top: 0;
+  padding: 16px 28px calc(24px + env(safe-area-inset-bottom, 0px));
+  border-top: var(--divider);
+  background: #fff;
+  border-radius: 0 0 28px 28px;
+}
+
+.doacao-modal__form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.doacao-modal__scroll-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.doacao-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 28px 16px;
+}
+
+.doacao-modal__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 32px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.doacao-modal__fade--top {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.doacao-modal__fade--bottom {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.doacao-modal__scroll-wrap.is-scrollable.is-scrolled .doacao-modal__fade--top {
+  opacity: 1;
+}
+
+.doacao-modal__scroll-wrap.is-scrollable:not(.at-bottom) .doacao-modal__fade--bottom {
+  opacity: 1;
+}
+
+.doacao-modal__items-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.doacao-modal__items-label {
+  font-size: var(--app-fs-md);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.doacao-modal__add-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--surface-green);
+  color: var(--green-text);
+  font-family: inherit;
+  font-size: var(--app-fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--duration-normal) var(--ease-out);
+}
+
+.doacao-modal__add-btn:hover {
+  background: #e4ece9;
+}
+
+.doacao-modal__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.doacao-modal__item {
+  position: relative;
+  padding: 16px;
+  background: var(--surface-green);
+  border-radius: var(--radius-md);
+}
+
+.doacao-modal__item-remove {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.doacao-modal__item-remove:hover {
+  color: #e24b4a;
+}
+
+.doacao-modal__item-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 16px;
+  padding-right: 40px;
+}
+
+.doacao-modal__item-fields .auth-field:first-child {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 680px) {
+  .doacao-modal__item-fields {
+    grid-template-columns: 1fr 1fr;
+    padding-right: 36px;
+  }
+
+  .doacao-modal__item-fields .auth-field:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .doacao-modal__item-fields {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-top: 28px;
+  }
+
+  .doacao-modal__item-remove {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 960px) {
+  .feedback-modal--form {
+    max-height: 92vh;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .doacao-modal__header {
+    padding: 24px 24px 0;
+  }
+
+  .doacao-modal__body {
+    padding: 16px 24px 12px;
+  }
+
+  .feedback-modal__actions--form {
+    padding: 14px 24px calc(20px + env(safe-area-inset-bottom, 0px));
+    border-radius: 0;
+  }
+}

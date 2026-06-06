@@ -1,0 +1,189 @@
+<% if (locals.usuario) { %>
+
+<%
+
+  const nomeUsuario = locals.usuario.nome;
+
+  const inicial = nomeUsuario.charAt(0).toUpperCase();
+
+  const isHomeHeader = typeof headerVariant !== 'undefined' && headerVariant === 'home';
+
+  const headingPrefix = typeof pageHeadingPrefix !== 'undefined' ? pageHeadingPrefix : 'Esse é seu';
+
+  const headingHighlight = typeof pageHeadingHighlight !== 'undefined' ? pageHeadingHighlight : 'painel';
+
+%>
+
+<header class="home-header app-header<%= isHomeHeader ? ' app-header--home' : '' %>">
+
+  <div class="home-header__desktop">
+
+    <div class="app-header__intro">
+
+      <% if (isHomeHeader) { %>
+
+        <h1 class="home-greeting">
+
+          <span class="home-greeting__ola">Olá,</span>
+
+          <span class="home-greeting__nome"><%= nomeUsuario %> 👋</span>
+
+        </h1>
+
+      <% } else { %>
+
+        <h1 class="app-page-title">
+
+          <span class="app-page-title__prefix"><%= headingPrefix %></span>
+
+          <span class="app-page-title__highlight"><%= headingHighlight %></span>
+
+        </h1>
+
+      <% } %>
+
+    </div>
+
+    <div class="home-header__actions">
+
+      <% if (typeof headerActionLabel !== 'undefined' && headerActionLabel) { %>
+        <%- include('app-header-action', {
+          actionLabel: headerActionLabel,
+          actionHref: typeof headerActionHref !== 'undefined' ? headerActionHref : undefined,
+          actionModal: typeof headerActionModal !== 'undefined' ? headerActionModal : false,
+          buttonClass: 'app-header__action',
+        }) %>
+      <% } %>
+
+      <button
+
+        type="button"
+
+        class="home-icon-btn app-header__notifications-btn"
+
+        aria-label="Notificações"
+
+        aria-expanded="false"
+
+        aria-controls="notifications-dropdown"
+
+        data-notifications-toggle
+
+      >
+
+        <%- include('app-icon', { icon: 'notifications', size: 'header' }) %>
+
+        <% if (typeof notificacoesCount !== 'undefined' && notificacoesCount > 0) { %>
+
+          <span class="app-header__badge" aria-hidden="true"><%= notificacoesCount > 9 ? '9+' : notificacoesCount %></span>
+
+        <% } %>
+
+      </button>
+
+      <button
+
+        type="button"
+
+        class="home-avatar app-header__avatar-btn"
+
+        aria-label="Menu do perfil"
+
+        aria-expanded="false"
+
+        aria-controls="profile-dropdown"
+
+        data-profile-toggle
+
+      >
+
+        <%= inicial %>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="home-header__mobile">
+
+    <div class="home-header__mobile-top">
+
+      <button
+
+        type="button"
+
+        class="home-avatar home-avatar--lg app-header__avatar-btn"
+
+        aria-label="Menu do perfil"
+
+        aria-expanded="false"
+
+        aria-controls="profile-dropdown"
+
+        data-profile-toggle
+
+      >
+
+        <%= inicial %>
+
+      </button>
+
+      <button
+
+        type="button"
+
+        class="home-icon-btn home-icon-btn--lg app-header__notifications-btn"
+
+        aria-label="Notificações"
+
+        aria-expanded="false"
+
+        aria-controls="notifications-dropdown"
+
+        data-notifications-toggle
+
+      >
+
+        <%- include('app-icon', { icon: 'notifications', size: 'header' }) %>
+
+        <% if (typeof notificacoesCount !== 'undefined' && notificacoesCount > 0) { %>
+
+          <span class="app-header__badge" aria-hidden="true"><%= notificacoesCount > 9 ? '9+' : notificacoesCount %></span>
+
+        <% } %>
+
+      </button>
+
+    </div>
+
+    <% if (isHomeHeader) { %>
+
+      <h1 class="home-greeting home-greeting--mobile">
+
+        <span class="home-greeting__ola">Olá,</span>
+
+        <span class="home-greeting__nome"><%= nomeUsuario %> 👋</span>
+
+      </h1>
+
+    <% } else { %>
+
+      <h1 class="app-page-title app-page-title--mobile">
+
+        <span class="app-page-title__prefix"><%= headingPrefix %></span>
+
+        <span class="app-page-title__highlight"><%= headingHighlight %></span>
+
+      </h1>
+
+    <% } %>
+
+  </div>
+
+</header>
+
+<% } %>
+

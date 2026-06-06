@@ -1,0 +1,25 @@
+.app-feature-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 16px;
+  background: #0a0a0a;
+  color: #f5d061;
+  flex-shrink: 0;
+}
+
+.app-feature-preview__text {
+  margin: 0;
+  max-width: 960px;
+  font-size: var(--app-fs-sm);
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
+  color: #f5d061;
+}
+
+.app-feature-preview__text strong {
+  font-weight: 700;
+  color: #f5d061;
+}

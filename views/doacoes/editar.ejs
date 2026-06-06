@@ -1,5 +1,115 @@
-<!-- Editar Doacao View -->
-<div class="editar-doacao-container">
-  <h1>Editar Doação</h1>
-  <!-- Form to edit donation here -->
+<%- include('../partials/app-shell-start') %>
+
+<div class="app-page">
+  <%- include('../partials/app-page-header') %>
+
+  <article class="app-page-panel doacao-edit-panel">
+    <% if (errors && errors.length > 0) { %>
+      <div class="auth-alert auth-alert--error" role="alert">
+        <p class="auth-alert__title">Corrija os campos abaixo:</p>
+        <ul class="auth-alert__list">
+          <% errors.forEach(function(err) { %>
+            <li><%= err.message %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/doacoes/<%= doacao.id %>/editar" class="doacao-edit-form" id="editarDoacaoForm" novalidate>
+      <div class="auth-field">
+        <label for="doacao-edit-observacoes" class="auth-field__label">Observações (opcional)</label>
+        <textarea
+          id="doacao-edit-observacoes"
+          name="observacoes"
+          rows="2"
+          maxlength="500"
+          placeholder="Ex: Todos os itens estão com embalagem fechada..."
+          class="auth-field__input auth-field__input--textarea"
+        ><%= typeof doacaoOld !== 'undefined' && doacaoOld.observacoes != null ? doacaoOld.observacoes : (doacao.observacoes || '') %></textarea>
+      </div>
+
+      <div class="auth-field">
+        <label for="doacao-edit-status" class="auth-field__label">Status do pacote</label>
+        <select id="doacao-edit-status" name="status" class="auth-field__input auth-field__select">
+          <% var currentStatus = typeof doacaoOld !== 'undefined' && doacaoOld.status ? doacaoOld.status : doacao.status; %>
+          <option value="disponivel" <%= currentStatus === 'disponivel' ? 'selected' : '' %>>Disponível</option>
+          <option value="reservado" <%= currentStatus === 'reservado' ? 'selected' : '' %>>Reservado</option>
+          <option value="entregue" <%= currentStatus === 'entregue' ? 'selected' : '' %>>Entregue</option>
+        </select>
+      </div>
+
+      <div class="doacao-modal__items-head">
+        <span class="doacao-modal__items-label">Itens da doação</span>
+        <button type="button" class="doacao-modal__add-btn" id="btnAdicionarItemEdit">
+          + Adicionar item
+        </button>
+      </div>
+
+      <div id="itensContainerEdit" class="doacao-modal__items"></div>
+
+      <p class="doacao-edit-meta">
+        Pacote criado em <%= formatDateShort(doacao.createdAt) %>
+      </p>
+
+      <div class="doacao-edit-actions">
+        <a href="/doacoes" class="feedback-modal__btn feedback-modal__btn--secondary">Cancelar</a>
+        <button type="submit" class="feedback-modal__btn feedback-modal__btn--primary" id="btnSalvarEdit">
+          Salvar alterações
+        </button>
+      </div>
+    </form>
+  </article>
 </div>
+
+<template id="doacaoItemTemplateEdit">
+  <div class="doacao-modal__item">
+    <button type="button" class="doacao-modal__item-remove btnRemoverItemEdit" title="Remover item" aria-label="Remover item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="doacao-modal__item-fields">
+      <div class="auth-field">
+        <label class="auth-field__label">Nome do alimento</label>
+        <input type="text" data-name="nome" required maxlength="120" placeholder="Ex: Arroz integral 5kg" class="auth-field__input">
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Categoria</label>
+        <select data-name="categoria" required class="auth-field__input auth-field__select">
+          <option value="">Selecione...</option>
+          <option value="grãos">Grãos e cereais</option>
+          <option value="laticínios">Laticínios</option>
+          <option value="frutas">Frutas e vegetais</option>
+          <option value="carnes">Carnes e proteínas</option>
+          <option value="industrializados">Industrializados</option>
+          <option value="outros">Outros</option>
+        </select>
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Quantidade</label>
+        <input type="number" data-name="quantidade" min="1" max="9999" required placeholder="Ex: 5" class="auth-field__input">
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Validade</label>
+        <input type="date" data-name="validade" required class="auth-field__input">
+      </div>
+    </div>
+  </div>
+</template>
+
+<%
+const editSeed = typeof doacaoOld !== 'undefined' ? doacaoOld : {
+  observacoes: doacao.observacoes || '',
+  status: doacao.status,
+  itens: doacao.itens.map(function(item) {
+    return {
+      nome: item.nome,
+      categoria: item.categoria,
+      quantidade: item.quantidade,
+      validade: new Date(item.validade).toISOString().slice(0, 10),
+    };
+  }),
+};
+%>
+<script type="application/json" id="doacao-edit-old"><%- JSON.stringify(editSeed) %></script>
+<script src="/js/doacao-edit.js"></script>
+
+<%- include('../partials/app-shell-end') %>

@@ -3,12 +3,46 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const { buildAuthFeedback } = require('./utils/feedbackErrors');
+const { resolveErrorPage } = require('./utils/errorPageContent');
+const {
+  formatValidade,
+  timeAgo,
+  solicitationDisplayStatus,
+  solicitationPillKey,
+  solicitationPillLabel,
+  RECEPTOR_CATEGORY_FILTERS,
+  categoryFilterKey,
+  categoryIconVariant,
+  formatCategoryLabel,
+  formatDateShort,
+  donationDisplayStatus,
+  mesAtual,
+} = require('./utils/formatTime');
+const { showHome } = require('./controllers/homeController');
+const { showHistorico } = require('./controllers/historicoController');
+const { showNotificacoes } = require('./controllers/notificacoesController');
+const { showConfiguracoes } = require('./controllers/configuracoesController');
+const { authenticate } = require('./middlewares/authMiddleware');
+const { attachAppData } = require('./middlewares/appDataMiddleware');
 const app = express();
 
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.locals.buildAuthFeedback = buildAuthFeedback;
+app.locals.resolveErrorPage = resolveErrorPage;
+app.locals.formatValidade = formatValidade;
+app.locals.timeAgo = timeAgo;
+app.locals.solicitationDisplayStatus = solicitationDisplayStatus;
+app.locals.solicitationPillKey = solicitationPillKey;
+app.locals.solicitationPillLabel = solicitationPillLabel;
+app.locals.RECEPTOR_CATEGORY_FILTERS = RECEPTOR_CATEGORY_FILTERS;
+app.locals.categoryFilterKey = categoryFilterKey;
+app.locals.categoryIconVariant = categoryIconVariant;
+app.locals.formatCategoryLabel = formatCategoryLabel;
+app.locals.formatDateShort = formatDateShort;
+app.locals.donationDisplayStatus = donationDisplayStatus;
+app.locals.mesAtual = mesAtual;
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +64,8 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use(attachAppData);
 
 const swaggerJsdoc = require('swagger-jsdoc');
 
@@ -66,23 +102,35 @@ app.get('/api-docs', (req, res) => {
 const authRoutes = require('./routes/auth');
 const doacoesRoutes = require('./routes/doacoes');
 const solicitacoesRoutes = require('./routes/solicitacoes');
+const errortestRoutes = require('./routes/errortest');
 
 // Home route
-app.get('/', (req, res) => {
-  if (res.locals.usuario) {
-    return res.render('index', { title: 'FoodShare' });
-  }
-  res.redirect('/auth');
-});
+app.get('/', showHome);
+app.get('/historico', authenticate, showHistorico);
+app.get('/notificacoes', authenticate, showNotificacoes);
+app.get('/configuracoes', authenticate, showConfiguracoes);
+app.get('/perfil', authenticate, (req, res) => res.redirect('/configuracoes'));
 
 app.use('/auth', authRoutes);
 app.use('/doacoes', doacoesRoutes);
 app.use('/solicitacoes', solicitacoesRoutes);
+app.use('/errortest', errortestRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).render('error', { message: 'Erro no servidor', error: err });
+  const statusCode = err.status || err.statusCode || 500;
+  res.status(statusCode).render('error', {
+    statusCode,
+    error: err,
+  });
+});
+
+// 404
+app.use((req, res) => {
+  res.status(404).render('error', {
+    statusCode: 404,
+  });
 });
 
 module.exports = app;

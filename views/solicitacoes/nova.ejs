@@ -1,61 +1,98 @@
-<%- include('../partials/header') %>
+<%- include('../partials/app-shell-start') %>
 
-<div class="max-w-xl mx-auto px-4 py-8">
-  <div class="bg-white dark:bg-[#111111] rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm">
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold text-neutral-900 dark:text-white mb-1">Solicitar Alimentos</h1>
-      <p class="text-neutral-500 text-sm">Escolha um dos pacotes de doação disponíveis.</p>
-    </div>
+<div class="app-page">
+  <article class="app-page-panel solicitacao-form-panel">
     <% if (errors && errors.length > 0) { %>
-      <div class="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 p-4 rounded-xl mb-6">
-        <ul class="list-disc list-inside text-sm">
-          <% errors.forEach(err => { %>
+      <div class="auth-alert auth-alert--error" role="alert">
+        <p class="auth-alert__title">Corrija os campos abaixo:</p>
+        <ul class="auth-alert__list">
+          <% errors.forEach(function(err) { %>
             <li><%= err.message %></li>
-          <% }) %>
+          <% }); %>
         </ul>
       </div>
     <% } %>
 
-    <form method="POST" action="/solicitacoes/nova">
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Pacote de Doação *</label>
-        <select name="doacaoId" required class="w-full bg-white dark:bg-[#1a1a1a] border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500">
+    <form method="POST" action="/solicitacoes/nova" class="solicitacao-form" id="novaSolicitacaoForm" novalidate>
+      <div class="auth-field">
+        <label for="solicitacao-doacao" class="auth-field__label">Pacote de doação</label>
+        <select
+          id="solicitacao-doacao"
+          name="doacaoId"
+          required
+          class="auth-field__input auth-field__select<%= errors.some(function(e) { return e.field === 'doacaoId'; }) ? ' auth-field__input--error' : '' %>"
+        >
           <option value="">Selecione um pacote...</option>
-          <% doacoes.forEach(d => { %>
-            <% 
-              // Monta um resumo do pacote: "Arroz (5), Feijão (2)..."
-              const resumoItens = d.itens.map(i => `${i.nome} (${i.quantidade})`).join(', ');
-              const textoSelect = resumoItens.length > 60 ? resumoItens.substring(0, 60) + '...' : resumoItens;
-            %>
+          <% doacoes.forEach(function(d) {
+            const resumoItens = d.itens.map(function(i) { return i.nome + ' (' + i.quantidade + ')'; }).join(', ');
+            const textoSelect = resumoItens.length > 60 ? resumoItens.substring(0, 60) + '...' : resumoItens;
+          %>
             <option value="<%= d.id %>" <%= preSelectedDoacaoId === d.id ? 'selected' : '' %>>
               Pacote: <%= textoSelect %>
             </option>
-          <% }) %>
+          <% }); %>
         </select>
         <% if (doacoes.length === 0) { %>
-          <p class="text-xs text-red-500 mt-2">Não há doações disponíveis no momento.</p>
+          <span class="auth-field__hint auth-field__hint--error">Não há doações disponíveis no momento.</span>
+        <% } else { %>
+          <%- include('../partials/auth-field-hint', { errors: errors, field: 'doacaoId' }) %>
         <% } %>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Quantos pacotes/itens deste doador você precisa? *</label>
-        <input type="number" name="quantidade" min="1" value="<%= old.quantidade || 1 %>" required class="w-full bg-white dark:bg-[#1a1a1a] border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500">
-        <p class="text-xs text-neutral-500 mt-1">Normalmente é 1, caso queira o pacote inteiro.</p>
+      <div class="auth-field">
+        <label for="solicitacao-quantidade" class="auth-field__label">Quantidade solicitada</label>
+        <input
+          type="number"
+          id="solicitacao-quantidade"
+          name="quantidade"
+          min="1"
+          value="<%= old.quantidade || 1 %>"
+          required
+          class="auth-field__input<%= errors.some(function(e) { return e.field === 'quantidade'; }) ? ' auth-field__input--error' : '' %>"
+        >
+        <span class="auth-field__hint">Normalmente é 1, caso queira o pacote inteiro.</span>
+        <%- include('../partials/auth-field-hint', { errors: errors, field: 'quantidade' }) %>
       </div>
 
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Mensagem (Opcional)</label>
-        <textarea name="observacoes" rows="3" class="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Explique brevemente por que você precisa desta doação..."><%= old.observacoes || '' %></textarea>
+      <div class="auth-field">
+        <label for="solicitacao-observacoes" class="auth-field__label">Mensagem (opcional)</label>
+        <textarea
+          id="solicitacao-observacoes"
+          name="observacoes"
+          rows="3"
+          maxlength="500"
+          placeholder="Explique brevemente por que você precisa desta doação..."
+          class="auth-field__input auth-field__input--textarea"
+        ><%= old.observacoes || '' %></textarea>
       </div>
 
-      <div class="pt-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end gap-3">
-        <a href="/doacoes" class="px-5 py-2.5 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">Cancelar</a>
-        <button type="submit" class="px-5 py-2.5 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-0.5" <%= doacoes.length === 0 ? 'disabled' : '' %>>
-          Enviar Solicitação
+      <div class="solicitacao-form__actions">
+        <a href="/doacoes" class="feedback-modal__btn feedback-modal__btn--secondary">Cancelar</a>
+        <button
+          type="submit"
+          class="feedback-modal__btn feedback-modal__btn--primary"
+          id="btnEnviarSolicitacao"
+          <%= doacoes.length === 0 ? 'disabled' : '' %>
+        >
+          Enviar solicitação
         </button>
       </div>
     </form>
-  </div>
+  </article>
 </div>
 
-<%- include('../partials/footer') %>
+<script>
+  (function () {
+    var form = document.getElementById('novaSolicitacaoForm');
+    if (!form) return;
+    form.addEventListener('submit', function () {
+      var btn = document.getElementById('btnEnviarSolicitacao');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+      }
+    });
+  })();
+</script>
+
+<%- include('../partials/app-shell-end') %>

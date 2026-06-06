@@ -1,0 +1,44 @@
+<main class="error-page error-page--<%= err.variant %>" role="alert">
+
+  <p class="error-page__code-bg" aria-hidden="true"><%= err.code %></p>
+
+
+
+  <article class="error-page__card error-page__card--<%= err.variant %>">
+
+    <div class="error-page__icon-wrap" aria-hidden="true">
+
+      <span class="material-symbols-rounded error-page__icon error-page__icon--symbol"><%= err.icon %></span>
+
+    </div>
+
+
+
+    <div class="error-page__copy">
+
+      <h1 class="error-page__title"><%= err.title %></h1>
+
+      <p class="error-page__subtitle"><%= err.subtitle %></p>
+
+    </div>
+
+
+
+    <% if (err.retryAction === 'reload') { %>
+
+      <button type="button" class="error-page__btn" onclick="window.location.reload()"><%= err.retryLabel %></button>
+
+    <% } else if (err.retryAction === 'back') { %>
+
+      <button type="button" class="error-page__btn" onclick="window.history.back()"><%= err.retryLabel %></button>
+
+    <% } else { %>
+
+      <a href="<%= err.retryHref %>" class="error-page__btn"><%= err.retryLabel %></a>
+
+    <% } %>
+
+  </article>
+
+</main>
+

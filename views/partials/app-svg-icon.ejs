@@ -1,0 +1,12 @@
+<%#
+  Ícone SVG exportado do Figma.
+  Uso: include('partials/app-svg-icon', { src: '/images/app/icon-home.svg', size: 'nav', className: '' })
+  size: nav | metric | arrow | panel | header | action | empty | chevron | settings
+%>
+<%
+  const srcPath = typeof src !== 'undefined' ? src : '';
+  const sizeKey = typeof size !== 'undefined' ? size : '';
+  const sizeClass = sizeKey ? ' app-svg-icon--' + sizeKey : '';
+  const extraClass = typeof className !== 'undefined' ? ' ' + className : '';
+%>
+<img src="<%= srcPath %>" alt="" class="app-svg-icon<%= sizeClass %><%= extraClass %>" aria-hidden="true">

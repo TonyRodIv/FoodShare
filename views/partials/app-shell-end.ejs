@@ -1,0 +1,24 @@
+      </main>
+    </div>
+  </div>
+  <%- include('app-bottom-nav', { activeNav: typeof activeNav !== 'undefined' ? activeNav : '' }) %>
+
+  <% if (locals.usuario) { %>
+    <% const inicial = locals.usuario.nome.charAt(0).toUpperCase(); %>
+    <%- include('app-notifications-dropdown') %>
+    <%- include('app-profile-dropdown', { nomeUsuario: locals.usuario.nome, inicial }) %>
+    <script src="/js/app-motion.js"></script>
+    <script src="/js/app-header.js"></script>
+  <% } %>
+
+  <% if (locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin')) { %>
+    <%- include('doacao-modal', {
+      openDoacaoModal: typeof openDoacaoModal !== 'undefined' ? openDoacaoModal : false,
+      doacaoErrors: typeof doacaoErrors !== 'undefined' ? doacaoErrors : [],
+      doacaoOld: typeof doacaoOld !== 'undefined' ? doacaoOld : {}
+    }) %>
+    <script src="/js/feedback-modal.js"></script>
+    <script src="/js/doacao-modal.js"></script>
+  <% } %>
+</body>
+</html>

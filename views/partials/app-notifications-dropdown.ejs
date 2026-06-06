@@ -1,0 +1,39 @@
+<%#
+  Dropdown de notificações — usa res.locals.notificacoesRecentes
+%>
+<div class="app-dropdown app-dropdown--notifications" id="notifications-dropdown" hidden>
+  <div class="app-dropdown__panel" role="dialog" aria-label="Notificações">
+    <header class="app-dropdown__header">
+      <h2 class="app-dropdown__title">Notificações</h2>
+      <% if (typeof notificacoesCount !== 'undefined' && notificacoesCount > 0) { %>
+        <span class="app-dropdown__badge"><%= notificacoesCount %> novas</span>
+      <% } %>
+    </header>
+
+    <% const lista = typeof notificacoesRecentes !== 'undefined' ? notificacoesRecentes : []; %>
+    <% if (lista.length === 0) { %>
+      <div class="app-dropdown__empty">
+        <p class="app-dropdown__empty-title">Nenhuma notificação</p>
+        <p class="app-dropdown__empty-desc">Solicitações recentes aparecerão aqui.</p>
+      </div>
+    <% } else { %>
+      <ul class="app-dropdown__list">
+        <% lista.forEach(function(n) { %>
+          <li>
+            <a href="<%= n.href %>" class="app-dropdown__item<%= n.unread ? ' app-dropdown__item--unread' : '' %>">
+              <span class="app-dropdown__item-dot" aria-hidden="true"></span>
+              <span class="app-dropdown__item-body">
+                <span class="app-dropdown__item-title"><%= n.title %></span>
+                <span class="app-dropdown__item-meta"><%= n.meta %> · <%= timeAgo(n.createdAt) %></span>
+              </span>
+            </a>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <footer class="app-dropdown__footer">
+      <a href="/notificacoes" class="app-dropdown__footer-link">Ver todas as notificações</a>
+    </footer>
+  </div>
+</div>

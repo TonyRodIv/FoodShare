@@ -1,0 +1,25 @@
+<%#
+  Uso: include('partials/home-empty-state', {
+    variant: 'green' | 'amber' | 'blue',
+    icon: 'inventory_2',
+    title: '...',
+    description: '...',
+    actionLabel: '...',
+    actionHref: '...',
+    actionModal: true
+  })
+%>
+<div class="home-empty-state">
+  <div class="home-empty-state__icon home-empty-state__icon--<%= variant %>">
+    <%- include('app-icon', { icon: icon, size: 'empty' }) %>
+  </div>
+  <p class="home-empty-state__title"><%= title %></p>
+  <p class="home-empty-state__desc"><%= description %></p>
+  <% if (typeof actionLabel !== 'undefined') { %>
+    <% if (typeof actionModal !== 'undefined' && actionModal) { %>
+      <button type="button" class="home-empty-state__btn" data-doacao-modal-open><%= actionLabel %></button>
+    <% } else if (typeof actionHref !== 'undefined') { %>
+      <a href="<%= actionHref %>" class="home-empty-state__btn"><%= actionLabel %></a>
+    <% } %>
+  <% } %>
+</div>

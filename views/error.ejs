@@ -1,10 +1,13 @@
-<%- include('partials/header') %>
-<div class="error-page">
-  <div class="error-card">
-    <span class="error-icon"><%= error && error.status === 403 ? '🚫' : '⚠️' %></span>
-    <h1><%= error && error.status ? error.status : '500' %></h1>
-    <p><%= message || 'Ocorreu um erro inesperado.' %></p>
-    <a href="/" class="btn-primary">Voltar ao início</a>
-  </div>
-</div>
-<%- include('partials/footer') %>
+<%
+  const err = resolveErrorPage({
+    statusCode: typeof statusCode !== 'undefined' ? statusCode : (error && error.status),
+    message: typeof message !== 'undefined' ? message : undefined,
+    subtitle: typeof subtitle !== 'undefined' ? subtitle : undefined,
+    context: typeof context !== 'undefined' ? context : undefined,
+    title: typeof title !== 'undefined' ? title : undefined,
+    usuario: locals.usuario,
+  });
+%>
+<%- include('partials/error-shell-start', { title: err.pageTitle }) %>
+<%- include('partials/error-page-main', { err }) %>
+<%- include('partials/error-shell-end') %>

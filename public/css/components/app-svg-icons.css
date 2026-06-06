@@ -1,0 +1,43 @@
+/* Ícones SVG do Figma — tamanhos fixos (nunca width: 100% no img) */
+
+.app-svg-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.app-svg-icon--nav {
+  width: 20px;
+  height: 20px;
+}
+
+.app-svg-icon--metric {
+  width: var(--app-icon-metric-glyph);
+  height: var(--app-icon-metric-glyph);
+}
+
+.app-svg-icon--arrow {
+  width: 14px;
+  height: 10px;
+}
+
+.app-svg-icon--panel,
+.app-svg-icon--chevron,
+.app-svg-icon--settings {
+  width: 18px;
+  height: 18px;
+}
+
+.app-svg-icon--header {
+  width: var(--app-icon-header-glyph);
+  height: var(--app-icon-header-glyph);
+}
+
+.app-svg-icon--empty {
+  width: var(--app-icon-empty-glyph);
+  height: var(--app-icon-empty-glyph);
+}
+
+.app-svg-icon--action {
+  width: var(--app-icon-action-glyph);
+  height: var(--app-icon-action-glyph);
+}

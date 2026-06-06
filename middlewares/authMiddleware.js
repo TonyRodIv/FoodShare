@@ -77,7 +77,7 @@ function authorize(allowedRoles) {
     }
     if (!allowedRoles.includes(req.usuario.role)) {
       return res.status(403).render('error', {
-        message: 'Acesso negado. Você não tem permissão para acessar este recurso.',
+        statusCode: 403,
         error: { status: 403 },
       });
     }

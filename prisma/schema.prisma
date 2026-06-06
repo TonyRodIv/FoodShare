@@ -31,17 +31,24 @@ model RefreshToken {
 
 model Doacao {
   id           String        @id @default(uuid())
-  nome         String
-  quantidade   Int
-  categoria    String
-  validade     DateTime
   status       String        @default("disponivel") // disponivel, reservado, entregue
   observacoes  String?
   usuarioId    String
   usuario      Usuario       @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  itens        ItemDoacao[]
   solicitacoes Solicitacao[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+}
+
+model ItemDoacao {
+  id         String   @id @default(uuid())
+  nome       String
+  quantidade Int
+  categoria  String
+  validade   DateTime
+  doacaoId   String
+  doacao     Doacao   @relation(fields: [doacaoId], references: [id], onDelete: Cascade)
 }
 
 model Solicitacao {
@@ -56,4 +63,3 @@ model Solicitacao {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-

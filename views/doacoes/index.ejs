@@ -1,85 +1,146 @@
-<%- include('../partials/header') %>
+<%- include('../partials/app-shell-start') %>
 
-<div class="max-w-5xl mx-auto px-4 py-8">
-  <div class="flex items-center justify-between mb-8">
-    <div>
-      <h1 class="text-2xl font-bold text-neutral-900 dark:text-white mb-1">Doações Disponíveis</h1>
-      <p class="text-neutral-500 text-sm">Navegue pelas doações e solicite o que precisar.</p>
-    </div>
-    <% if (locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin')) { %>
-      <a href="/doacoes/nova" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-xl shadow-lg shadow-green-500/20 transition-all">
-        + Nova Doação
-      </a>
-    <% } %>
-  </div>
+<div class="app-page">
+  <% if (isDoador) { %>
+    <%- include('../partials/app-page-header') %>
 
-  <% if (doacoes.length === 0) { %>
-    <div class="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-12 text-center">
-      <div class="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-        📦
-      </div>
-      <h3 class="text-lg font-medium text-neutral-900 dark:text-white mb-2">Nenhuma doação no momento</h3>
-      <p class="text-neutral-500 text-sm">Volte mais tarde ou seja o primeiro a doar!</p>
-    </div>
-  <% } else { %>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <% doacoes.forEach(doacao => { %>
-        <div class="bg-white dark:bg-[#111111] rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm flex flex-col h-full">
-          
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400 mb-2 border border-green-200 dark:border-green-500/20">
-                <%= doacao.status === 'disponivel' ? 'Disponível' : doacao.status %>
+    <article class="app-page-panel">
+      <% if (itens.length === 0) { %>
+        <%- include('../partials/home-empty-state', {
+          variant: 'green',
+          icon: 'package_2',
+          title: 'Nenhuma doação publicada',
+          description: 'Cadastre alimentos disponíveis para compartilhar com quem precisa.',
+          actionLabel: 'Publicar primeira doação',
+          actionModal: true
+        }) %>
+      <% } else { %>
+        <div class="home-table home-table--actions">
+          <div class="home-table__head">
+            <span>item</span>
+            <span>quantidade</span>
+            <span>validade</span>
+            <span>status</span>
+            <span>ações</span>
+          </div>
+          <% var seenDoacoes = {}; %>
+          <% itens.forEach(function(item) { %>
+            <div class="home-table__row">
+              <span class="home-table__item"><%= item.nome %></span>
+              <span class="home-table__qty"><%= item.quantidade %> un</span>
+              <span class="home-table__date"><%= formatValidade(item.validade) %></span>
+              <span class="home-pill home-pill--<%= item.displayStatus %>"><%= item.displayStatus %></span>
+              <span class="home-table__action">
+                <% if (!seenDoacoes[item.doacaoId]) {
+                  seenDoacoes[item.doacaoId] = true;
+                %>
+                  <a href="/doacoes/<%= item.doacaoId %>/editar" class="home-table__edit">Editar</a>
+                <% } %>
               </span>
-              <h3 class="text-neutral-500 text-xs flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Doador: <strong class="text-neutral-700 dark:text-neutral-300"><%= doacao.usuario.nome %></strong>
-              </h3>
             </div>
-            <span class="text-neutral-400 text-xs" title="<%= new Date(doacao.createdAt).toLocaleString() %>">
-              <%= new Date(doacao.createdAt).toLocaleDateString() %>
-            </span>
-          </div>
-
-          <div class="bg-neutral-50 dark:bg-neutral-800/50 rounded-xl p-4 border border-neutral-100 dark:border-neutral-800 mb-4 flex-grow">
-            <h4 class="text-sm font-medium text-neutral-900 dark:text-white mb-3 flex items-center justify-between">
-              Itens Inclusos
-              <span class="text-xs font-normal text-neutral-500 bg-neutral-200 dark:bg-neutral-700 px-2 py-0.5 rounded-full"><%= doacao.itens.length %> itens</span>
-            </h4>
-            <ul class="space-y-2">
-              <% doacao.itens.forEach(item => { %>
-                <li class="flex items-center justify-between text-sm">
-                  <span class="text-neutral-700 dark:text-neutral-300 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                    <%= item.nome %>
-                  </span>
-                  <div class="text-right">
-                    <span class="font-medium text-neutral-900 dark:text-white"><%= item.quantidade %> un</span>
-                    <span class="text-xs text-neutral-400 block">Val: <%= new Date(item.validade).toLocaleDateString() %></span>
-                  </div>
-                </li>
-              <% }) %>
-            </ul>
-            
-            <% if (doacao.observacoes) { %>
-              <div class="mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-700">
-                <p class="text-xs text-neutral-500"><em>"<%= doacao.observacoes %>"</em></p>
-              </div>
-            <% } %>
-          </div>
-
-          <% if (locals.usuario && locals.usuario.role === 'receptor') { %>
-            <div class="mt-auto pt-2">
-              <a href="/solicitacoes/nova?doacaoId=<%= doacao.id %>" class="w-full inline-flex justify-center items-center px-4 py-2 bg-white dark:bg-[#1a1a1a] border border-neutral-200 dark:border-neutral-700 hover:border-green-500 dark:hover:border-green-500 text-sm font-medium text-neutral-900 dark:text-white rounded-xl transition-colors">
-                Solicitar Este Pacote
-              </a>
-            </div>
-          <% } %>
-
+          <% }); %>
         </div>
-      <% }) %>
+      <% } %>
+    </article>
+
+  <% } else { %>
+    <div class="receptor-dashboard">
+      <div class="receptor-dashboard__main">
+        <div class="receptor-toolbar">
+          <label class="receptor-search">
+            <span class="receptor-search__icon" aria-hidden="true">
+              <%- include('../partials/app-icon', { icon: 'search', size: 'chevron' }) %>
+            </span>
+            <input
+              type="search"
+              class="receptor-search__input"
+              placeholder="Buscar alimentos disponíveis..."
+              autocomplete="off"
+              data-receptor-search
+            >
+          </label>
+
+          <div class="receptor-filters" role="group" aria-label="Filtrar por categoria">
+            <% RECEPTOR_CATEGORY_FILTERS.forEach(function(cat, index) { %>
+              <button
+                type="button"
+                class="receptor-filter-chip<%= index === 0 ? ' is-active' : '' %>"
+                data-receptor-filter="<%= cat.key %>"
+              ><%= cat.label %></button>
+            <% }); %>
+          </div>
+        </div>
+
+        <p class="receptor-grid-label" data-receptor-count>
+          <%= doacoes.length %> <%= doacoes.length === 1 ? 'doação disponível' : 'doações disponíveis' %>
+        </p>
+
+        <% if (doacoes.length === 0) { %>
+          <article class="app-page-panel receptor-empty-panel">
+            <%- include('../partials/home-empty-state', {
+              variant: 'blue',
+              icon: 'local_mall',
+              title: 'Nenhuma doação no momento',
+              description: 'Volte mais tarde ou avise a comunidade sobre o FoodShare.',
+              actionLabel: 'Voltar ao início',
+              actionHref: '/'
+            }) %>
+          </article>
+        <% } else { %>
+          <div class="receptor-food-grid" data-receptor-grid>
+            <% doacoes.forEach(function(item) { %>
+              <%- include('../partials/receptor-donation-card', { item: item }) %>
+            <% }); %>
+          </div>
+
+          <p class="receptor-grid-empty" data-receptor-empty hidden>
+            Nenhum alimento encontrado para esta busca.
+          </p>
+        <% } %>
+      </div>
+
+      <aside class="receptor-dashboard__aside" aria-label="Resumo das solicitações">
+        <%- include('../partials/receptor-hero-card', {
+          totalSolicitadas: totalSolicitadas,
+          totalRecebidas: totalRecebidas,
+          totalPendentes: totalPendentes,
+          mesAtual: mesAtual
+        }) %>
+
+        <article class="home-panel home-panel--requests receptor-requests-panel">
+          <header class="home-panel__header">
+            <h2 class="home-panel__title">Minhas solicitações</h2>
+          </header>
+
+          <% if (minhasSolicitacoes.length === 0) { %>
+            <%- include('../partials/home-empty-state', {
+              variant: 'amber',
+              icon: 'hourglass_top',
+              title: 'Nenhuma solicitação ainda',
+              description: 'Quando você solicitar um item, ele aparecerá aqui com o status do pedido.'
+            }) %>
+          <% } else { %>
+            <ul class="home-requests">
+              <% minhasSolicitacoes.forEach(function(sol) {
+                const pillKey = solicitationPillKey(sol.status);
+                const pillLabel = solicitationPillLabel(sol.status);
+              %>
+                <li class="home-request home-request--readonly">
+                  <div class="home-request__info">
+                    <p class="home-request__title"><%= sol.itemLabel %></p>
+                    <p class="home-request__meta"><%= sol.doadorNome %> · <%= timeAgo(sol.createdAt) %></p>
+                  </div>
+                  <span class="home-pill home-pill--<%= pillKey %>"><%= pillLabel %></span>
+                </li>
+              <% }); %>
+            </ul>
+          <% } %>
+        </article>
+      </aside>
     </div>
+
+    <script src="/js/receptor-doacoes.js"></script>
   <% } %>
 </div>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/app-shell-end') %>

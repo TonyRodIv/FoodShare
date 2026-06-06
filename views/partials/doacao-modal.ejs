@@ -1,0 +1,101 @@
+<%#
+  Modal de nova doação — estilo feedback-modal + auth-field inputs.
+  Incluído via app-shell-end para doadores.
+%>
+<div
+  class="feedback-modal-overlay<%= typeof openDoacaoModal !== 'undefined' && openDoacaoModal ? ' is-open' : '' %>"
+  id="doacao-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="doacao-modal-title"
+  aria-hidden="<%= typeof openDoacaoModal !== 'undefined' && openDoacaoModal ? 'false' : 'true' %>"
+  data-doacao-modal
+>
+  <div class="feedback-modal feedback-modal--form">
+    <div class="doacao-modal__header">
+      <div class="feedback-modal__content feedback-modal__content--form">
+        <h3 id="doacao-modal-title" class="feedback-modal__title">Nova doação</h3>
+        <p class="feedback-modal__description">Adicione os itens que deseja doar. Você pode incluir vários no mesmo pacote.</p>
+      </div>
+    </div>
+
+    <form method="POST" action="/doacoes/nova" class="doacao-modal__form" id="doacaoForm" novalidate>
+      <div class="doacao-modal__scroll-wrap" data-doacao-modal-scroll>
+        <div class="doacao-modal__fade doacao-modal__fade--top" aria-hidden="true"></div>
+        <div class="doacao-modal__body">
+        <div class="auth-field">
+          <label for="doacao-observacoes" class="auth-field__label">Observações (opcional)</label>
+          <textarea
+            id="doacao-observacoes"
+            name="observacoes"
+            rows="2"
+            maxlength="500"
+            placeholder="Ex: Todos os itens estão com embalagem fechada..."
+            class="auth-field__input auth-field__input--textarea<%= (typeof doacaoErrors !== 'undefined' ? doacaoErrors : []).some(function(e){ return e.field === 'observacoes'; }) ? ' auth-field__input--error' : '' %>"
+          ><%= typeof doacaoOld !== 'undefined' && doacaoOld.observacoes ? doacaoOld.observacoes : '' %></textarea>
+        </div>
+
+        <div class="doacao-modal__items-head">
+          <span class="doacao-modal__items-label">Itens da doação</span>
+          <button type="button" class="doacao-modal__add-btn" id="btnAdicionarItem">
+            + Adicionar item
+          </button>
+        </div>
+
+        <% const modalErrors = typeof doacaoErrors !== 'undefined' ? doacaoErrors : []; %>
+        <% if (modalErrors.some(function(e) { return e.field === 'itens'; })) { %>
+          <%- include('auth-field-hint', { errors: modalErrors, field: 'itens' }) %>
+        <% } %>
+
+        <div id="itensContainer" class="doacao-modal__items"></div>
+        </div>
+        <div class="doacao-modal__fade doacao-modal__fade--bottom" aria-hidden="true"></div>
+      </div>
+
+      <div class="feedback-modal__actions feedback-modal__actions--form">
+        <button type="button" class="feedback-modal__btn feedback-modal__btn--secondary" data-doacao-modal-close>
+          Cancelar
+        </button>
+        <button type="submit" class="feedback-modal__btn feedback-modal__btn--primary">
+          Publicar doação
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<template id="doacaoItemTemplate">
+  <div class="doacao-modal__item">
+    <button type="button" class="doacao-modal__item-remove btnRemoverItem" title="Remover item" aria-label="Remover item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="doacao-modal__item-fields">
+      <div class="auth-field">
+        <label class="auth-field__label">Nome do alimento</label>
+        <input type="text" data-name="nome" required maxlength="120" placeholder="Ex: Arroz integral 5kg" class="auth-field__input">
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Categoria</label>
+        <select data-name="categoria" required class="auth-field__input auth-field__select">
+          <option value="">Selecione...</option>
+          <option value="grãos">Grãos e cereais</option>
+          <option value="laticínios">Laticínios</option>
+          <option value="frutas">Frutas e vegetais</option>
+          <option value="carnes">Carnes e proteínas</option>
+          <option value="industrializados">Industrializados</option>
+          <option value="outros">Outros</option>
+        </select>
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Quantidade</label>
+        <input type="number" data-name="quantidade" min="1" max="9999" required placeholder="Ex: 5" class="auth-field__input">
+      </div>
+      <div class="auth-field">
+        <label class="auth-field__label">Validade</label>
+        <input type="date" data-name="validade" required class="auth-field__input">
+      </div>
+    </div>
+  </div>
+</template>
+
+<script type="application/json" id="doacao-modal-old"><%- JSON.stringify(typeof doacaoOld !== 'undefined' ? doacaoOld : {}) %></script>

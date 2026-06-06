@@ -1,5 +1,0 @@
-﻿Branch: feature/auth-system
-
-Commits:
-1. feat(auth): rotas e dual-mode no Swagger
-2. fix(auth): resolucao de conflitos do merge e validacoes

@@ -1,0 +1,12 @@
+<%#
+  Ícone Material Symbols Rounded (outline).
+  Uso: include('partials/app-icon', { icon: 'home', size: 'nav', className: '' })
+  size: nav | header | metric | empty | panel | action | chevron | arrow | settings
+%>
+<%
+  const iconName = typeof icon !== 'undefined' ? icon : '';
+  const sizeKey = typeof size !== 'undefined' ? size : '';
+  const sizeClass = sizeKey ? ' app-icon--' + sizeKey : '';
+  const extraClass = typeof className !== 'undefined' ? ' ' + className : '';
+%>
+<span class="app-icon material-symbols-rounded<%= sizeClass %><%= extraClass %>" aria-hidden="true"><%= iconName %></span>

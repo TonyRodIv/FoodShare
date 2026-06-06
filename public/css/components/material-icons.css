@@ -1,0 +1,64 @@
+/* Material Symbols Rounded — referência Google Fonts */
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+.app-icon {
+  width: 1em;
+  height: 1em;
+  font-size: 20px;
+}
+
+.app-icon--nav {
+  font-size: 22px;
+}
+
+.app-icon--header {
+  font-size: 22px;
+}
+
+.app-icon--metric {
+  font-size: var(--app-icon-metric-glyph);
+}
+
+.app-icon--empty {
+  font-size: var(--app-icon-empty-glyph);
+}
+
+.app-icon--panel {
+  font-size: var(--app-icon-panel-action-glyph);
+}
+
+.app-icon--action {
+  font-size: var(--app-icon-action-glyph);
+}
+
+.app-icon--chevron {
+  font-size: 18px;
+}
+
+.app-icon--arrow {
+  font-size: 18px;
+}
+
+.app-icon--settings {
+  font-size: 18px;
+}

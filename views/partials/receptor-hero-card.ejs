@@ -1,0 +1,23 @@
+<article class="home-hero-card home-hero-card--receptor">
+  <div class="home-hero-card__text">
+    <p class="home-hero-card__title">Suas solicitações deste mês 📦</p>
+    <p class="home-hero-card__subtitle home-hero-card__subtitle--receptor">
+      Você recebeu <%= totalRecebidas %> <%= totalRecebidas === 1 ? 'doação' : 'doações' %> em <%= mesAtual %>
+    </p>
+  </div>
+
+  <div class="receptor-hero-stats">
+    <div class="receptor-hero-stat">
+      <p class="receptor-hero-stat__value"><%= totalSolicitadas %></p>
+      <p class="receptor-hero-stat__label">Solicitadas</p>
+    </div>
+    <div class="receptor-hero-stat">
+      <p class="receptor-hero-stat__value"><%= totalRecebidas %></p>
+      <p class="receptor-hero-stat__label">Recebidas</p>
+    </div>
+    <div class="receptor-hero-stat">
+      <p class="receptor-hero-stat__value"><%= totalPendentes %></p>
+      <p class="receptor-hero-stat__label">Pendentes</p>
+    </div>
+  </div>
+</article>

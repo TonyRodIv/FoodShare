@@ -1,0 +1,33 @@
+<%- include('../partials/app-shell-start') %>
+
+<div class="app-page">
+  <article class="app-page-panel">
+    <% if (notificacoes.length === 0) { %>
+      <%- include('../partials/home-empty-state', {
+        variant: 'amber',
+        icon: 'notifications_off',
+        title: 'Nenhuma notificação',
+        description: 'Quando houver movimentação nas suas solicitações, você verá aqui.',
+        actionLabel: isDoador ? 'Ver solicitações' : 'Explorar doações',
+        actionHref: isDoador ? '/solicitacoes/recebidas' : '/doacoes'
+      }) %>
+    <% } else { %>
+      <ul class="app-notifications-list">
+        <% notificacoes.forEach(function(n) { %>
+          <li>
+            <a href="<%= n.href %>" class="app-notifications-list__item<%= n.unread ? ' app-notifications-list__item--unread' : '' %>">
+              <span class="app-notifications-list__dot" aria-hidden="true"></span>
+              <span class="app-notifications-list__body">
+                <span class="app-notifications-list__title"><%= n.title %></span>
+                <span class="app-notifications-list__meta"><%= n.meta %> · <%= timeAgo(n.createdAt) %></span>
+              </span>
+              <%- include('../partials/app-icon', { icon: 'chevron_right', size: 'chevron', className: 'app-notifications-list__chevron' }) %>
+            </a>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </article>
+</div>
+
+<%- include('../partials/app-shell-end') %>

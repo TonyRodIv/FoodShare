@@ -1,0 +1,14 @@
+<%#
+  Toolbar mobile — no desktop o CTA fica no app-header.
+  Locals: headerActionLabel, headerActionHref?, headerActionModal?
+%>
+<% if (typeof headerActionLabel !== 'undefined' && headerActionLabel) { %>
+<header class="app-page-toolbar app-page-toolbar--mobile">
+  <%- include('app-header-action', {
+    actionLabel: headerActionLabel,
+    actionHref: typeof headerActionHref !== 'undefined' ? headerActionHref : undefined,
+    actionModal: typeof headerActionModal !== 'undefined' ? headerActionModal : false,
+    buttonClass: 'app-page-header__btn',
+  }) %>
+</header>
+<% } %>

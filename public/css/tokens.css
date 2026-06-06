@@ -1,9 +1,115 @@
 :root {
   /* Marca — alinhado com .rules/design.mdc */
+  --green-dark: #0a1a12;
   --green-mid: #1d9e75;
+  --green-light: #5dcaa5;
+  --green-pale: #e1f5ee;
   --surface-green: #f0f5f3;
+  --amber-pale: #faeeda;
+  --amber-text: #633806;
+  --red-pale: #fcebeb;
+  --red-text: #791f1f;
+  --green-text: #085041;
+  --blue-pale: #e6f1fb;
+  --bg: #f5f5f0;
+  --app-bg: #f0f5f3;
+  --card: #ffffff;
+  --surface: #f0f0ea;
+  /* Divisórias — Figma Line (66:3048): hairline 0.5px, traço translúcido */
+  --border-hairline: 0.5px;
+  --border-color: color-mix(in srgb, var(--text) 7%, transparent);
+  --border: var(--border-color);
+  --divider: var(--border-hairline) solid var(--border-color);
   --text: #1a1a1a;
+  --text-muted: rgba(26, 26, 26, 0.7);
   --muted: #888780;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-modal: 28px;
+  --radius-full: 9999px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --sidebar-width: 60px;
+  --bottom-nav-height: 72px;
+
+  /* App — tipografia (escala web, design.mdc) */
+  --app-fs-xs: 11px;
+  --app-fs-sm: 12px;
+  --app-fs-base: 13px;
+  --app-fs-md: 14px;
+  --app-fs-lg: 15px;
+  --app-fs-xl: 16px;
+  --app-fs-2xl: 18px;
+  --app-fs-3xl: 22px;
+  --app-fs-4xl: 24px;
+  --app-fs-5xl: 26px;
+  --app-fs-greeting: 22px;
+  --app-fs-hero-title: 22px;
+  --app-fs-hero-title-empty: 24px;
+  --app-fs-hero-subtitle: 14px;
+  --app-fs-metric-value: 26px;
+
+  /* App — espaçamento e dimensões proporcionais */
+  --app-gap-dashboard: 20px;
+  --app-gap-metrics: 12px;
+  --app-gap-panel: 20px;
+  --app-card-padding: 16px;
+  --app-metrics-padding: 16px;
+  --app-panel-padding: 16px;
+  --app-card-metrics-h: 160px;
+  --app-panel-min-h: 300px;
+  --app-fs-metric-label: 14px;
+  --app-fs-metric-hint: 14px;
+  --app-panel-fs-title: 16px;
+  --app-empty-title-fs: 16px;
+  --app-empty-desc-fs: 14px;
+  --app-empty-btn-fs: 13px;
+  --app-btn-py: 10px;
+  --app-btn-px: 18px;
+  --app-space-xs: 6px;
+  --app-space-sm: 10px;
+  --app-icon-header: 40px;
+  --app-icon-header-glyph: 20px;
+  --app-avatar: 40px;
+  --app-fs-avatar: 14px;
+  --app-icon-metric: 45px;
+  --app-icon-metric-glyph: 25px;
+  --app-icon-empty: 64px;
+  --app-icon-empty-glyph: 28px;
+  --app-icon-panel-action: 34px;
+  --app-icon-panel-action-glyph: 18px;
+  --app-icon-action: 44px;
+  --app-icon-action-glyph: 20px;
+  --app-pill-min-w: 80px;
+  --app-empty-min-h: 200px;
+
+  /* Error page — Figma 105:373 / 105:785 */
+  --error-bg: var(--auth-bg);
+  --error-card-bg: rgba(18, 18, 18, 0.8);
+  --error-card-max-w: 352px;
+  --error-card-radius: var(--radius-modal);
+  --error-card-gap: var(--app-gap-metrics);
+  --error-card-px: 20px;
+  --error-card-py: 16px;
+  --error-code-color: rgba(255, 255, 255, 0.2);
+  --error-code-fs: clamp(260px, 52vw, 860px);
+  --error-code-fs-mobile: clamp(360px, 130vw, 680px);
+  --error-page-gutter: 15px;
+  --error-icon-size: 45px;
+  --error-icon-glyph: 26px;
+  --error-title-fs: var(--app-fs-xl);
+  --error-subtitle-fs: var(--app-fs-md);
+  --error-subtitle-color: #8c8c8c;
+  --error-subtitle-max-w: 254px;
+  --error-btn-bg: var(--surface-green);
+  --error-btn-color: var(--text-muted);
+  --error-btn-fs: var(--app-fs-base);
+  --error-btn-radius: var(--radius-md);
+  --error-btn-min-h: 33px;
+  --error-btn-py: var(--app-btn-py);
+  --error-btn-px: var(--app-btn-px);
+  --error-copy-gap: 5px;
 
   /* Auth (aliases usados nos módulos auth + modal) */
   --auth-bg: #121212;
@@ -33,4 +139,130 @@
   --duration-normal: 180ms;
   --duration-slow: 280ms;
   --press-scale: 0.98;
+}
+
+/* App — escala só da faixa superior (métricas) em telas grandes */
+@media (min-width: 1024px) {
+  :root {
+    --app-fs-hero-title: 22px;
+    --app-fs-hero-title-empty: 24px;
+    --app-fs-hero-subtitle: 14px;
+    --app-fs-metric-value: 24px;
+    --app-fs-metric-label: 14px;
+    --app-fs-metric-hint: 14px;
+    --app-card-metrics-h: 200px;
+    --app-metrics-padding: 16px;
+    --app-icon-metric: 48px;
+    --app-icon-metric-glyph: 26px;
+    --error-card-max-w: 380px;
+    --error-card-px: 24px;
+    --error-card-py: 20px;
+    --error-card-gap: 14px;
+    --error-icon-size: 52px;
+    --error-icon-glyph: 30px;
+    --error-title-fs: var(--app-fs-2xl);
+    --error-subtitle-fs: var(--app-fs-base);
+    --error-subtitle-max-w: 300px;
+    --error-btn-min-h: 44px;
+    --error-btn-fs: var(--app-fs-base);
+    --error-btn-py: 12px;
+    --error-btn-px: 20px;
+    --error-btn-radius: var(--radius-md);
+    --error-copy-gap: 6px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --app-fs-hero-title: 24px;
+    --app-fs-hero-title-empty: 26px;
+    --app-fs-hero-subtitle: 15px;
+    --app-fs-metric-value: 28px;
+    --app-fs-metric-label: 15px;
+    --app-fs-metric-hint: 15px;
+    --app-card-metrics-h: 224px;
+    --app-metrics-padding: 20px;
+    --app-icon-metric: 54px;
+    --app-icon-metric-glyph: 28px;
+    --error-card-max-w: 400px;
+    --error-card-px: 26px;
+    --error-card-py: 22px;
+    --error-card-gap: 16px;
+    --error-icon-size: 56px;
+    --error-icon-glyph: 32px;
+    --error-title-fs: var(--app-fs-3xl);
+    --error-subtitle-fs: var(--app-fs-md);
+    --error-subtitle-max-w: 320px;
+    --error-btn-min-h: 46px;
+    --error-btn-fs: var(--app-fs-md);
+    --error-copy-gap: 8px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --app-fs-greeting: 24px;
+    --app-fs-hero-title: 26px;
+    --app-fs-hero-title-empty: 28px;
+    --app-fs-hero-subtitle: 16px;
+    --app-fs-metric-value: 30px;
+    --app-fs-metric-label: 15px;
+    --app-fs-metric-hint: 15px;
+    --app-card-metrics-h: 248px;
+    --app-metrics-padding: 22px;
+    --app-icon-metric: 60px;
+    --app-icon-metric-glyph: 32px;
+    --error-card-max-w: 420px;
+    --error-card-px: 28px;
+    --error-card-py: 24px;
+    --error-card-gap: 18px;
+    --error-icon-size: 60px;
+    --error-icon-glyph: 34px;
+    --error-title-fs: var(--app-fs-3xl);
+    --error-subtitle-fs: var(--app-fs-lg);
+    --error-subtitle-max-w: 340px;
+    --error-btn-min-h: 48px;
+    --error-btn-fs: var(--app-fs-md);
+    --error-copy-gap: 8px;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --app-fs-greeting: 24px;
+    --app-fs-hero-title: 24px;
+    --app-fs-hero-subtitle: 13px;
+    --app-fs-metric-value: 26px;
+    --app-icon-header: 50px;
+    --app-icon-header-glyph: 22px;
+    --app-avatar: 50px;
+    --app-fs-avatar: 18px;
+    --app-card-metrics-h: auto;
+    --app-panel-min-h: auto;
+    --app-empty-min-h: 160px;
+    --app-icon-metric: 45px;
+    --app-icon-metric-glyph: 25px;
+    --app-btn-py: 18px;
+    --app-btn-px: 20px;
+    --app-btn-min-h: 60px;
+    --app-btn-radius: 20px;
+    --app-empty-btn-fs: 16px;
+    --error-icon-size: 50px;
+    --error-icon-glyph: 28px;
+    --error-title-fs: var(--app-fs-2xl);
+    --error-subtitle-fs: var(--app-fs-base);
+    --error-btn-fs: var(--app-empty-btn-fs);
+    --error-btn-min-h: var(--app-btn-min-h);
+    --error-btn-py: var(--app-btn-py);
+    --error-btn-px: var(--app-btn-px);
+    --error-btn-radius: var(--app-btn-radius);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --app-fs-greeting: 22px;
+    --app-fs-metric-value: 24px;
+    --error-code-fs-mobile: clamp(320px, 140vw, 620px);
+  }
 }

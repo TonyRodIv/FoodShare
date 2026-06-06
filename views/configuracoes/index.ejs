@@ -1,0 +1,97 @@
+<%- include('../partials/app-shell-start') %>
+
+<div class="app-page">
+  <div class="app-settings">
+    <section class="app-settings__group">
+      <h2 class="app-settings__group-title">Conta</h2>
+      <article class="app-settings__card">
+        <div class="app-settings__row">
+          <div class="app-settings__row-text">
+            <span class="app-settings__label">Nome</span>
+            <span class="app-settings__value"><%= locals.usuario.nome %></span>
+          </div>
+          <span class="app-settings__tag">Em breve</span>
+        </div>
+        <div class="app-settings__row">
+          <div class="app-settings__row-text">
+            <span class="app-settings__label">E-mail</span>
+            <span class="app-settings__value"><%= locals.usuario.email %></span>
+          </div>
+          <span class="app-settings__tag">Em breve</span>
+        </div>
+        <div class="app-settings__row">
+          <div class="app-settings__row-text">
+            <span class="app-settings__label">Tipo de perfil</span>
+            <span class="app-settings__value"><%= locals.usuario.role === 'doador' ? 'Doador' : locals.usuario.role === 'receptor' ? 'Receptor' : 'Administrador' %></span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="app-settings__group">
+      <h2 class="app-settings__group-title">Notificações</h2>
+      <article class="app-settings__card">
+        <label class="app-settings__toggle">
+          <span class="app-settings__toggle-text">
+            <span class="app-settings__label">Novas solicitações</span>
+            <span class="app-settings__hint">Avisar quando alguém pedir seus itens</span>
+          </span>
+          <input type="checkbox" checked disabled class="app-settings__toggle-input">
+          <span class="app-settings__toggle-track" aria-hidden="true"></span>
+        </label>
+        <label class="app-settings__toggle">
+          <span class="app-settings__toggle-text">
+            <span class="app-settings__label">Respostas de doadores</span>
+            <span class="app-settings__hint">Avisar quando suas solicitações forem respondidas</span>
+          </span>
+          <input type="checkbox" checked disabled class="app-settings__toggle-input">
+          <span class="app-settings__toggle-track" aria-hidden="true"></span>
+        </label>
+        <label class="app-settings__toggle">
+          <span class="app-settings__toggle-text">
+            <span class="app-settings__label">Lembretes de validade</span>
+            <span class="app-settings__hint">Avisar antes dos itens expirarem</span>
+          </span>
+          <input type="checkbox" disabled class="app-settings__toggle-input">
+          <span class="app-settings__toggle-track" aria-hidden="true"></span>
+        </label>
+      </article>
+    </section>
+
+    <section class="app-settings__group">
+      <h2 class="app-settings__group-title">Privacidade</h2>
+      <article class="app-settings__card">
+        <button type="button" class="app-settings__link-row" data-placeholder-link>
+          <span>Visibilidade do perfil</span>
+          <span class="app-settings__tag">Em breve</span>
+        </button>
+        <button type="button" class="app-settings__link-row" data-placeholder-link>
+          <span>Dados compartilhados</span>
+          <span class="app-settings__tag">Em breve</span>
+        </button>
+      </article>
+    </section>
+
+    <section class="app-settings__group">
+      <h2 class="app-settings__group-title">Sobre</h2>
+      <article class="app-settings__card">
+        <div class="app-settings__row app-settings__row--static">
+          <div class="app-settings__row-text">
+            <span class="app-settings__label">Versão do app</span>
+            <span class="app-settings__value">1.0.0 (beta)</span>
+          </div>
+        </div>
+        <button type="button" class="app-settings__link-row" data-placeholder-link>
+          <span>Termos de uso</span>
+          <%- include('../partials/app-icon', { icon: 'chevron_right', size: 'settings', className: 'app-settings__chevron' }) %>
+        </button>
+        <button type="button" class="app-settings__link-row" data-placeholder-link>
+          <span>Política de privacidade</span>
+          <%- include('../partials/app-icon', { icon: 'chevron_right', size: 'settings', className: 'app-settings__chevron' }) %>
+        </button>
+      </article>
+    </section>
+  </div>
+</div>
+
+<%- include('../partials/app-shell-end') %>

@@ -1,0 +1,18 @@
+<%#
+  Botão de ação reutilizável (header desktop + toolbar mobile).
+  Locals: actionLabel, actionHref?, actionModal?, buttonClass
+%>
+<%
+  const btnClass = typeof buttonClass !== 'undefined' ? buttonClass : 'app-page-header__btn';
+%>
+<% if (typeof actionModal !== 'undefined' && actionModal) { %>
+  <button type="button" class="<%= btnClass %>" data-doacao-modal-open>
+    <%= actionLabel %>
+    <%- include('app-svg-icon', { src: '/images/app/icon-arrow-right.svg', size: 'arrow' }) %>
+  </button>
+<% } else if (typeof actionHref !== 'undefined') { %>
+  <a href="<%= actionHref %>" class="<%= btnClass %>">
+    <%= actionLabel %>
+    <%- include('app-svg-icon', { src: '/images/app/icon-arrow-right.svg', size: 'arrow' }) %>
+  </a>
+<% } %>

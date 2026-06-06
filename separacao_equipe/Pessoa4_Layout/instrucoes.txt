@@ -1,5 +1,0 @@
-﻿Branch: feature/ui-layout-base
-
-Commits:
-1. chore(setup): atualizacoes de dependencias (swagger, body-parser)
-2. feat(admin): configura app.js, urlencoded extendido e interface html do Swagger (api-docs)

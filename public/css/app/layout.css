@@ -1,0 +1,252 @@
+/* App logado — layout shell (sidebar + bottom nav) */
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  background: var(--app-bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-top {
+  flex-shrink: 0;
+  z-index: 150;
+  padding: 25px 50px 28px;
+  margin-bottom: -16px;
+  background: linear-gradient(
+    180deg,
+    var(--app-bg) 0%,
+    var(--app-bg) 52%,
+    color-mix(in srgb, var(--app-bg) 75%, transparent) 72%,
+    color-mix(in srgb, var(--app-bg) 35%, transparent) 88%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.app-top > * {
+  pointer-events: auto;
+}
+
+.app-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-gap-dashboard);
+  padding: 12px 50px 25px;
+}
+
+/* ── Sidebar desktop ── */
+.app-sidebar {
+  display: none;
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--auth-bg);
+  padding: 20px 12px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.app-sidebar__top,
+.app-sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.app-sidebar__bottom {
+  gap: 6px;
+}
+
+.app-sidebar__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 36px;
+  background: var(--green-mid);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.app-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.app-sidebar__link,
+.app-sidebar__logout button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--duration-normal) var(--ease-out);
+}
+
+.app-sidebar__link .app-svg-icon,
+.app-sidebar__logout button .app-svg-icon {
+  display: block;
+}
+
+.app-sidebar__link.is-active {
+  background: var(--green-mid);
+}
+
+.app-sidebar__link.is-active .app-svg-icon {
+  filter: brightness(0) invert(1);
+}
+
+.app-sidebar__logout {
+  display: contents;
+}
+
+/* ── Bottom nav mobile (flutuante) ── */
+.app-bottom-nav-wrap {
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 0 24px 20px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(240, 245, 243, 0) 0%, var(--app-bg) 55%);
+}
+
+.app-bottom-nav {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px;
+  background: var(--auth-bg);
+  border-radius: 32px;
+}
+
+.app-bottom-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 26px;
+  text-decoration: none;
+}
+
+.app-bottom-nav__link .app-svg-icon {
+  display: block;
+}
+
+.app-bottom-nav__link.is-active {
+  background: var(--green-mid);
+}
+
+.app-bottom-nav__link.is-active .app-svg-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Breakpoints app ── */
+@media (min-width: 1024px) {
+  .app-sidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .app-main {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+  }
+
+  .app-bottom-nav-wrap {
+    display: none;
+  }
+
+  .app-content {
+    padding: 12px 50px 25px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .app-top {
+    padding: 25px 56px 28px;
+  }
+
+  .app-content {
+    padding: 12px 56px 25px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .app-top {
+    padding: 28px 64px 32px;
+  }
+
+  .app-content {
+    padding: 14px 64px 32px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .app-top {
+    padding: 24px 24px 24px;
+    margin-bottom: -12px;
+  }
+
+  .app-content {
+    padding: 12px 24px calc(var(--bottom-nav-height) + 32px);
+  }
+}
+
+@media (max-width: 767px) {
+  .app-top {
+    padding: 20px 24px 22px;
+    margin-bottom: -10px;
+  }
+
+  .app-content {
+    padding: 10px 24px calc(var(--bottom-nav-height) + 28px);
+  }
+}

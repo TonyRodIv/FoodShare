@@ -1,0 +1,631 @@
+/* Microinterações — app logado (cliques, entradas, modais, dropdowns) */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* ── Entrada da página ── */
+  @keyframes appFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes appFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes appScaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes appSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes appBadgePop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  .app-main--mounted .app-header {
+    animation: appFadeUp var(--duration-slow) var(--ease-out) both;
+  }
+
+  .app-main--mounted .app-page-lead {
+    animation: appFadeUp var(--duration-slow) var(--ease-out) 50ms both;
+  }
+
+  .app-main--mounted .app-content > .home-dashboard,
+  .app-main--mounted .app-content > .app-page {
+    animation: appFadeUp var(--duration-slow) var(--ease-out) 70ms both;
+  }
+
+  .app-main--mounted .home-metrics,
+  .app-main--mounted .home-panels,
+  .app-main--mounted .app-page-panel,
+  .app-main--mounted .app-donation-grid,
+  .app-main--mounted .app-settings,
+  .app-main--mounted .app-page-toolbar {
+    animation: appFadeUp var(--duration-slow) var(--ease-out) 120ms both;
+  }
+
+  .app-main--mounted .home-hero-card {
+    animation: appScaleIn calc(var(--duration-slow) + 40ms) var(--ease-out) 140ms both;
+  }
+
+  .app-main--mounted .home-metric-card {
+    animation: appScaleIn calc(var(--duration-slow) + 40ms) var(--ease-out) both;
+  }
+
+  .app-main--mounted .home-metric-card:nth-child(1) {
+    animation-delay: 180ms;
+  }
+
+  .app-main--mounted .home-metric-card:nth-child(2) {
+    animation-delay: 240ms;
+  }
+
+  .app-main--mounted .home-panel,
+  .app-main--mounted .app-donation-card {
+    animation: appFadeUp var(--duration-slow) var(--ease-out) both;
+  }
+
+  .app-main--mounted .home-panel:nth-child(1),
+  .app-main--mounted .app-donation-card:nth-child(1) {
+    animation-delay: 200ms;
+  }
+
+  .app-main--mounted .home-panel:nth-child(2),
+  .app-main--mounted .app-donation-card:nth-child(2) {
+    animation-delay: 260ms;
+  }
+
+  .app-main--mounted .home-panel:nth-child(3),
+  .app-main--mounted .app-donation-card:nth-child(3) {
+    animation-delay: 320ms;
+  }
+
+  /* ── Press scale (clique) ── */
+  .app-sidebar__link,
+  .app-sidebar__logout button,
+  .app-bottom-nav__link,
+  .home-icon-btn,
+  .app-header__avatar-btn,
+  .home-avatar.app-header__avatar-btn,
+  .home-hero-card__btn,
+  .home-btn-secondary,
+  .home-icon-action,
+  .app-page-header__btn,
+  .app-header__action,
+  .home-empty-state__btn,
+  .home-panel__action,
+  .app-donation-card__action,
+  .doacao-modal__add-btn,
+  .doacao-modal__item-remove,
+  .feedback-modal__btn,
+  .app-profile-menu__link,
+  .app-settings__link-row,
+  .app-dropdown__footer-link,
+  button[type='submit'].home-btn-secondary {
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      background var(--duration-normal) var(--ease-out),
+      opacity var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .app-sidebar__link:active,
+  .app-sidebar__logout button:active,
+  .home-icon-btn:active,
+  .app-header__avatar-btn:active,
+  .home-hero-card__btn:active,
+  .home-btn-secondary:active,
+  .home-icon-action:active,
+  .app-page-header__btn:active,
+  .app-header__action:active,
+  .home-empty-state__btn:active,
+  .doacao-modal__add-btn:active,
+  .doacao-modal__item-remove:active,
+  .feedback-modal__btn:active,
+  .app-profile-menu__link:active,
+  .app-settings__link-row:active {
+    transform: scale(var(--press-scale));
+  }
+
+  /* ── Hover cards ── */
+  .home-hero-card,
+  .home-metric-card,
+  .home-panel,
+  .app-page-panel,
+  .app-donation-card,
+  .app-settings__card {
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .home-metric-card:hover,
+    .home-panel:hover,
+    .app-page-panel:hover,
+    .app-donation-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .home-hero-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(29, 158, 117, 0.18);
+    }
+
+    .home-icon-btn:not(.app-header__notifications-btn):hover,
+    .app-header__avatar-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .app-sidebar__link:not(.is-active):hover,
+    .app-bottom-nav__link:not(.is-active):hover {
+      background: rgba(93, 202, 165, 0.12);
+    }
+
+    /* Sidebar — ícones com movimento leve e personalizado no hover */
+    .app-sidebar__nav .app-sidebar__link:nth-child(1):hover .app-icon,
+    .app-sidebar__nav .app-sidebar__link:nth-child(1):hover .app-svg-icon {
+      animation: sidebarIconHome 560ms var(--ease-spring);
+    }
+
+    .app-sidebar__nav .app-sidebar__link:nth-child(2):hover .app-icon,
+    .app-sidebar__nav .app-sidebar__link:nth-child(2):hover .app-svg-icon {
+      animation: sidebarIconGift 560ms var(--ease-spring);
+    }
+
+    .app-sidebar__nav .app-sidebar__link:nth-child(3):hover .app-icon,
+    .app-sidebar__nav .app-sidebar__link:nth-child(3):hover .app-svg-icon {
+      animation: sidebarIconHand 560ms var(--ease-spring);
+    }
+
+    .app-sidebar__nav .app-sidebar__link:nth-child(4):hover .app-icon,
+    .app-sidebar__nav .app-sidebar__link:nth-child(4):hover .app-svg-icon {
+      animation: sidebarIconHistory 620ms var(--ease-spring);
+    }
+
+    .app-sidebar__bottom > .app-sidebar__link:hover .app-icon,
+    .app-sidebar__bottom > .app-sidebar__link:hover .app-svg-icon {
+      animation: sidebarIconSettings 640ms var(--ease-spring);
+    }
+
+    .app-sidebar__logout button:hover .app-icon,
+    .app-sidebar__logout button:hover .app-svg-icon {
+      animation: sidebarIconLogout 520ms var(--ease-spring);
+    }
+
+    .app-bottom-nav__link:not(.is-active):hover {
+      background: rgba(93, 202, 165, 0.14);
+    }
+
+    /* Sino de notificações — toque de campainha no hover */
+    .app-header__notifications-btn:hover .app-icon {
+      animation: iconBellRing 720ms var(--ease-out);
+    }
+
+    /* Botões com seta → */
+    .home-hero-card__btn:hover .app-icon,
+    .home-hero-card__btn:hover .app-svg-icon,
+    .app-page-header__btn:hover .app-icon,
+    .app-page-header__btn:hover .app-svg-icon,
+    .app-header__action:hover .app-svg-icon {
+      animation: iconArrowNudge 480ms var(--ease-spring);
+    }
+
+    /* Botões / links com chevron › */
+    .home-panel__action:hover .app-icon,
+    .home-panel__action:hover .app-svg-icon,
+    .app-settings__link-row:hover .app-settings__chevron,
+    .app-notifications-list__item:hover .app-notifications-list__chevron {
+      animation: iconChevronNudge 440ms var(--ease-spring);
+    }
+
+    .home-table__row:hover,
+    .home-request:hover,
+    .app-history-item:hover,
+    .app-notifications-list__item:hover,
+    .app-dropdown__item:hover {
+      background: rgba(240, 245, 243, 0.65);
+    }
+
+    .app-page-header__btn:hover,
+    .app-header__action:hover,
+    .home-empty-state__btn:hover,
+    .app-donation-card__action:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  /* ── Listas e tabela ── */
+  .home-table__row,
+  .home-request,
+  .app-history-item,
+  .app-notifications-list__item,
+  .app-dropdown__item {
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .home-pill {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .home-pill:active {
+    transform: scale(0.97);
+  }
+
+  /* ── Badge notificação ── */
+  .app-header__badge {
+    animation: appBadgePop 480ms var(--ease-spring) 400ms both;
+  }
+
+  /* ── Modal — overlay e saída ── */
+  .feedback-modal-overlay {
+    transition:
+      opacity var(--duration-slow) var(--ease-out),
+      backdrop-filter var(--duration-slow) var(--ease-out);
+  }
+
+  .feedback-modal-overlay:not(.is-open):not(.is-closing) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .feedback-modal-overlay.is-open,
+  .feedback-modal-overlay.is-closing {
+    display: flex;
+    opacity: 1;
+  }
+
+  @keyframes feedbackModalOut {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.96) translateY(10px);
+    }
+  }
+
+  .feedback-modal-overlay.is-closing .feedback-modal {
+    animation: feedbackModalOut 220ms var(--ease-out) forwards;
+  }
+
+  .feedback-modal-overlay.is-closing {
+    opacity: 0;
+  }
+
+  /* ── Item do modal doação ── */
+  .doacao-modal__item--enter {
+    animation: appSlideUp var(--duration-normal) var(--ease-out) both;
+  }
+
+  /* ── Sidebar logo ── */
+  .app-sidebar__logo {
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      background var(--duration-normal) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .app-sidebar__logo:hover {
+      transform: scale(1.04);
+    }
+  }
+
+  .app-sidebar__logo:active {
+    transform: scale(var(--press-scale));
+  }
+
+  /* ── Sidebar — base dos ícones ── */
+  .app-sidebar__link .app-icon,
+  .app-sidebar__link .app-svg-icon,
+  .app-sidebar__logout button .app-icon,
+  .app-sidebar__logout button .app-svg-icon {
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  @keyframes sidebarIconHome {
+    0%, 100% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-2px) scale(1.05); }
+    70% { transform: translateY(-1px) scale(1.02); }
+  }
+
+  @keyframes sidebarIconGift {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    30% { transform: rotate(-6deg) scale(1.04); }
+    55% { transform: rotate(5deg) scale(1.03); }
+    80% { transform: rotate(-2deg) scale(1.01); }
+  }
+
+  @keyframes sidebarIconHand {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-11deg) translateY(-1px); }
+    50% { transform: rotate(8deg) translateY(-1px); }
+    75% { transform: rotate(-3deg) translateY(0); }
+  }
+
+  @keyframes sidebarIconHistory {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    35% { transform: rotate(-18deg) scale(1.06); }
+    65% { transform: rotate(6deg) scale(1.03); }
+  }
+
+  @keyframes sidebarIconSettings {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    45% { transform: rotate(28deg) scale(1.04); }
+    75% { transform: rotate(10deg) scale(1.01); }
+  }
+
+  @keyframes sidebarIconLogout {
+    0%, 100% { transform: translateX(0) scale(1); }
+    35% { transform: translateX(-2px) scale(0.98); }
+    65% { transform: translateX(1px) scale(1.02); }
+  }
+
+  .app-sidebar__link:active .app-icon,
+  .app-sidebar__link:active .app-svg-icon,
+  .app-sidebar__logout button:active .app-icon,
+  .app-sidebar__logout button:active .app-svg-icon {
+    transform: scale(0.9);
+    transition: transform 100ms var(--ease-out);
+  }
+
+  /* ── Bottom nav mobile — clique expressivo ── */
+  .app-bottom-nav__link {
+    transition:
+      transform 220ms var(--ease-spring),
+      background var(--duration-normal) var(--ease-out);
+  }
+
+  .app-bottom-nav__link .app-icon,
+  .app-bottom-nav__link .app-svg-icon {
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .app-bottom-nav__link:active {
+    transform: scale(0.86);
+    transition-duration: 90ms;
+  }
+
+  .app-bottom-nav__link:nth-child(1):active .app-icon,
+  .app-bottom-nav__link:nth-child(1):active .app-svg-icon {
+    animation: bottomNavTapHome 420ms var(--ease-spring);
+  }
+
+  .app-bottom-nav__link:nth-child(2):active .app-icon,
+  .app-bottom-nav__link:nth-child(2):active .app-svg-icon {
+    animation: bottomNavTapGift 420ms var(--ease-spring);
+  }
+
+  .app-bottom-nav__link:nth-child(3):active .app-icon,
+  .app-bottom-nav__link:nth-child(3):active .app-svg-icon {
+    animation: bottomNavTapHand 420ms var(--ease-spring);
+  }
+
+  @keyframes bottomNavTapHome {
+    0% { transform: scale(1) translateY(0); }
+    28% { transform: scale(0.78) translateY(3px); }
+    58% { transform: scale(1.22) translateY(-5px); }
+    82% { transform: scale(0.94) translateY(-1px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  @keyframes bottomNavTapGift {
+    0% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(0.8) rotate(-12deg); }
+    60% { transform: scale(1.2) rotate(10deg); }
+    85% { transform: scale(0.95) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  @keyframes bottomNavTapHand {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(0.82) rotate(14deg); }
+    55% { transform: scale(1.18) rotate(-12deg); }
+    80% { transform: scale(0.96) rotate(4deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  /* ── Sino e setas — base dos ícones ── */
+  .app-header__notifications-btn .app-icon,
+  .home-hero-card__btn .app-icon,
+  .home-hero-card__btn .app-svg-icon,
+  .app-page-header__btn .app-icon,
+  .app-page-header__btn .app-svg-icon,
+  .app-header__action .app-svg-icon,
+  .home-panel__action .app-icon,
+  .home-panel__action .app-svg-icon,
+  .app-settings__chevron,
+  .app-notifications-list__chevron {
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  @keyframes iconBellRing {
+    0%, 100% { transform: rotate(0deg); }
+    18% { transform: rotate(7deg); }
+    36% { transform: rotate(-5deg); }
+    54% { transform: rotate(3deg); }
+    72% { transform: rotate(-1.5deg); }
+    88% { transform: rotate(0.5deg); }
+  }
+
+  @keyframes iconBellTap {
+    0% { transform: rotate(0deg) scale(1); }
+    28% { transform: rotate(-18deg) scale(0.86); }
+    55% { transform: rotate(14deg) scale(1.14); }
+    80% { transform: rotate(-4deg) scale(0.98); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+
+  @keyframes iconArrowNudge {
+    0%, 100% { transform: translateX(0) scale(1); }
+    45% { transform: translateX(5px) scale(1.08); }
+    72% { transform: translateX(2px) scale(1.02); }
+  }
+
+  @keyframes iconArrowTap {
+    0% { transform: translateX(0) scale(1); }
+    32% { transform: translateX(7px) scale(0.88); }
+    62% { transform: translateX(-2px) scale(1.12); }
+    100% { transform: translateX(0) scale(1); }
+  }
+
+  @keyframes iconChevronNudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+    78% { transform: translateX(1px); }
+  }
+
+  @keyframes iconChevronTap {
+    0% { transform: translateX(0) scale(1); }
+    35% { transform: translateX(6px) scale(0.9); }
+    65% { transform: translateX(-1px) scale(1.08); }
+    100% { transform: translateX(0) scale(1); }
+  }
+
+  .app-header__notifications-btn:active .app-icon {
+    animation: iconBellTap 400ms var(--ease-spring);
+  }
+
+  .home-hero-card__btn:active .app-svg-icon,
+  .app-page-header__btn:active .app-svg-icon,
+  .app-header__action:active .app-svg-icon {
+    animation: iconArrowTap 380ms var(--ease-spring);
+  }
+
+  .home-panel__action:active .app-icon,
+  .home-panel__action:active .app-svg-icon,
+  .app-settings__link-row:active .app-settings__chevron,
+  .app-notifications-list__item:active .app-notifications-list__chevron {
+    animation: iconChevronTap 380ms var(--ease-spring);
+  }
+
+  /* ── Aceitar / recusar (solicitações mobile) ── */
+  .home-icon-action .app-svg-icon {
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+
+  @keyframes iconThumbsUpHover {
+    0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
+    45% { transform: rotate(-4deg) translateY(-1.5px) scale(1.04); }
+    75% { transform: rotate(2deg) translateY(-0.5px) scale(1.02); }
+  }
+
+  @keyframes iconThumbsDownHover {
+    0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
+    45% { transform: rotate(4deg) translateY(1.5px) scale(1.04); }
+    75% { transform: rotate(-2deg) translateY(0.5px) scale(1.02); }
+  }
+
+  @keyframes iconThumbsUpTap {
+    0% { transform: rotate(0deg) translateY(0) scale(1); }
+    35% { transform: rotate(-3deg) translateY(1px) scale(0.94); }
+    65% { transform: rotate(2deg) translateY(-2px) scale(1.05); }
+    100% { transform: rotate(0deg) translateY(0) scale(1); }
+  }
+
+  @keyframes iconThumbsDownTap {
+    0% { transform: rotate(0deg) translateY(0) scale(1); }
+    35% { transform: rotate(3deg) translateY(-1px) scale(0.94); }
+    65% { transform: rotate(-2deg) translateY(2px) scale(1.05); }
+    100% { transform: rotate(0deg) translateY(0) scale(1); }
+  }
+
+  @media (hover: hover) {
+    .home-icon-action--accept,
+    .home-icon-action--reject {
+      transition:
+        transform var(--duration-normal) var(--ease-out),
+        background var(--duration-slow) var(--ease-out);
+    }
+
+    .home-icon-action--accept:hover {
+      background: color-mix(in srgb, var(--green-mid) 12%, var(--surface-green));
+    }
+
+    .home-icon-action--reject:hover {
+      background: color-mix(in srgb, var(--red-text) 8%, var(--surface-green));
+    }
+
+    .home-icon-action--accept:hover .app-svg-icon {
+      animation: iconThumbsUpHover 720ms var(--ease-out);
+    }
+
+    .home-icon-action--reject:hover .app-svg-icon {
+      animation: iconThumbsDownHover 720ms var(--ease-out);
+    }
+  }
+
+  .home-icon-action--accept:active .app-svg-icon {
+    animation: iconThumbsUpTap 560ms var(--ease-out);
+  }
+
+  .home-icon-action--reject:active .app-svg-icon {
+    animation: iconThumbsDownTap 560ms var(--ease-out);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-main--mounted > *,
+  .app-main--mounted .home-metric-card,
+  .app-main--mounted .home-panel,
+  .app-dropdown__item,
+  .doacao-modal__item--enter,
+  .app-sidebar__link .app-icon,
+  .app-sidebar__link .app-svg-icon,
+  .app-sidebar__logout button .app-icon,
+  .app-sidebar__logout button .app-svg-icon,
+  .app-bottom-nav__link .app-icon,
+  .app-bottom-nav__link .app-svg-icon,
+  .app-header__notifications-btn .app-icon,
+  .home-hero-card__btn .app-icon,
+  .home-hero-card__btn .app-svg-icon,
+  .app-page-header__btn .app-icon,
+  .app-page-header__btn .app-svg-icon,
+  .app-header__action .app-svg-icon,
+  .home-panel__action .app-icon,
+  .home-panel__action .app-svg-icon,
+  .app-settings__chevron,
+  .app-notifications-list__chevron,
+  .home-icon-action .app-svg-icon {
+    animation: none !important;
+  }
+
+  .app-bottom-nav__link:active {
+    transform: scale(var(--press-scale));
+  }
+
+  .feedback-modal-overlay.is-closing .feedback-modal {
+    animation: none !important;
+  }
+}

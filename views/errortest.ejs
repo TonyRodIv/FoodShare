@@ -1,0 +1,41 @@
+<%
+  const err = resolveErrorPage({
+    statusCode: typeof statusCode !== 'undefined' ? statusCode : 500,
+    context: typeof context !== 'undefined' ? context : undefined,
+    usuario: locals.usuario,
+  });
+  const activeCode = err.code;
+  const activeContext = typeof context !== 'undefined' ? context : '';
+%>
+<%- include('partials/error-shell-start', { title: 'Teste de erros — FoodShare' }) %>
+<link rel="stylesheet" href="/css/components/error-test.css">
+<%- include('partials/error-page-main', { err }) %>
+
+<div class="error-test" data-error-test>
+  <button type="button" class="error-test__toggle" aria-expanded="false" aria-controls="error-test-panel">
+    Variações
+  </button>
+  <div class="error-test__panel" id="error-test-panel" hidden>
+    <p class="error-test__heading">Códigos HTTP</p>
+    <div class="error-test__group">
+      <% httpCodes.forEach(function(code) { %>
+        <a
+          href="/errortest?code=<%= code %>"
+          class="error-test__chip<%= activeCode === code && !activeContext ? ' is-active' : '' %>"
+        ><%= code %></a>
+      <% }); %>
+    </div>
+    <p class="error-test__heading">Contextos (500)</p>
+    <div class="error-test__group">
+      <% contextKeys.forEach(function(key) { %>
+        <a
+          href="/errortest?code=500&amp;context=<%= key %>"
+          class="error-test__chip<%= activeCode === 500 && activeContext === key ? ' is-active' : '' %>"
+        ><%= key %></a>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<script src="/js/error-test.js"></script>
+<%- include('partials/error-shell-end') %>

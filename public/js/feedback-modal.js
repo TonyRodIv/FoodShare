@@ -1,8 +1,5 @@
 /**
  * Modal de feedback reutilizável (erros, avisos, confirmações).
- *
- * Uso server-side: incluir `feedback-modal.ejs` com objeto `modal`.
- * O overlay com classe `is-open` abre automaticamente ao carregar a página.
  */
 (function FeedbackModalModule() {
   'use strict';
@@ -15,6 +12,13 @@
     var overlay = getOpenOverlay();
     if (!overlay) return;
 
+    if (window.AppMotion) {
+      window.AppMotion.closeOverlay(overlay, {
+        bodyClass: 'feedback-modal-open',
+      });
+      return;
+    }
+
     overlay.classList.remove('is-open');
     document.body.classList.remove('feedback-modal-open');
   }
@@ -22,8 +26,16 @@
   function open(overlay) {
     if (!overlay) return;
 
+    overlay.classList.remove('is-closing');
     overlay.classList.add('is-open');
     document.body.classList.add('feedback-modal-open');
+
+    var modal = overlay.querySelector('.feedback-modal');
+    if (modal) {
+      modal.style.animation = 'none';
+      void modal.offsetWidth;
+      modal.style.animation = '';
+    }
 
     var primaryBtn = overlay.querySelector('[data-feedback-modal-close]');
     if (primaryBtn) primaryBtn.focus();
@@ -39,7 +51,7 @@
 
     document.addEventListener('click', function (event) {
       var overlay = event.target.closest('.feedback-modal-overlay');
-      if (overlay && event.target === overlay) {
+      if (overlay && event.target === overlay && overlay.classList.contains('is-open')) {
         close();
       }
     });
@@ -50,7 +62,7 @@
   }
 
   function initAutoOpen() {
-    var overlay = getOpenOverlay();
+    var overlay = document.querySelector('.feedback-modal-overlay.is-open');
     if (overlay) open(overlay);
   }
 
