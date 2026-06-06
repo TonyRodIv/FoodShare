@@ -27,7 +27,7 @@ async function showHome(req, res) {
 
   try {
     if (isDoador) {
-      const [totalDoacoes, doacoesAtivasCount, pendentes, familiasAjudadas, itens, doacoesFull] = await Promise.all([
+      const [totalDoacoes, doacoesAtivasCount, pendentes, familiasAjudadas, itens] = await Promise.all([
         prisma.doacao.count({ where: { usuarioId: userId } }),
         prisma.doacao.count({
           where: {
@@ -57,15 +57,7 @@ async function showHome(req, res) {
           },
           include: { doacao: { select: { status: true } } },
           orderBy: { validade: 'asc' },
-          take: 8,
-        }),
-        prisma.doacao.findMany({
-          where: {
-            usuarioId: userId,
-            status: { in: ['disponivel', 'reservado'] },
-          },
-          include: { itens: { orderBy: { validade: 'asc' } } },
-          orderBy: { createdAt: 'desc' },
+          take: 5,
         }),
       ]);
 
@@ -81,7 +73,7 @@ async function showHome(req, res) {
           usuario: { select: { nome: true } },
         },
         orderBy: { createdAt: 'desc' },
-        take: 6,
+        take: 5,
       });
 
       stats = {
@@ -101,7 +93,15 @@ async function showHome(req, res) {
           validade: item.validade,
         }),
       }));
-      doacoesDetalhe = buildDoacoesDetalheMap(doacoesFull, { viewerRole: 'doador' });
+      doacoesDetalhe = {};
+      if (itens.length > 0) {
+        const doacaoIds = [...new Set(itens.map((item) => item.doacaoId))];
+        const doacoesForDetail = await prisma.doacao.findMany({
+          where: { id: { in: doacaoIds } },
+          include: { itens: { orderBy: { validade: 'asc' } } },
+        });
+        doacoesDetalhe = buildDoacoesDetalheMap(doacoesForDetail, { viewerRole: 'doador' });
+      }
       solicitacoesRecebidas = solicitacoes.map((s) => ({
         ...s,
         itemLabel: s.doacao.itens[0]?.nome || 'Doação',

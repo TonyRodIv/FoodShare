@@ -19,23 +19,20 @@
           <div class="home-table__head">
             <span>item</span>
             <span>quantidade</span>
-            <span>validade</span>
+            <span class="home-table__head-date">validade</span>
             <span>status</span>
-            <span>ações</span>
+            <span class="home-table__head-action">ações</span>
           </div>
-          <% var seenDoacoes = {}; %>
-          <% itens.forEach(function(item) { %>
+          <% itens.forEach(function(item) {
+            const itemExpirado = isExpired(item.validade);
+          %>
             <div class="home-table__row home-table__row--clickable" data-doacao-id="<%= item.doacaoId %>" role="button" tabindex="0" aria-label="Ver detalhes de <%= item.nome %>">
-              <span class="home-table__item" title="<%= item.nome %>"><%= item.nome %></span>
+              <span class="home-table__item<%= itemExpirado ? ' home-table__item--expirado' : '' %>" title="<%= item.nome %><%= itemExpirado ? ' · validade vencida' : '' %>"><%= item.nome %></span>
               <span class="home-table__qty"><%= item.quantidade %> un</span>
-              <span class="home-table__date"><%= formatValidade(item.validade) %></span>
+              <span class="home-table__date<%= itemExpirado ? ' home-table__date--expirado' : '' %>"><%= formatValidade(item.validade) %></span>
               <span class="home-pill home-pill--<%= item.displayStatus %>"><%= item.displayStatus %></span>
               <span class="home-table__action">
-                <% if (!seenDoacoes[item.doacaoId]) {
-                  seenDoacoes[item.doacaoId] = true;
-                %>
-                  <a href="/doacoes/<%= item.doacaoId %>/editar" class="home-table__edit">Editar</a>
-                <% } %>
+                <a href="/doacoes/<%= item.doacaoId %>/editar" class="home-table__edit">Editar</a>
               </span>
             </div>
           <% }); %>

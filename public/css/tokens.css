@@ -31,7 +31,11 @@
   --radius-full: 9999px;
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
   --sidebar-width: 60px;
-  --bottom-nav-height: 72px;
+  /* Navbar flutuante mobile: pill (62px) + margem inferior do wrap (20px) + safe area */
+  --bottom-nav-pill-height: 62px;
+  --bottom-nav-wrap-pad: 20px;
+  --bottom-nav-height: calc(var(--bottom-nav-pill-height) + var(--bottom-nav-wrap-pad));
+  --app-mobile-safe-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
 
   /* App — tipografia (escala web, design.mdc) */
   --app-fs-xs: 11px;
@@ -44,7 +48,7 @@
   --app-fs-3xl: 22px;
   --app-fs-4xl: 24px;
   --app-fs-5xl: 26px;
-  --app-fs-greeting: 22px;
+  --app-fs-greeting: 24px;
   --app-fs-hero-title: 22px;
   --app-fs-hero-title-empty: 24px;
   --app-fs-hero-subtitle: 14px;
@@ -61,7 +65,7 @@
   --app-panel-min-h: 300px;
   --app-fs-metric-label: 14px;
   --app-fs-metric-hint: 14px;
-  --app-panel-fs-title: 16px;
+  --app-panel-fs-title: 18px;
   --app-empty-title-fs: 16px;
   --app-empty-desc-fs: 14px;
   --app-empty-btn-fs: 13px;
@@ -83,6 +87,12 @@
   --app-icon-action-glyph: 20px;
   --app-pill-min-w: 80px;
   --app-empty-min-h: 200px;
+  --app-home-list-max-h: 272px;
+  --app-home-items-limit: 5;
+  --home-table-col-qty: 5.5rem;
+  --home-table-col-date: 4.5rem;
+  --home-table-col-status: 6rem;
+  --home-table-col-action: 4rem;
 
   /* Error page — Figma 105:373 / 105:785 */
   --error-bg: var(--auth-bg);

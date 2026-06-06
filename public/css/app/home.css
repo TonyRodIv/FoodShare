@@ -6,6 +6,7 @@
   gap: var(--app-gap-dashboard);
   width: 100%;
   max-width: none;
+  min-width: 0;
 }
 
 /* ── Header ── */
@@ -123,6 +124,17 @@
   .app-header__action .app-svg-icon {
     width: 12px;
     height: 9px;
+  }
+
+  .app-header__action--secondary {
+    background: var(--surface-green);
+    color: var(--text);
+    border: var(--divider);
+  }
+
+  .app-header__action--secondary:hover {
+    opacity: 1;
+    background: var(--hover-btn-secondary-bg);
   }
 }
 
@@ -325,6 +337,7 @@ button.home-empty-state__btn {
   grid-template-columns: 1fr minmax(340px, 36%);
   gap: var(--app-gap-panel);
   align-items: stretch;
+  min-width: 0;
 }
 
 .home-panel {
@@ -335,6 +348,32 @@ button.home-empty-state__btn {
   background: var(--card);
   border-radius: var(--radius-xl);
   min-height: var(--app-panel-min-h);
+  min-width: 0;
+}
+
+.home-panel--table:not(:has(.home-empty-state)),
+.home-panel--requests:not(:has(.home-empty-state)) {
+  max-height: calc(var(--app-home-list-max-h) + 56px);
+  min-height: auto;
+}
+
+.home-panel--table .home-table,
+.home-panel--requests .home-requests {
+  flex: 1;
+  min-height: 0;
+  max-height: var(--app-home-list-max-h);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-bottom: 8px;
+  padding-bottom: 4px;
+}
+
+.home-panel--table .home-table__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--card);
 }
 
 .home-panel--full {
@@ -347,6 +386,7 @@ button.home-empty-state__btn {
   align-items: center;
   justify-content: space-between;
   gap: var(--app-gap-metrics);
+  min-height: 32px;
 }
 
 .home-panel__title {
@@ -462,18 +502,25 @@ button.home-empty-state__btn {
 
 /* ── Tabela doações ── */
 .home-table {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--home-table-col-qty) var(--home-table-col-date) var(--home-table-col-status);
+  column-gap: 8px;
   width: 100%;
-  overflow-x: auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.home-table--actions {
+  grid-template-columns: minmax(0, 1fr) var(--home-table-col-qty) var(--home-table-col-date) var(--home-table-col-status) var(--home-table-col-action);
 }
 
 .home-table__head,
 .home-table__row {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, var(--app-pill-min-w));
-  gap: 8px;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
+  min-width: 0;
   padding: 8px 0;
   border-bottom: var(--divider);
 }
@@ -486,10 +533,17 @@ button.home-empty-state__btn {
   text-transform: lowercase;
 }
 
+.home-table__head span:first-child,
+.home-table__item {
+  text-align: left;
+  justify-self: stretch;
+}
+
 .home-table__head span:not(:first-child),
 .home-table__qty,
 .home-table__date {
   text-align: center;
+  justify-self: center;
 }
 
 .home-table__row:last-child {
@@ -504,7 +558,15 @@ button.home-empty-state__btn {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: var(--truncate-table-item);
+}
+
+.home-table__item--expirado {
+  color: var(--red-text);
+}
+
+.home-table__date--expirado {
+  color: var(--red-text);
+  font-weight: 600;
 }
 
 .home-table__qty,
@@ -513,17 +575,19 @@ button.home-empty-state__btn {
   font-weight: 500;
   color: var(--text);
   min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
-}
-
-.home-table--actions .home-table__head,
-.home-table--actions .home-table__row {
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr) minmax(0, 0.75fr) minmax(0, var(--app-pill-min-w)) minmax(44px, auto);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .home-table__action {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  justify-self: center;
 }
 
 .home-table__edit {
@@ -532,6 +596,10 @@ button.home-empty-state__btn {
   color: var(--green-mid);
   text-decoration: none;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  text-align: center;
 }
 
 .home-table__edit:hover {
@@ -539,6 +607,15 @@ button.home-empty-state__btn {
 }
 
 /* ── Pills de status ── */
+.home-table .home-pill {
+  justify-self: center;
+  min-width: var(--app-pill-min-w);
+  width: auto;
+  max-width: 100%;
+  padding: 6px 10px;
+  font-size: var(--app-fs-xs);
+}
+
 .home-pill {
   display: inline-flex;
   align-items: center;
@@ -546,7 +623,7 @@ button.home-empty-state__btn {
   min-width: var(--app-pill-min-w);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  font-size: var(--app-fs-xs);
+  font-size: var(--app-fs-sm);
   font-weight: 600;
   text-transform: lowercase;
   justify-self: center;
@@ -567,6 +644,11 @@ button.home-empty-state__btn {
   color: var(--red-text);
 }
 
+.home-pill--entregue {
+  background: var(--green-pale);
+  color: var(--green-text);
+}
+
 /* ── Lista solicitações ── */
 .home-requests {
   list-style: none;
@@ -583,6 +665,10 @@ button.home-empty-state__btn {
   padding: 0 0 7px;
   margin-bottom: 7px;
   border-bottom: var(--divider);
+}
+
+.home-request.is-filter-hidden {
+  display: none !important;
 }
 
 .home-request:last-child {
@@ -603,7 +689,7 @@ button.home-empty-state__btn {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: var(--truncate-list-title);
+  max-width: 100%;
 }
 
 .home-request__meta {
@@ -611,6 +697,9 @@ button.home-empty-state__btn {
   font-size: var(--app-fs-xs);
   font-weight: 500;
   color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .home-request__actions {
@@ -744,6 +833,10 @@ button.home-empty-state__btn {
     grid-template-columns: 1fr;
   }
 
+  .home-dashboard {
+    padding-bottom: 8px;
+  }
+
   .home-panel {
     border-radius: var(--radius-modal);
   }
@@ -754,6 +847,12 @@ button.home-empty-state__btn {
 
   .home-panel--requests {
     order: 1;
+  }
+
+  .home-panel--table .home-table,
+  .home-panel--requests .home-requests {
+    scroll-padding-bottom: var(--app-mobile-safe-bottom);
+    padding-bottom: var(--app-mobile-safe-bottom);
   }
 
   .home-request__actions--desktop {
@@ -772,20 +871,32 @@ button.home-empty-state__btn {
     max-width: 26ch;
   }
 
-  .home-table__head,
-  .home-table__row {
-    gap: 6px;
+  /* Tabela — mobile: sem validade nem editar (editar via toque na linha) */
+  .home-table,
+  .home-table--actions {
+    grid-template-columns: minmax(0, 1fr) var(--home-table-col-qty) var(--home-table-col-status);
   }
 
-  .home-table--actions .home-table__head,
-  .home-table--actions .home-table__row {
-    grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.7fr) minmax(0, 0.6fr) minmax(0, 68px) minmax(40px, auto);
+  .home-table__head-date,
+  .home-table__head-action,
+  .home-table__date,
+  .home-table__action {
+    display: none;
   }
 
-  .home-table .home-pill {
-    min-width: 0;
-    width: 100%;
-    padding: 6px 8px;
-    font-size: 10px;
+  .home-table__head span:nth-child(4) {
+    grid-column: 3;
+  }
+
+  .home-table__row .home-table__item {
+    grid-column: 1;
+  }
+
+  .home-table__row .home-table__qty {
+    grid-column: 2;
+  }
+
+  .home-table__row .home-pill {
+    grid-column: 3;
   }
 }

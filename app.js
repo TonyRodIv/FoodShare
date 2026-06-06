@@ -16,6 +16,7 @@ const {
   formatCategoryLabel,
   formatDateShort,
   donationDisplayStatus,
+  isExpired,
   mesAtual,
 } = require('./utils/formatTime');
 const { showHome } = require('./controllers/homeController');
@@ -42,6 +43,7 @@ app.locals.categoryIconVariant = categoryIconVariant;
 app.locals.formatCategoryLabel = formatCategoryLabel;
 app.locals.formatDateShort = formatDateShort;
 app.locals.donationDisplayStatus = donationDisplayStatus;
+app.locals.isExpired = isExpired;
 app.locals.mesAtual = mesAtual;
 
 // Middleware
@@ -102,6 +104,7 @@ app.get('/api-docs', (req, res) => {
 const authRoutes = require('./routes/auth');
 const doacoesRoutes = require('./routes/doacoes');
 const solicitacoesRoutes = require('./routes/solicitacoes');
+const notificacoesRoutes = require('./routes/notificacoes');
 const errortestRoutes = require('./routes/errortest');
 
 // Home route
@@ -114,6 +117,7 @@ app.get('/perfil', authenticate, (req, res) => res.redirect('/configuracoes'));
 app.use('/auth', authRoutes);
 app.use('/doacoes', doacoesRoutes);
 app.use('/solicitacoes', solicitacoesRoutes);
+app.use('/notificacoes', notificacoesRoutes);
 app.use('/errortest', errortestRoutes);
 
 // Error handling middleware

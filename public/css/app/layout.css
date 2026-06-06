@@ -5,8 +5,11 @@
   flex-direction: column;
   background: var(--app-bg);
   color: var(--text);
+  height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
+  overflow: hidden;
 }
 
 .app-shell {
@@ -21,10 +24,14 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .app-top {
+  position: sticky;
+  top: 0;
   flex-shrink: 0;
   z-index: 150;
   padding: 25px 50px 28px;
@@ -32,9 +39,11 @@
   background: linear-gradient(
     180deg,
     var(--app-bg) 0%,
-    var(--app-bg) 52%,
-    color-mix(in srgb, var(--app-bg) 75%, transparent) 72%,
-    color-mix(in srgb, var(--app-bg) 35%, transparent) 88%,
+    var(--app-bg) 48%,
+    color-mix(in srgb, var(--app-bg) 98%, transparent) 58%,
+    color-mix(in srgb, var(--app-bg) 90%, transparent) 70%,
+    color-mix(in srgb, var(--app-bg) 65%, transparent) 84%,
+    color-mix(in srgb, var(--app-bg) 25%, transparent) 94%,
     transparent 100%
   );
   pointer-events: none;
@@ -47,7 +56,6 @@
 .app-content {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--app-gap-dashboard);
@@ -141,7 +149,7 @@
   right: 0;
   bottom: 0;
   z-index: 100;
-  padding: 0 24px 20px;
+  padding: 0 24px calc(var(--bottom-nav-wrap-pad) + env(safe-area-inset-bottom, 0px));
   pointer-events: none;
   background: linear-gradient(to bottom, rgba(240, 245, 243, 0) 0%, var(--app-bg) 55%);
 }
@@ -180,6 +188,15 @@
 
 .app-bottom-nav__link.is-active .app-svg-icon {
   filter: brightness(0) invert(1);
+}
+
+/* Reserva espaço no fluxo do documento = altura da navbar flutuante (mobile) */
+.app-bottom-nav-spacer {
+  display: none;
+  flex-shrink: 0;
+  width: 100%;
+  height: var(--app-mobile-safe-bottom);
+  pointer-events: none;
 }
 
 /* ── Breakpoints app ── */
@@ -230,13 +247,26 @@
 }
 
 @media (max-width: 1023px) {
+  .app-bottom-nav-spacer {
+    display: block;
+  }
+
+  .app-main {
+    scroll-padding-bottom: var(--app-mobile-safe-bottom);
+  }
+
+  .app-content {
+    flex: 0 1 auto;
+    min-height: auto;
+  }
+
   .app-top {
     padding: 24px 24px 24px;
     margin-bottom: -12px;
   }
 
   .app-content {
-    padding: 12px 24px calc(var(--bottom-nav-height) + 32px);
+    padding: 12px 24px 20px;
   }
 }
 
@@ -247,6 +277,6 @@
   }
 
   .app-content {
-    padding: 10px 24px calc(var(--bottom-nav-height) + 28px);
+    padding: 10px 24px 16px;
   }
 }

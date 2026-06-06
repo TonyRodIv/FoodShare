@@ -95,14 +95,16 @@
             <div class="home-table__head">
               <span>item</span>
               <span>quantidade</span>
-              <span>validade</span>
+              <span class="home-table__head-date">validade</span>
               <span>status</span>
             </div>
-            <% doacoesAtivas.forEach(function(doacao) { %>
+            <% doacoesAtivas.forEach(function(doacao) {
+              const itemExpirado = isExpired(doacao.validade);
+            %>
               <div class="home-table__row home-table__row--clickable" data-doacao-id="<%= doacao.doacaoId %>" role="button" tabindex="0" aria-label="Ver detalhes de <%= doacao.nome %>">
-                <span class="home-table__item" title="<%= doacao.nome %>"><%= doacao.nome %></span>
+                <span class="home-table__item<%= itemExpirado ? ' home-table__item--expirado' : '' %>" title="<%= doacao.nome %><%= itemExpirado ? ' · validade vencida' : '' %>"><%= doacao.nome %></span>
                 <span class="home-table__qty"><%= doacao.quantidade %> un</span>
-                <span class="home-table__date"><%= formatValidade(doacao.validade) %></span>
+                <span class="home-table__date<%= itemExpirado ? ' home-table__date--expirado' : '' %>"><%= formatValidade(doacao.validade) %></span>
                 <span class="home-pill home-pill--<%= doacao.displayStatus %>"><%= doacao.displayStatus %></span>
               </div>
             <% }); %>
