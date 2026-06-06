@@ -22,6 +22,18 @@ Guia de identidade visual do projeto. Consulte antes de implementar qualquer tel
 | Home Doador — Mobile | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=66-2992&m=dev) |
 | Modal | [Abrir](https://www.figma.com/design/JwnAOAPF8NczJIBXr3jCBG/FoodShare-%E2%80%94-UI-Design?node-id=90-371&m=dev) |
 
+### App logado (implementado)
+
+| Tela | Arquivo | Rota | Nav |
+|---|---|---|---|
+| Home / Dashboard | `views/index.ejs` | `/` | `home` |
+| Doações | `views/doacoes/index.ejs` | `/doacoes` | `doacoes` |
+| Solicitações recebidas | `views/solicitacoes/recebidas.ejs` | `/solicitacoes/recebidas` | `solicitacoes` |
+| Minhas solicitações | `views/solicitacoes/minhas_solicita.ejs` | `/solicitacoes/minhas` | `solicitacoes` |
+| Histórico | `views/historico/index.ejs` | `/historico` | `historico` |
+| Notificações | `views/notificacoes/index.ejs` | `/notificacoes` | — |
+| Configurações | `views/configuracoes/index.ejs` | `/configuracoes` | `configuracoes` |
+
 ### Auth (implementado)
 
 | Tela | Link | Arquivo |
@@ -66,6 +78,37 @@ Guia de identidade visual do projeto. Consulte antes de implementar qualquer tel
 
 Tokens CSS em `public/css/tokens.css` (importados via `public/css/style.css`).
 
+### Tokens app (`--app-*`)
+
+Variáveis específicas do dashboard em `tokens.css`. **Não usar px brutos** nas views app — sempre referenciar tokens.
+
+| Token | Base | Uso |
+|---|---|---|
+| `--app-fs-xs` … `--app-fs-5xl` | 11–26px | Escala tipográfica app |
+| `--app-fs-greeting` | 22px | Saudação header |
+| `--app-fs-hero-title` | 22px | Título card verde |
+| `--app-fs-hero-subtitle` | 14px | Subtítulo card verde |
+| `--app-fs-metric-value` | 26px | Número métrica |
+| `--app-fs-metric-label/hint` | 14px | Label/subtexto métrica |
+| `--app-panel-fs-title` | 16px | Título painel inferior |
+| `--app-empty-title-fs` | 16px | Título empty state |
+| `--app-empty-desc-fs` | 14px | Descrição empty state |
+| `--app-gap-dashboard` | 20px | Gap entre seções |
+| `--app-gap-metrics` | 12px | Gap cards topo |
+| `--app-metrics-padding` | 16px | Padding hero + métricas (**escala** em telas grandes) |
+| `--app-panel-padding` | 16px | Padding painéis inferiores (**fixo**) |
+| `--app-card-metrics-h` | 160px | Altura mínima cards topo (**escala**) |
+| `--app-panel-min-h` | 300px | Altura mínima painéis (**fixo**) |
+| `--app-icon-metric` | 45px | Círculo ícone métrica (**escala** 48→54→60) |
+| `--app-icon-empty` | 64px | Ícone empty state (**fixo**) |
+| `--app-btn-py/px` | 10/18px | Botões secundários e CTAs |
+| `--sidebar-width` | 60px | Largura sidebar |
+| `--bottom-nav-height` | 72px | Altura bottom bar |
+
+**Regra de escala proporcional (aprendida na implementação):**
+- **Escalam** em 1024 / 1440 / 1920: faixa superior (hero + métricas) — padding, altura, ícones de métrica, tipografia do hero.
+- **Não escalam**: painéis inferiores, empty states, tabelas, listas de solicitações — mantêm tamanhos fixos para legibilidade consistente.
+
 ---
 
 ## Tipografia
@@ -105,6 +148,11 @@ Use estes tamanhos no código, mantendo **proporção e hierarquia** do Figma:
 | Título modal | 22px / 600 | 20px |
 | Descrição modal | 15px / 500 | 14px |
 | Botão modal | 14px / 600 | 15px |
+| Título página interna | 22px / 600 | 24px (`--app-fs-greeting`) |
+| Subtítulo página | 14px / 500 | 14px |
+| Título painel | 16px / 600 | 16px (fixo) |
+| Linha tabela / lista | 14px / 500 | 14px |
+| Meta (timeAgo, data) | 11px / 500 | 11px |
 
 ---
 
@@ -133,15 +181,135 @@ Dois contextos convivem no projeto:
 |---|---|---|
 | **Auth** | `960px` | Split desktop ↔ layout mobile; transições de página; modal bottom sheet |
 | **App logado** | `1024px` / `767px` | Sidebar, bottom bar, dashboard (Figma) |
+| **App — escala métricas** | `1440px` / `1920px` | Só cards superiores (hero + métricas) |
 
 ```css
 /* Auth — implementado */
 @media (max-width: 960px) { /* mobile auth */ }
 
-/* App — alvo Figma */
-@media (min-width: 1024px) { /* desktop */ }
-@media (max-width: 767px)  { /* mobile app */ }
+/* App — implementado */
+@media (min-width: 1024px) { /* desktop: sidebar visível */ }
+@media (min-width: 1440px) { /* escala métricas + grid painéis */ }
+@media (min-width: 1920px) { /* escala métricas ampliada */ }
+@media (max-width: 1023px) { /* mobile: bottom bar, header mobile */ }
+@media (max-width: 767px)  { /* mobile app compacto */ }
 ```
+
+---
+
+## Módulo App (logado)
+
+Shell compartilhado por todas as páginas internas. Visitante autenticado acessa `/` como dashboard.
+
+### Arquitetura de views
+
+```
+views/partials/
+├── app-shell-start.ejs    ← DOCTYPE, head, sidebar, abre <main>
+├── app-shell-end.ejs      ← fecha main, bottom nav, scripts
+├── app-sidebar.ejs        ← nav desktop (60px)
+├── app-bottom-nav.ejs     ← nav mobile (<1024px)
+├── app-page-header.ejs    ← título + subtítulo + CTA opcional
+├── app-header.ejs         ← saudação + notificações + avatar (todas as telas)
+└── home-empty-state.ejs   ← estado vazio reutilizável (ícone circular)
+```
+
+Toda página app deve:
+1. Incluir `app-shell-start` / `app-shell-end`
+2. Passar `activeNav`: `'home'` | `'doacoes'` | `'solicitacoes'` | `'historico'`
+3. Usar wrapper `.app-page` + `.app-page-panel` ou componentes home (`.home-table`, `.home-requests`)
+
+### Navegação por perfil
+
+| Ícone | Doador/admin | Receptor |
+|---|---|---|
+| Home | `/` | `/` |
+| Doações (gift) | `/doacoes` — minhas doações | `/doacoes` — disponíveis |
+| Solicitações (hand) | `/solicitacoes/recebidas` | `/solicitacoes/minhas` |
+| Histórico (clock) | `/historico` | `/historico` |
+
+Bottom bar mobile: Home · Doações · Solicitações (sem histórico — só sidebar desktop).
+
+### Header — notificações e perfil
+
+| Elemento | Comportamento |
+|---|---|
+| Sino (bell) | Dropdown com últimas solicitações (`notificacoesRecentes`); badge com pendentes |
+| Avatar | Dropdown com opções fictícias + link Configurações + Sair |
+| `/notificacoes` | Página completa com histórico de notificações |
+| `/configuracoes` | Página de preferências (toggles/links fictícios por enquanto) |
+
+Arquivos: `app-notifications-dropdown.ejs`, `app-profile-dropdown.ejs`, `app-header.js`, `app-header-menus.css`, `services/notificacoesService.js`.
+
+### Microinterações (app logado)
+
+`public/css/components/app-microinteractions.css` + `public/js/app-motion.js` — entrada de página, press em botões, hover em cards, modais/dropdowns animados. Respeita `prefers-reduced-motion`.
+
+### Ícones SVG (`public/images/app/`)
+
+Exportados do Figma. **Regra crítica:** SVGs com `width="100%" height="100%"` (ex.: `icon-arrow-right.svg`) **precisam de tamanho fixo no CSS** — nunca `width: 100%` ou `calc(font-size)` no `<img>`, senão distorcem flex containers.
+
+```css
+/* Correto — botão hero / page header */
+.home-hero-card__btn img,
+.app-page-header__btn img {
+  width: 14px;
+  height: 10px;
+  flex-shrink: 0;
+}
+```
+
+Ícones de métrica usam container circular `--app-icon-metric` + glyph `--app-icon-metric-glyph`.
+
+### Empty state (padrão modal)
+
+Ícone 64px circular + título 16px + descrição 14px + botão secundário (`--surface-green`). Variantes: `--green`, `--amber`, `--blue`.
+
+### Pills de status — doações
+
+| Classe | Quando |
+|---|---|
+| `.home-pill--ativo` | disponível + não expirado |
+| `.home-pill--reservado` | status reservado |
+| `.home-pill--expirado` | validade passada |
+| `.home-pill--entregue` | doação entregue |
+
+### Pills de status — solicitações
+
+| Classe | Status DB |
+|---|---|
+| `.home-pill--pendente` | pendente |
+| `.home-pill--aprovado` | aprovado |
+| `.home-pill--recusado` | recusado |
+| `.home-pill--cancelado` | cancelado |
+
+Helpers: `donationDisplayStatus()`, `solicitationDisplayStatus()`, `formatValidade()`, `timeAgo()`, `formatDateShort()` em `utils/formatTime.js` — expostos via `app.locals`.
+
+### Modal nova doação
+
+Formulário em modal (não página separada). Abre via `data-doacao-modal-open` ou `/doacoes?nova=1`.
+
+| Arquivo | Papel |
+|---|---|
+| `views/partials/doacao-modal.ejs` | Markup do modal + template de item |
+| `public/css/components/doacao-modal.css` | Estende `feedback-modal--form` |
+| `public/js/doacao-modal.js` | Abrir/fechar, adicionar/remover itens |
+
+- Overlay e animação: mesmo padrão `feedback-modal` (420–520px, radius 28px, bottom sheet mobile ≤960px)
+- Inputs: classes `auth-field` / `auth-field__input` / `auth-field__select` (fundo branco, focus verde)
+- POST continua em `/doacoes/nova`; GET `/doacoes/nova` redireciona para `/doacoes?nova=1`
+- Incluído em `app-shell-end.ejs` apenas para `doador` / `admin`
+
+### Modelo de dados (UI)
+
+```
+Doacao (pacote) ──< ItemDoacao (nome, qty, categoria, validade)
+Doacao ──< Solicitacao (qty, status, observações)
+Usuario ──< Doacao | Solicitacao
+```
+
+Status doação: `disponivel` · `reservado` · `entregue`  
+Status solicitação: `pendente` · `aprovado` · `recusado` · `cancelado`
 
 ---
 
@@ -383,8 +551,13 @@ Variantes futuras de ícone/container:
 
 ```css
 width:         60px;
+position:      fixed;   /* desktop — não rola com o conteúdo */
+top: 0; left: 0;
+height:        100dvh;
+z-index:       200;
 background:    #121212;
 padding:       20px 12px;
+```
 
 /* Logo FS */
 background:    #1D9E75;
@@ -418,7 +591,7 @@ padding:       10px 0 12px;
 ### Desktop app (`≥ 1024px`)
 
 ```
-Sidebar 60px (#121212) + conteúdo (#F5F5F0, padding 16px)
+Sidebar 60px fixa (#121212) + conteúdo com margin-left 60px (#F5F5F0, padding 16px)
 ```
 
 ### Mobile app (`≤ 767px`)
@@ -445,8 +618,8 @@ Tela cheia #F0F5F3 · sem moldura escura
 
 ```
 Logo:     "Food" SemiBold #1A1A1A  +  "Share" SemiBold #1D9E75
-Greeting: "Olá, [Nome] 👋" — nome em #1D9E75
-Avatar:   circular, bg #1D9E75, inicial branca, 32×32px
+Greeting (home): `"Olá, [Nome] 👋"` — nome em `#1D9E75`. Demais telas: `"Esse é seu **página**"` no header; subtítulo em `.app-page-lead` abaixo do header.
+Avatar: circular, bg `#1D9E75`, inicial branca, 32×32px
 Tagline:  "Doe o que sobra." / "Alimente quem precisa." (quebra intencional)
 ```
 
@@ -457,9 +630,13 @@ Tagline:  "Doe o que sobra." / "Alimente quem precisa." (quebra intencional)
 ```
 public/css/
 ├── style.css                      ← único link nas views (entry point)
-├── tokens.css                     ← variáveis (:root)
+├── tokens.css                     ← variáveis (:root) + breakpoints app
 ├── base.css                       ← reset, body
-├── app.css                        ← navbar, forms, cards (páginas logadas)
+├── app.css                        ← navbar, forms, cards (legado)
+├── app/
+│   ├── layout.css                 ← shell, sidebar, bottom nav
+│   ├── home.css                   ← dashboard home
+│   └── pages.css                  ← páginas internas (doações, solicitações, histórico)
 ├── auth/
 │   ├── layout.css                 ← auth desktop + componentes
 │   └── mobile.css                 ← auth responsivo (≤960px)
@@ -477,6 +654,10 @@ Novos estilos: coloque no módulo correspondente. Componentes reutilizáveis vã
 1. Consultar node Figma correspondente (tabela acima)
 2. Usar tokens de cor deste documento — não inventar hex
 3. Aplicar escala **web**, não copiar px do Figma literalmente
-4. Respeitar breakpoint correto (auth 960px vs app 767/1024px)
+4. Respeitar breakpoint correto (auth 960px vs app 1023/1024px)
 5. Erros → modal de feedback; navegação auth mobile → `data-nav-direction`
-6. Ícones do Figma → salvar em `public/images/` como SVG (preferir sobre icon fonts)
+6. Ícones do Figma → salvar em `public/images/app/` como SVG
+7. Páginas logadas → shell app + `activeNav` + classes `--app-*`
+8. Empty states → partial `home-empty-state.ejs`
+9. Ícones inline em botões → tamanho fixo (14×10px), `flex-shrink: 0`
+10. Escala proporcional só na faixa superior; painéis/listas ficam fixos
