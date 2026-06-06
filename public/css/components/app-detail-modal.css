@@ -1,4 +1,3 @@
-/* Modais de detalhe — layout Figma 90:371 (escala web) */
 
 .doacao-detail-overlay .doacao-detail-modal {
   position: relative;
@@ -72,8 +71,6 @@
 .solicitacao-detail-modal__form .feedback-modal__btn {
   flex: 1;
 }
-
-/* ── Conteúdo (escala alinhada ao app) ── */
 
 .app-detail-modal__sections {
   display: flex;
@@ -278,7 +275,6 @@
   font-weight: 500;
 }
 
-/* Modal de solicitação (formulário) — resumo e largura total */
 .solicitacao-modal .doacao-modal__body {
   padding: 16px 24px;
 }
@@ -293,7 +289,6 @@
   line-height: 1.4;
 }
 
-/* Elementos clicáveis que abrem modais */
 .receptor-food-card--clickable {
   cursor: pointer;
 }

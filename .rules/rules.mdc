@@ -71,48 +71,17 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 5. FoodShare — Protocolo de Implementação Interativo (OBRIGATÓRIO)
+## 5. FoodShare — Referências do projeto
 
-Este projeto possui um guia de implementação em `auth-implementation-guide.md`. As regras abaixo são **invioláveis** sempre que uma tarefa de desenvolvimento estiver em andamento neste projeto.
+Antes de alterar estrutura, rotas ou fluxos de autenticação, consulte:
 
-### 5.1 — Uma Fase por Vez
+| Tema | Arquivo |
+|------|---------|
+| Organização do código | `docs/architecture.md` |
+| Índice da documentação | `docs/README.md` |
+| Contas e seed de demo | `docs/demo-users.md` |
+| Rotas de solicitações | `docs/solicitacoes-routes.md` |
+| JWT (arquivo histórico) | `docs/archive/auth-implementation-guide.md` |
+| Design system | `.rules/design.mdc` |
 
-- Implemente **exatamente uma fase** do guia por vez.
-- Ao concluir uma fase, **PARE imediatamente**. Não inicie a próxima fase.
-- Aguarde confirmação explícita do usuário para continuar.
-
-### 5.2 — Parada Obrigatória para Commit
-
-Após cada fase concluída e validada:
-
-1. **PARE a execução.**
-2. Sugira uma mensagem de commit no padrão Conventional Commits:
-   - `feat: <descrição>` para funcionalidades novas
-   - `fix: <descrição>` para correções
-3. **Aguarde** o usuário confirmar ou fazer o commit.
-4. **Só prossiga** após confirmação explícita do commit.
-
-> NUNCA implemente a próxima fase sem o commit da fase anterior ter sido confirmado.
-
-### 5.3 — Validação Antes de Avançar
-
-Antes de sugerir o commit de cada fase:
-- Execute o servidor (`node server.js`) e confirme que não há erros de inicialização.
-- Se houver erro, corrija-o dentro da mesma fase antes de propor o commit.
-
-### 5.4 — Formato da Parada de Commit
-
-Ao parar para commit, use sempre este formato:
-
-```
-✅ Fase [N] concluída e validada.
-
-📝 Sugestão de commit:
-feat: <mensagem descritiva da fase>
-
-Arquivos alterados:
-- caminho/do/arquivo1
-- caminho/do/arquivo2
-
-Aguardando confirmação do commit para prosseguir para a Fase [N+1].
-```
+O schema de dados está em `prisma/schema.prisma`. Não existe pasta `models/`.

@@ -1,6 +1,3 @@
-/**
- * Monta título e mensagens amigáveis para o modal de feedback (auth).
- */
 function buildAuthFeedback(errors, formType) {
   if (!errors || errors.length === 0) return null;
 

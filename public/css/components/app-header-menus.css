@@ -1,4 +1,3 @@
-/* Dropdowns do header — notificações e perfil */
 
 .app-header__menu-wrap {
   position: relative;
@@ -32,7 +31,6 @@
   pointer-events: none;
 }
 
-/* ── Dropdown base (sem overlay/blur — só o painel) ── */
 .app-dropdown {
   position: fixed;
   inset: 0;
@@ -211,7 +209,6 @@
   text-decoration: underline;
 }
 
-/* ── Perfil ── */
 .app-dropdown__panel--profile {
   width: min(280px, calc(100vw - 32px));
 }
@@ -279,7 +276,6 @@
   display: contents;
 }
 
-/* ── Página notificações ── */
 .app-notifications-list {
   list-style: none;
 }
@@ -346,7 +342,6 @@
   color: var(--muted);
 }
 
-/* ── Caixa de entrada (página notificações) ── */
 .app-inbox-panel {
   gap: 8px;
 }
@@ -504,7 +499,6 @@
   }
 }
 
-/* ── Configurações ── */
 .app-settings {
   display: flex;
   flex-direction: column;

@@ -1,7 +1,8 @@
-# Contas demonstrativas — FoodShare
+# Contas de demonstração
 
-> **Atenção:** estas contas são apenas para demonstração e testes locais.  
-> Todas usam o domínio `@foodshare.local` e compartilham a mesma senha.
+Contas e cenários criados pelo seed (`npm run seed`) para testes e apresentações locais.
+
+> **Uso exclusivo em ambiente local.** Todas as contas usam o domínio `@foodshare.local` e a mesma senha.
 
 ## Senha padrão
 
@@ -9,7 +10,7 @@
 demo123
 ```
 
-Para recriar os dados no banco:
+Para recriar ou atualizar os dados:
 
 ```bash
 npm run seed
@@ -17,16 +18,18 @@ npm run seed
 
 ---
 
-## Doador (todas as doações)
+## Doador
 
-| Nome | E-mail | Telefone | Papel |
-|------|--------|----------|-------|
-| Mercado Solidário Demo | `doador.demo@foodshare.local` | (11) 3000-1000 | doador |
+Uma conta concentra todas as doações de exemplo.
 
-### Doações cadastradas (10)
+| Nome | E-mail | Telefone |
+|------|--------|----------|
+| Mercado Solidário Demo | `doador.demo@foodshare.local` | (11) 3000-1000 |
 
-| Status | Itens principais | Solicitações |
-|--------|------------------|--------------|
+### Doações no seed (10)
+
+| Status | Itens principais | Solicitações associadas |
+|--------|------------------|-------------------------|
 | disponível | Arroz, feijão, aveia | 2 pendentes |
 | disponível | Banana, tomate, alface | 1 pendente, 1 recusada |
 | disponível | Sardinha, extrato, biscoito | 1 pendente, 1 cancelada |
@@ -55,8 +58,8 @@ npm run seed
 
 ### Solicitações por receptor
 
-| Receptor | Status das solicitações |
-|----------|-------------------------|
+| Receptor | Cenários cobertos |
+|----------|-------------------|
 | Família Santos | pendente, aprovada (entregue), recusada |
 | ONG Alimenta | aprovada (reservado) |
 | Comunidade Vila Nova | pendente, aprovada (entregue) |
@@ -68,12 +71,13 @@ npm run seed
 
 ---
 
-## Login rápido
+## Como testar
 
 1. Acesse `/auth/login`
-2. Use qualquer e-mail da tabela acima
-3. Senha: `demo123`
+2. Informe um dos e-mails acima
+3. Use a senha `demo123`
 
-**Sugestão para demonstração:**
-- Entre como **doador** (`doador.demo@foodshare.local`) para ver todas as doações e solicitações recebidas
-- Entre como **receptor** (`familia.santos@foodshare.local` ou `ong.alimenta@foodshare.local`) para ver pedidos e itens disponíveis
+**Sugestões para demonstração:**
+
+- **Doador** — `doador.demo@foodshare.local`: visão geral das doações e solicitações recebidas
+- **Receptor** — `familia.santos@foodshare.local` ou `ong.alimenta@foodshare.local`: catálogo de doações e acompanhamento de pedidos

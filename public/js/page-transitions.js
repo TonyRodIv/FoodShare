@@ -1,15 +1,3 @@
-/**
- * Sistema de transições entre páginas (reutilizável).
- *
- * Uso:
- * 1. Adicione `page-transitions-enabled` ao <body>
- * 2. Envolva o conteúdo em `.page-transition-root` (mobile)
- * 3. Marque links com `data-nav-direction="forward"` ou `"back"`
- * 4. Inclua este script antes de </body>
- *
- * Mobile (≤960px): anima `.page-transition-root` (tela inteira).
- * Desktop: anima apenas `.auth-panel__inner` (container e hero permanecem estáticos).
- */
 (function PageTransitionsModule() {
   'use strict';
 

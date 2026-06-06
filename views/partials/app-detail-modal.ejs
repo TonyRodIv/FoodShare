@@ -1,0 +1,21 @@
+<%
+  const kind = typeof modalKind !== 'undefined' ? modalKind : 'doacao';
+  const overlayClass = kind === 'solicitacao' ? ' solicitacao-detail-overlay' : '';
+  const modalClass = kind === 'solicitacao' ? ' solicitacao-detail-modal' : '';
+%>
+<div
+  class="feedback-modal-overlay doacao-detail-overlay<%= overlayClass %>"
+  id="<%= kind %>-detail-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="<%= kind %>-detail-title"
+  aria-hidden="true"
+>
+  <div class="feedback-modal doacao-detail-modal<%= modalClass %>">
+    <button type="button" class="doacao-detail-modal__close" data-<%= kind %>-detail-close aria-label="Fechar">
+      <%- include('app-icon', { icon: 'close', size: 'chevron' }) %>
+    </button>
+    <div class="doacao-detail-modal__body" id="<%= kind %>-detail-body"></div>
+    <div class="doacao-detail-modal__actions" id="<%= kind %>-detail-actions"></div>
+  </div>
+</div>

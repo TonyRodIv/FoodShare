@@ -1,4 +1,3 @@
-/* Auth — responsivo (≤ 960px e ≤ 480px) */
 
 @media (min-width: 961px) {
   .auth-screen--form .auth-field__input,
@@ -44,7 +43,6 @@
     display: block;
   }
 
-  /* Welcome mobile */
   .auth-screen--welcome .auth-desktop {
     display: none;
   }
@@ -85,7 +83,6 @@
     max-width: none;
   }
 
-  /* Ellipse 5 — azul, superior direito (Figma 61:2437) */
   .auth-mobile__glow--blue {
     top: -17.8%;
     right: -1.5%;
@@ -98,7 +95,6 @@
     inset: -154.75% -150.55%;
   }
 
-  /* Ellipse 6 — verde, lateral esquerda (Figma 61:2438) */
   .auth-mobile__glow--green {
     top: 5.5%;
     left: -103.5%;
@@ -111,7 +107,6 @@
     inset: -135.01% -131.19%;
   }
 
-  /* Star 3 — direita, parcialmente fora da tela (Figma 61:2435) */
   .auth-mobile__star-wrap {
     position: absolute;
     top: 1.26%;
@@ -189,7 +184,6 @@
     gap: 15px;
   }
 
-  /* Login & cadastro mobile */
   .auth-screen--form {
     position: relative;
   }

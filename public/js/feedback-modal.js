@@ -1,6 +1,3 @@
-/**
- * Modal de feedback reutilizável (erros, avisos, confirmações).
- */
 (function FeedbackModalModule() {
   'use strict';
 

@@ -10,7 +10,6 @@ const prisma = require('../config/database');
 async function authenticate(req, res, next) {
   const accessToken = req.cookies?.token;
 
-  // Tenta validar o Access Token
   if (accessToken) {
     try {
       const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
@@ -20,11 +19,9 @@ async function authenticate(req, res, next) {
       if (err.name !== 'TokenExpiredError') {
         return res.redirect('/auth/login');
       }
-      // Access Token expirado — tenta renovar via Refresh Token
     }
   }
 
-  // Tenta renovar com o Refresh Token
   const refreshTokenCookie = req.cookies?.refreshToken;
   if (!refreshTokenCookie) {
     return res.redirect('/auth/login');

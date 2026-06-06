@@ -5,7 +5,7 @@ const { authenticate, authorize } = require('../middlewares/authMiddleware');
 const {
   sortSolicitacoesRecebidas,
   buildSolicitacoesDetalheMap,
-} = require('../utils/solicitacaoDetail');
+} = require('../utils/detailSerializers');
 const { getReceptorMonthStats } = require('../utils/receptorStats');
 const { mesAtual } = require('../utils/formatTime');
 
@@ -67,7 +67,6 @@ function isApiRequest(req) {
  *       400:
  *         description: Campos obrigatórios faltando
  */
-// GET /solicitacoes/nova — redireciona para /doacoes (fluxo principal via modal)
 router.get('/nova', authenticate, authorize(['receptor', 'admin']), (req, res) => {
   const doacaoId = req.query.doacaoId;
   if (doacaoId) {
@@ -76,18 +75,15 @@ router.get('/nova', authenticate, authorize(['receptor', 'admin']), (req, res) =
   return res.redirect('/doacoes');
 });
 
-// POST /solicitacoes/nova — salva a solicitação no banco
 router.post('/nova', authenticate, authorize(['receptor', 'admin']), async (req, res) => {
   const { doacaoId, quantidade, observacoes } = req.body;
 
-  // Validação dos campos obrigatórios
   const erros = [];
   if (!doacaoId) erros.push({ field: 'doacaoId', message: 'O ID da doação é obrigatório' });
   if (!quantidade) erros.push({ field: 'quantidade', message: 'A quantidade é obrigatória' });
 
   if (erros.length > 0) {
     if (isApiRequest(req)) return res.status(400).json({ errors: erros });
-    // Se for EJS, busca doacoes novamente para renderizar a view com erro
     const doacoes = await prisma.doacao.findMany({ where: { status: 'disponivel' }, include: { itens: true } });
     return res.status(400).render('solicitacoes/nova', {
       title: 'Nova Solicitação - FoodShare',

@@ -1,23 +1,69 @@
 const {
-  timeAgo,
-  formatDateShort,
+  donationDisplayStatus,
   formatCategoryLabel,
   formatValidade,
+  formatDateShort,
+  timeAgo,
   solicitationPillKey,
   solicitationPillLabel,
 } = require('./formatTime');
 
-const STATUS_SORT_ORDER = {
+const DOACAO_STATUS_LABELS = {
+  disponivel: 'Disponível',
+  reservado: 'Reservado',
+  entregue: 'Entregue',
+};
+
+const SOLICITACAO_STATUS_SORT = {
   pendente: 0,
   aprovado: 1,
   recusado: 2,
   cancelado: 3,
 };
 
+function serializeDoacaoForDetail(doacao, { viewerRole = 'receptor' } = {}) {
+  const isReceptor = viewerRole === 'receptor';
+  const itens = (doacao.itens || []).map((item) => ({
+    id: item.id,
+    nome: item.nome,
+    quantidade: item.quantidade,
+    categoria: item.categoria,
+    categoriaLabel: formatCategoryLabel(item.categoria),
+    validadeLabel: formatValidade(item.validade),
+    displayStatus: donationDisplayStatus({
+      status: doacao.status,
+      validade: item.validade,
+    }),
+  }));
+
+  const title = itens.length === 1 ? itens[0].nome : `Doação com ${itens.length} itens`;
+
+  return {
+    id: doacao.id,
+    title,
+    status: doacao.status,
+    statusLabel: DOACAO_STATUS_LABELS[doacao.status] || doacao.status,
+    observacoes: doacao.observacoes || null,
+    doadorNome: doacao.usuario?.nome || null,
+    publicadoLabel: doacao.createdAt ? timeAgo(doacao.createdAt) : null,
+    itens,
+    canSolicitar: isReceptor && doacao.status === 'disponivel',
+    editarUrl: !isReceptor ? `/doacoes/${doacao.id}/editar` : null,
+  };
+}
+
+function buildDoacoesDetalheMap(doacoes, options = {}) {
+  const map = {};
+  for (const doacao of doacoes) {
+    map[doacao.id] = serializeDoacaoForDetail(doacao, options);
+  }
+  return map;
+}
+
 function sortSolicitacoesRecebidas(solicitacoes) {
   return [...solicitacoes].sort((a, b) => {
-    const orderA = STATUS_SORT_ORDER[a.status] ?? 99;
-    const orderB = STATUS_SORT_ORDER[b.status] ?? 99;
+    const orderA = SOLICITACAO_STATUS_SORT[a.status] ?? 99;
+    const orderB = SOLICITACAO_STATUS_SORT[b.status] ?? 99;
     if (orderA !== orderB) return orderA - orderB;
 
     const dateA = a.status === 'pendente' ? a.createdAt : a.updatedAt;
@@ -71,6 +117,8 @@ function buildSolicitacoesDetalheMap(solicitacoes, options = {}) {
 }
 
 module.exports = {
+  serializeDoacaoForDetail,
+  buildDoacoesDetalheMap,
   sortSolicitacoesRecebidas,
   serializeSolicitacaoForDetail,
   buildSolicitacoesDetalheMap,

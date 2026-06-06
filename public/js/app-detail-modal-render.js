@@ -1,6 +1,3 @@
-/**
- * Blocos reutilizáveis — layout Figma 90:371 (modal de detalhe).
- */
 (function AppDetailModalRenderModule() {
   'use strict';
 

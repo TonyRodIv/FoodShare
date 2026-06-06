@@ -1,6 +1,3 @@
-/**
- * Modal de nova solicitação (receptor).
- */
 (function SolicitacaoModalModule() {
   'use strict';
 

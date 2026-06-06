@@ -1,6 +1,3 @@
-/**
- * Modal de nova doação
- */
 (function DoacaoModalModule() {
   'use strict';
 

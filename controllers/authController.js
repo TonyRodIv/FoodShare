@@ -8,7 +8,6 @@ const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY = '7d';
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
 
-// Helpers
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRY });
 }
@@ -28,7 +27,6 @@ function setCookies(res, accessToken, refreshToken) {
   res.cookie('refreshToken', refreshToken, { ...cookieOptions, maxAge: REFRESH_TOKEN_EXPIRY_MS });
 }
 
-// GET /auth — tela inicial de boas-vindas
 async function showWelcome(req, res) {
   if (res.locals.usuario) {
     return res.redirect('/');
@@ -36,12 +34,10 @@ async function showWelcome(req, res) {
   res.render('auth/welcome', { title: 'FoodShare' });
 }
 
-// GET /auth/register
 async function showRegister(req, res) {
   res.render('auth/register', { title: 'Criar Conta - FoodShare', errors: [], old: {} });
 }
 
-// POST /auth/register
 async function register(req, res) {
   const result = registerSchema.safeParse(req.body);
 
@@ -83,13 +79,11 @@ async function register(req, res) {
   }
 }
 
-// GET /auth/login
 async function showLogin(req, res) {
   const registered = req.query.registered === '1';
   res.render('auth/login', { title: 'Entrar - FoodShare', errors: [], old: {}, registered });
 }
 
-// POST /auth/login
 async function login(req, res) {
   const result = loginSchema.safeParse(req.body);
 
@@ -157,7 +151,6 @@ async function login(req, res) {
   }
 }
 
-// POST /auth/refresh
 async function refresh(req, res) {
   const refreshTokenCookie = req.cookies?.refreshToken;
 
@@ -199,7 +192,6 @@ async function refresh(req, res) {
   }
 }
 
-// POST /auth/logout
 async function logout(req, res) {
   const refreshTokenCookie = req.cookies?.refreshToken;
 

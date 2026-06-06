@@ -1,7 +1,9 @@
 const prisma = require('../config/database');
 const { mesAtual, donationDisplayStatus } = require('../utils/formatTime');
-const { buildDoacoesDetalheMap } = require('../utils/doacaoDetail');
-const { buildSolicitacoesDetalheMap } = require('../utils/solicitacaoDetail');
+const {
+  buildDoacoesDetalheMap,
+  buildSolicitacoesDetalheMap,
+} = require('../utils/detailSerializers');
 
 async function showHome(req, res) {
   const usuario = res.locals.usuario;

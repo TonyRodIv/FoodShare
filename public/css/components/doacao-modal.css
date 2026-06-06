@@ -1,6 +1,4 @@
-/* Modal de nova doação — estende feedback-modal */
 
-/* Form modals compartilhados — nova doação + solicitar doação */
 .doacao-modal,
 .solicitacao-modal {
   position: relative;
@@ -43,7 +41,6 @@
   padding-bottom: 14px;
 }
 
-/* Campos no painel branco do app — fundo distinto do container */
 .doacao-edit-form > .auth-field .auth-field__input,
 .doacao-edit-form > .auth-field .custom-select__trigger,
 .doacao-modal__body > .auth-field .auth-field__input,
@@ -52,7 +49,6 @@
   border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
 }
 
-/* Campos dentro do card de item (fundo já é surface-green) */
 .doacao-modal__item .auth-field__input,
 .doacao-modal__item .custom-select__trigger {
   background: var(--card);
@@ -284,4 +280,46 @@
     padding: 14px 24px calc(20px + env(safe-area-inset-bottom, 0px));
     border-radius: 0;
   }
+}
+
+.solicitacao-modal__body > .auth-field .auth-field__label {
+  font-size: var(--app-fs-sm);
+  font-weight: 500;
+  color: var(--auth-label);
+}
+
+.solicitacao-modal__body > .auth-field .auth-field__input {
+  background: var(--app-inset-bg);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  font-size: var(--app-fs-md);
+  color: var(--text);
+}
+
+.solicitacao-modal__body > .auth-field .auth-field__input::placeholder {
+  color: var(--placeholder);
+}
+
+.solicitacao-modal__body > .auth-field .auth-field__hint {
+  font-size: var(--app-fs-sm);
+  color: var(--muted);
+}
+
+.solicitacao-modal__errors {
+  margin: 0;
+}
+
+.solicitacao-flash {
+  margin: 0 0 var(--app-gap-metrics);
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--green-pale);
+  color: var(--green-text);
+  font-size: var(--app-fs-md);
+  font-weight: 600;
+}
+
+.solicitacao-modal__body {
+  gap: 12px;
 }

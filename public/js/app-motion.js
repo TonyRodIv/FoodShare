@@ -1,6 +1,3 @@
-/**
- * Utilitários de motion compartilhados (modais, overlays).
- */
 (function AppMotionModule() {
   'use strict';
 

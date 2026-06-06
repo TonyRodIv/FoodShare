@@ -1,6 +1,3 @@
-/**
- * Modal de detalhes da doação (receptor e doador).
- */
 (function DoacaoDetailModalModule() {
   'use strict';
 

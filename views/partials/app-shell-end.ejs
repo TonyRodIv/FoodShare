@@ -8,12 +8,22 @@
     <% const inicial = locals.usuario.nome.charAt(0).toUpperCase(); %>
     <%- include('app-notifications-dropdown') %>
     <%- include('app-profile-dropdown', { nomeUsuario: locals.usuario.nome, inicial }) %>
-    <%- include('doacao-detail-modal') %>
+
+    <% if (typeof doacoesDetalhe !== 'undefined' && doacoesDetalhe && Object.keys(doacoesDetalhe).length) { %>
+      <%- include('json-detail-data', { detailData: doacoesDetalhe, detailDataId: 'doacoes-detalhe-data' }) %>
+    <% } %>
+    <%- include('app-detail-modal', { modalKind: 'doacao' }) %>
     <script src="/js/app-motion.js"></script>
     <script src="/js/app-header.js"></script>
     <script src="/js/feedback-modal.js"></script>
     <script src="/js/app-detail-modal-render.js"></script>
     <script src="/js/doacao-detail-modal.js"></script>
+
+    <% if (typeof solicitacoesDetalhe !== 'undefined' && solicitacoesDetalhe && Object.keys(solicitacoesDetalhe).length) { %>
+      <%- include('json-detail-data', { detailData: solicitacoesDetalhe, detailDataId: 'solicitacoes-detalhe-data' }) %>
+      <%- include('app-detail-modal', { modalKind: 'solicitacao' }) %>
+      <script src="/js/solicitacao-detail.js"></script>
+    <% } %>
   <% } %>
 
   <% if (locals.usuario && (locals.usuario.role === 'receptor' || locals.usuario.role === 'admin')) { %>

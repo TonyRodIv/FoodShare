@@ -1,7 +1,5 @@
-/* Microinterações — hover, clique e focus sutis (FoodShare) */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* ── Auth: botões ── */
   .auth-btn {
     transition:
       background var(--duration-normal) var(--ease-out),
@@ -17,7 +15,6 @@
     transform: scale(var(--press-scale));
   }
 
-  /* ── Auth: campos ── */
   .auth-field__input,
   .custom-select__trigger {
     transition:
@@ -43,7 +40,6 @@
     transform: scale(0.995);
   }
 
-  /* ── Auth: links e voltar ── */
   .auth-panel__footer a {
     transition: color var(--duration-normal) var(--ease-out), opacity var(--duration-fast) var(--ease-out);
   }
@@ -68,7 +64,6 @@
     transform: scale(0.96);
   }
 
-  /* ── Dropdown ── */
   .custom-select__option {
     transition:
       background var(--duration-fast) var(--ease-out),
@@ -80,7 +75,6 @@
     transform: scale(0.99);
   }
 
-  /* ── Modal ── */
   .feedback-modal__btn {
     transition:
       background var(--duration-normal) var(--ease-out),
@@ -92,7 +86,6 @@
     transform: scale(var(--press-scale));
   }
 
-  /* ── Alertas auth ── */
   .auth-alert {
     animation: microFadeIn var(--duration-slow) var(--ease-out) both;
   }

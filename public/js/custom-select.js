@@ -1,7 +1,3 @@
-/**
- * Dropdown personalizado — progressive enhancement sobre <select>.
- * Marque o select com data-custom-select.
- */
 (function CustomSelectModule() {
   'use strict';
 

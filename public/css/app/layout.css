@@ -1,4 +1,3 @@
-/* App logado — layout shell (sidebar + bottom nav) */
 
 .app-layout {
   display: flex;
@@ -62,7 +61,6 @@
   padding: 12px 50px 25px;
 }
 
-/* ── Sidebar desktop ── */
 .app-sidebar {
   display: none;
   width: var(--sidebar-width);
@@ -141,7 +139,6 @@
   display: contents;
 }
 
-/* ── Bottom nav mobile (flutuante) ── */
 .app-bottom-nav-wrap {
   display: block;
   position: fixed;
@@ -190,7 +187,6 @@
   filter: brightness(0) invert(1);
 }
 
-/* Reserva espaço no fluxo do documento = altura da navbar flutuante (mobile) */
 .app-bottom-nav-spacer {
   display: none;
   flex-shrink: 0;
@@ -199,7 +195,6 @@
   pointer-events: none;
 }
 
-/* ── Breakpoints app ── */
 @media (min-width: 1024px) {
   .app-sidebar {
     display: flex;

@@ -1,7 +1,3 @@
-/**
- * Conteúdo da página de erro — variantes por código HTTP e contexto da app.
- */
-
 const HTTP_VARIANTS = {
   400: {
     title: 'Requisição inválida',
@@ -77,7 +73,6 @@ const HTTP_VARIANTS = {
   },
 };
 
-/** Overrides por fluxo (500 contextual) */
 const CONTEXT_VARIANTS = {
   doacoes_list: {
     title: 'Não foi possível carregar suas doações',

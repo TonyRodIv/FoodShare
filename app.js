@@ -27,7 +27,6 @@ const { authenticate } = require('./middlewares/authMiddleware');
 const { attachAppData } = require('./middlewares/appDataMiddleware');
 const app = express();
 
-// View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.locals.buildAuthFeedback = buildAuthFeedback;
@@ -46,13 +45,11 @@ app.locals.donationDisplayStatus = donationDisplayStatus;
 app.locals.donationStatusLabel = donationStatusLabel;
 app.locals.isExpired = isExpired;
 
-// Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Middleware global: disponibiliza res.locals.usuario para todas as views EJS
 app.use((req, res, next) => {
   const token = req.cookies?.token;
   if (token) {
@@ -100,14 +97,12 @@ app.get('/api-docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'api-docs.html'));
 });
 
-// Routes
 const authRoutes = require('./routes/auth');
 const doacoesRoutes = require('./routes/doacoes');
 const solicitacoesRoutes = require('./routes/solicitacoes');
 const notificacoesRoutes = require('./routes/notificacoes');
 const errortestRoutes = require('./routes/errortest');
 
-// Home route
 app.get('/', showHome);
 app.get('/historico', authenticate, showHistorico);
 app.get('/notificacoes', authenticate, showNotificacoes);
@@ -118,9 +113,11 @@ app.use('/auth', authRoutes);
 app.use('/doacoes', doacoesRoutes);
 app.use('/solicitacoes', solicitacoesRoutes);
 app.use('/notificacoes', notificacoesRoutes);
-app.use('/errortest', errortestRoutes);
 
-// Error handling middleware
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/errortest', errortestRoutes);
+}
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const statusCode = err.status || err.statusCode || 500;
@@ -130,7 +127,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404
 app.use((req, res) => {
   res.status(404).render('error', {
     statusCode: 404,

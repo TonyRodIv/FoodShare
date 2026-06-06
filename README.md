@@ -2,176 +2,175 @@
 
 > Doe o que sobra. Alimente quem precisa.
 
-O **FoodShare** é uma plataforma web comunitária que conecta pessoas com excedente de alimentos a famílias e instituições que precisam. Por meio de um sistema simples de doações e solicitações, qualquer pessoa pode cadastrar itens disponíveis ou solicitar o que precisa — reduzindo o desperdício e fortalecendo redes de solidariedade locais.
+O **FoodShare** conecta quem tem excedente de alimentos a famílias e instituições que precisam. Doadores publicam itens disponíveis; receptores solicitam o que precisam; o doador aceita ou recusa cada pedido — reduzindo desperdício e fortalecendo redes locais de solidariedade.
 
-Desenvolvido como projeto acadêmico do curso de Engenharia de Software da UMJ (Centro Universitário Mário Pontes Jucá), utilizando Node.js, Express, EJS e PostgreSQL.
-
----
-
-## 📋 Como funciona
-
-- **Doadores** cadastram alimentos disponíveis com quantidade, categoria e validade
-- **Receptores** visualizam o que está disponível e fazem solicitações
-- O doador aceita ou recusa cada solicitação diretamente pela plataforma
-- O status da doação avança automaticamente: `disponível → reservado → entregue`
+Projeto acadêmico do curso de Engenharia de Software da UMJ (Centro Universitário Mário Pontes Jucá). Stack: Node.js, Express, EJS e PostgreSQL.
 
 ---
 
-## 🚀 Recursos
+## Como funciona
 
-- **Autenticação Segura**: Implementada usando JSON Web Tokens (JWT) armazenados em cookies seguros do tipo `httpOnly` para mitigar ataques XSS.
-- **Silent Refresh**: Mecanismo de renovação de sessão automático em background por meio de Refresh Tokens salvos no banco.
-- **Controle de Acesso por Tipo de Usuário (Roles)**:
-  - `doador`: Cadastra itens de doações.
-  - `receptor`: Solicita itens disponíveis.
-  - `admin`: Gerencia os recursos do sistema.
-- **Gerenciamento de Doações**: Criar, editar, visualizar e gerenciar doações de alimentos.
-- **Solicitações**: Pedidos de alimentos por receptores com gerenciamento de status.
-- **Perfis de Usuário**: Gerenciamento de dados cadastrais dos usuários.
-- **Row Level Security (RLS)**: Segurança ativa no nível de tabelas no PostgreSQL (Supabase).
-- **Interface Dinâmica e Responsiva**: Design moderno com EJS e navbar adaptável ao estado de login do usuário.
+1. **Doadores** cadastram alimentos com quantidade, categoria e validade.
+2. **Receptores** exploram o catálogo e enviam solicitações.
+3. O doador **aceita ou recusa** cada pedido na plataforma.
+4. A doação evolui de `disponível` → `reservado` → `entregue`.
 
 ---
 
-## 🛠️ Tecnologias
+## Principais recursos
 
-- **Backend**: Node.js + Express
-- **Frontend**: EJS (Template Engine com parciais header/footer)
-- **Validação**: Zod v4 (validação de schemas de inputs)
-- **Banco de Dados**: PostgreSQL hospedado no Supabase (com RLS ativo)
-- **ORM & Migrations**: Prisma 7 (com `@prisma/adapter-pg` e suporte a Supabase Pooler)
-- **Autenticação**: JWT (JSON Web Tokens)
-- **Segurança**: Bcrypt para hash de senhas e Cookies `httpOnly` seguros
+- Autenticação JWT em cookies `httpOnly`
+- Renovação silenciosa de sessão (refresh token persistido no banco)
+- Controle de acesso por papel: `doador`, `receptor`, `admin`
+- Interface responsiva com sidebar, barra inferior e modais
+- Documentação de API em `/api-docs` (Swagger)
 
 ---
 
-## 📁 Estrutura do Projeto
+## Tecnologias
+
+| Camada | Stack |
+|--------|-------|
+| Backend | Node.js, Express |
+| Views | EJS (app shell com partials) |
+| Validação | Zod |
+| Banco | PostgreSQL (Supabase) + Prisma 7 |
+| Autenticação | JWT + bcrypt |
+
+---
+
+## Estrutura do repositório
 
 ```text
 foodshare/
-├── config/          # Configurações de banco de dados (Prisma client & adapter)
-├── controllers/     # Controladores (regras e lógica de rotas)
-├── middlewares/     # Middlewares de autenticação e autorização
-├── models/          # Schemas de dados (antigos, a serem migrados)
-├── prisma/          # Definições do banco de dados (schema.prisma e migrations)
-├── public/          # Arquivos estáticos (CSS, imagens)
-├── routes/          # Arquivos de definição de rotas
-├── validators/      # Schemas de validação de input (Zod)
-├── views/           # Templates EJS (Login, Registro, Home e Parciais)
-├── app.js           # Inicialização e middleware global do Express
-├── server.js        # Inicialização do servidor HTTP
-└── package.json     # Gerenciador de dependências do projeto
+├── config/          Cliente Prisma
+├── controllers/     Lógica de páginas (auth, home, histórico…)
+├── docs/            Documentação detalhada
+├── middlewares/     Autenticação e dados globais das views
+├── prisma/          Schema, migrations e seed
+├── public/          CSS, JavaScript e imagens
+├── routes/          Rotas HTTP (+ anotações Swagger)
+├── services/        Serviços compartilhados
+├── utils/           Funções auxiliares
+├── validators/      Schemas Zod
+├── views/           Templates EJS
+├── app.js           Aplicação Express
+└── server.js        Entrada do servidor
 ```
+
+Mais detalhes: **[docs/README.md](./docs/README.md)**  
+Design system: **[.rules/design.mdc](./.rules/design.mdc)**
 
 ---
 
-## ⚙️ Instalação e Execução
+## Instalação
 
-### 1. Clonar o Repositório
+### 1. Clonar e instalar
+
 ```bash
 git clone https://github.com/TonyRodIv/FoodShare.git
 cd FoodShare
-```
-
-### 2. Instalar Dependências
-```bash
 npm install
 ```
 
-### 3. Configurar Variáveis de Ambiente
-Crie um arquivo `.env` na raiz do projeto e configure as chaves necessárias:
+### 2. Configurar ambiente
+
+Copie `.env.example` para `.env`:
+
 ```env
 PORT=3000
-
-# Conexão transacional com o Supabase Pooler (porta 6543) - para runtime do app
-DATABASE_URL="postgresql://postgres.[PROJETO]:[SENHA]@aws-1-sa-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-
-# Conexão de sessão com o Supabase (porta 5432) - para migrations e CLI do Prisma
-DIRECT_URL="postgresql://postgres.[PROJETO]:[SENHA]@aws-1-sa-east-1.pooler.supabase.com:5432/postgres"
-
-# Segredos criptográficos para geração de tokens
-JWT_SECRET="sua_chave_acesso_secreta"
-JWT_REFRESH_SECRET="sua_chave_refresh_secreta"
+DATABASE_URL="postgresql://..."      # pooler (6543) — uso em runtime
+DIRECT_URL="postgresql://..."        # sessão (5432) — migrations do Prisma
+JWT_SECRET="..."
+JWT_REFRESH_SECRET="..."
 ```
 
-### 4. Rodar Migrações do Banco (Apenas na Primeira Instalação)
-Se for a sua primeira vez configurando o projeto, aplique as migrações para criar as tabelas (`Usuario`, `RefreshToken`, `Doacao`, `Solicitacao`) no Supabase:
+### 3. Banco de dados
+
 ```bash
 npx prisma migrate dev
+npm run seed          # opcional — dados de demo (ver docs/demo-users.md)
 ```
 
-### 5. Iniciar o App
-Para produção:
+### 4. Executar
+
 ```bash
-npm start
-```
-Para desenvolvimento (com hot-reload via nodemon):
-```bash
-npm run dev
+npm run dev    # desenvolvimento
+npm start      # produção
 ```
 
 ---
 
-## 🌐 Endpoints
+## Endpoints
 
-### Autenticação (`/auth`)
-- `GET /auth/register` - Tela de cadastro de usuários
-- `POST /auth/register` - Realizar cadastro (validação com Zod, senha com Bcrypt)
-- `GET /auth/login` - Tela de login de usuários
-- `POST /auth/login` - Realizar autenticação (emite Access & Refresh cookies)
-- `POST /auth/refresh` - Rota silenciosa para renovação do Access Token
-- `POST /auth/logout` - Logout (limpa cookies e remove Refresh Token ativo do banco)
+Todas as rotas abaixo de doações e solicitações exigem autenticação.
 
-### Doações (`/doacoes`)
-- `GET /doacoes` - Listar todas as doações (Público)
-- `GET /doacoes/nova` - Formulário de nova doação (Protegido: `doador` ou `admin`)
-- `POST /doacoes/nova` - Criar nova doação (Protegido: `doador` ou `admin`)
-- `GET /doacoes/:id/editar` - Editar doação (Protegido: dono do recurso ou `admin`)
-- `DELETE /doacoes/:id` - Deletar doação (Protegido: dono do recurso ou `admin`)
+### Autenticação — `/auth`
 
-### Solicitações (`/solicitacoes`)
-- `GET /solicitacoes` - Listar solicitações (Público)
-- `GET /solicitacoes/nova` - Formulário de nova solicitação (Protegido: `receptor` ou `admin`)
-- `POST /solicitacoes/nova` - Criar nova solicitação (Protegido: `receptor` ou `admin`)
-- `GET /solicitacoes/minhas` - Ver minhas solicitações (Protegido: `receptor` ou `admin`)
-- `GET /solicitacoes/recebidas` - Ver solicitações recebidas (Protegido: `doador` ou `admin`)
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/auth/login`, `/auth/register` | Telas de login e cadastro |
+| POST | `/auth/login`, `/auth/register` | Autenticar ou registrar |
+| POST | `/auth/refresh` | Renovar access token |
+| POST | `/auth/logout` | Encerrar sessão |
 
----
+### Páginas — raiz da aplicação
 
-## 🔐 Segurança e Sessão
+| Rota | Descrição |
+|------|-----------|
+| `/` | Home (conteúdo varia por papel) |
+| `/historico` | Histórico de atividades (menu do perfil) |
+| `/notificacoes` | Central de notificações |
+| `/configuracoes` | Preferências da conta |
 
-O sistema não armazena tokens no localStorage. O controle é feito via **Cookies httpOnly**:
-- `token`: Access Token contendo os dados básicos do usuário (ID, Nome, E-mail, Role), expira em 15 minutos.
-- `refreshToken`: Token de longa duração (7 dias) armazenado de forma segura no banco de dados e no navegador.
+### Doações — `/doacoes`
 
-Caso o Access Token expire, o middleware `authenticate` verifica a existência do Refresh Token e faz a rota de renovação em background sem deslogar o usuário de forma abrupta.
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/doacoes` | Painel do doador ou catálogo do receptor |
+| GET | `/doacoes/nova` | Redireciona para `/doacoes?nova=1` (modal) |
+| POST | `/doacoes/nova` | Criar doação (`doador`, `admin`) |
+| GET, POST | `/doacoes/:id/editar` | Editar doação existente |
 
-*Nota para uso externo de API*: O sistema também está preparado para ler o token a partir do cabeçalho de autorização padrão caso seja integrado com aplicativos externos:
-```http
-Authorization: Bearer seu_token_aqui
-```
+### Solicitações — `/solicitacoes`
 
----
+Referência completa: [docs/solicitacoes-routes.md](./docs/solicitacoes-routes.md).
 
-## 🤝 Contribuindo
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/solicitacoes/nova` | Redireciona para `/doacoes` (modal de solicitação) |
+| POST | `/solicitacoes/nova` | Criar solicitação |
+| GET | `/solicitacoes/minhas` | Solicitações do receptor logado |
+| GET | `/solicitacoes/recebidas` | Pedidos recebidos pelo doador |
+| POST | `/solicitacoes/:id/aceitar` | Aprovar solicitação |
+| POST | `/solicitacoes/:id/recusar` | Recusar solicitação |
+| POST | `/solicitacoes/:id/cancelar` | Cancelar solicitação (receptor) |
 
-Contribuições são bem-vindas! Sinta-se livre para:
-- Reportar bugs
-- Sugerir novas funcionalidades
-- Enviar pull requests
+### Notificações — `/notificacoes`
 
----
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/notificacoes/:id/lida` | Marcar notificação como lida |
+| POST | `/notificacoes/marcar-todas` | Marcar todas como lidas |
 
-## 📝 Licença
-
-Este projeto é licenciado sob a MIT License - veja o arquivo LICENSE para detalhes.
-
----
-
-## 📧 Contato
-
-Para dúvidas ou sugestões, abra uma issue no repositório.
+Clientes API podem receber JSON com o header `Accept: application/json` ou o parâmetro `?format=json`, quando a rota suportar.
 
 ---
 
-Made with ❤️ by FoodShare Team
+## Segurança e sessão
+
+Os tokens ficam em cookies `httpOnly` (`token` e `refreshToken`). Quando o access token expira, o middleware `authenticate` tenta renovar a sessão via refresh token.
+
+Integrações externas também podem enviar `Authorization: Bearer <token>`.
+
+---
+
+## Contribuindo
+
+Issues, sugestões e pull requests são bem-vindos no repositório GitHub.
+
+---
+
+## Licença
+
+MIT — conforme `package.json`.

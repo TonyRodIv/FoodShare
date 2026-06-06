@@ -1,0 +1,3 @@
+<% if (typeof detailData !== 'undefined' && detailData && Object.keys(detailData).length) { %>
+<script type="application/json" id="<%= detailDataId %>"><%- JSON.stringify(detailData) %></script>
+<% } %>

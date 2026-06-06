@@ -1,6 +1,3 @@
-/**
- * Menus do header — notificações e perfil
- */
 (function AppHeaderModule() {
   'use strict';
 

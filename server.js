@@ -10,7 +10,6 @@ server.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM recebido. Encerrando servidor gracefully...');
   server.close(() => {
@@ -18,5 +17,3 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-
-// Nodemon trigger comment

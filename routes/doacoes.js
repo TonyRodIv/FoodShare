@@ -3,7 +3,7 @@ const router = express.Router();
 const prisma = require('../config/database');
 const { authenticate, authorize } = require('../middlewares/authMiddleware');
 const { donationDisplayStatus, isExpired, mesAtual, categoryFilterKey } = require('../utils/formatTime');
-const { buildDoacoesDetalheMap } = require('../utils/doacaoDetail');
+const { buildDoacoesDetalheMap } = require('../utils/detailSerializers');
 const { getReceptorMonthStats } = require('../utils/receptorStats');
 
 function isApiRequest(req) {

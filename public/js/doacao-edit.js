@@ -1,6 +1,3 @@
-/**
- * Formulário de edição de doação (multi-item)
- */
 (function DoacaoEditModule() {
   'use strict';
 

@@ -1,5 +1,3 @@
-/* Página de erro — Figma 105:373 (desktop) / 105:785 + 105:841 (mobile) */
-
 
 
 .error-layout {
@@ -13,8 +11,6 @@
   color: #fff;
 
 }
-
-
 
 .error-page {
 
@@ -35,8 +31,6 @@
   overflow: hidden;
 
 }
-
-
 
 .error-page__code-bg {
 
@@ -72,8 +66,6 @@
 
 }
 
-
-
 .error-page__card {
 
   position: relative;
@@ -106,8 +98,6 @@
 
 }
 
-
-
 .error-page__icon-wrap {
 
   display: flex;
@@ -128,8 +118,6 @@
 
 }
 
-
-
 .error-page__icon {
 
   display: block;
@@ -139,8 +127,6 @@
   height: var(--error-icon-glyph);
 
 }
-
-
 
 .error-page__icon--symbol {
 
@@ -160,8 +146,6 @@
 
 }
 
-
-
 .error-page__icon--symbol.is-entering {
 
   will-change: transform, opacity;
@@ -170,17 +154,11 @@
 
 }
 
-
-
-/* Variantes — cor do ícone */
-
 .error-page__card--server .error-page__icon-wrap {
 
   background: var(--red-text);
 
 }
-
-
 
 .error-page__card--forbidden .error-page__icon-wrap {
 
@@ -188,15 +166,11 @@
 
 }
 
-
-
 .error-page__card--not-found .error-page__icon-wrap {
 
   background: #414651;
 
 }
-
-
 
 .error-page__card--auth .error-page__icon-wrap {
 
@@ -204,15 +178,11 @@
 
 }
 
-
-
 .error-page__card--warning .error-page__icon-wrap {
 
   background: #9a6700;
 
 }
-
-
 
 .error-page__card--auth .error-page__icon--symbol,
 
@@ -225,8 +195,6 @@
   color: #fff;
 
 }
-
-
 
 .error-page__copy {
 
@@ -244,8 +212,6 @@
 
 }
 
-
-
 .error-page__title {
 
   margin: 0;
@@ -259,8 +225,6 @@
   color: #fff;
 
 }
-
-
 
 .error-page__subtitle {
 
@@ -277,8 +241,6 @@
   color: var(--error-subtitle-color);
 
 }
-
-
 
 .error-page__btn {
 
@@ -322,23 +284,17 @@
 
 }
 
-
-
 .error-page__btn:hover {
 
   background: #e4ece9;
 
 }
 
-
-
 .error-page__btn:active {
 
   transform: scale(var(--press-scale));
 
 }
-
-
 
 @keyframes errorIconGlyphArrive {
 
@@ -350,8 +306,6 @@
 
   }
 
-
-
   38% {
 
     opacity: 1;
@@ -360,23 +314,17 @@
 
   }
 
-
-
   58% {
 
     transform: scale(0.96);
 
   }
 
-
-
   76% {
 
     transform: scale(1.02);
 
   }
-
-
 
   100% {
 
@@ -388,8 +336,6 @@
 
 }
 
-
-
 @media (min-width: 1024px) {
 
   .error-page {
@@ -398,23 +344,17 @@
 
   }
 
-
-
   .error-page__card {
 
     min-width: min(100%, var(--error-card-max-w));
 
   }
 
-
-
   .error-page__copy {
 
     padding: 8px 0 4px;
 
   }
-
-
 
   .error-page__btn {
 
@@ -424,8 +364,6 @@
 
 }
 
-
-
 @media (max-width: 1023px) {
 
   .error-page {
@@ -433,8 +371,6 @@
     padding: var(--error-page-gutter);
 
   }
-
-
 
   .error-page__code-bg {
 
@@ -444,15 +380,11 @@
 
   }
 
-
-
   .error-page__card {
 
     max-width: none;
 
   }
-
-
 
   .error-page__subtitle {
 
@@ -462,8 +394,6 @@
 
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
 
   .error-page__icon--symbol.is-entering {
@@ -472,8 +402,6 @@
 
   }
 
-
-
   .error-page__btn:active {
 
     transform: none;
@@ -481,8 +409,6 @@
   }
 
 }
-
-
 
 @media (prefers-reduced-transparency: reduce) {
 

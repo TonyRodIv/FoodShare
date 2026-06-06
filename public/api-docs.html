@@ -25,18 +25,13 @@
       }
     }
   </script>
-  <!-- Swagger UI -->
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
-  <!-- Motion -->
   <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
   <style>
-    /* ===== RESET DO SWAGGER ===== */
     body { margin: 0; padding: 0; background: #0a0a0a; }
 
-    /* Esconde o header e info padrão do Swagger (substituímos pelo nosso) */
     .swagger-ui .topbar { display: none !important; }
 
-    /* ===== TEMA ESCURO GERAL ===== */
     .swagger-ui {
       font-family: 'Inter', sans-serif !important;
       color: #e5e5e5 !important;
@@ -46,7 +41,6 @@
     .swagger-ui .scheme-container { background: #171717 !important; border-bottom: 1px solid #262626 !important; box-shadow: none !important; padding: 12px 24px !important; }
     .swagger-ui .scheme-container .schemes > label { color: #a3a3a3 !important; }
 
-    /* ===== TAGS / GRUPOS ===== */
     .swagger-ui .opblock-tag-section { margin-bottom: 8px !important; }
     .swagger-ui .opblock-tag {
       background: #171717 !important;
@@ -62,7 +56,6 @@
     .swagger-ui .opblock-tag small { color: #737373 !important; font-weight: 400 !important; }
     .swagger-ui .opblock-tag svg { fill: #a3a3a3 !important; }
 
-    /* ===== BLOCOS DE OPERAÇÃO ===== */
     .swagger-ui .opblock {
       border-radius: 10px !important;
       border: 1px solid #262626 !important;
@@ -86,47 +79,39 @@
     .swagger-ui .opblock .opblock-summary-path a { color: #d4d4d4 !important; }
     .swagger-ui .opblock .opblock-summary-description { color: #a3a3a3 !important; font-size: 13px !important; }
 
-    /* POST */
     .swagger-ui .opblock.opblock-post { background: rgba(34, 197, 94, 0.06) !important; border-color: rgba(34, 197, 94, 0.2) !important; }
     .swagger-ui .opblock.opblock-post .opblock-summary-method { background: #16a34a !important; }
     .swagger-ui .opblock.opblock-post .opblock-summary { border-color: transparent !important; }
     .swagger-ui .opblock.opblock-post .tab-header .tab-item.active h4 span::after { background: #22c55e !important; }
 
-    /* GET */
     .swagger-ui .opblock.opblock-get { background: rgba(59, 130, 246, 0.06) !important; border-color: rgba(59, 130, 246, 0.2) !important; }
     .swagger-ui .opblock.opblock-get .opblock-summary-method { background: #2563eb !important; }
     .swagger-ui .opblock.opblock-get .opblock-summary { border-color: transparent !important; }
 
-    /* PUT */
     .swagger-ui .opblock.opblock-put { background: rgba(245, 158, 11, 0.06) !important; border-color: rgba(245, 158, 11, 0.2) !important; }
     .swagger-ui .opblock.opblock-put .opblock-summary-method { background: #d97706 !important; }
 
-    /* DELETE */
     .swagger-ui .opblock.opblock-delete { background: rgba(239, 68, 68, 0.06) !important; border-color: rgba(239, 68, 68, 0.2) !important; }
     .swagger-ui .opblock.opblock-delete .opblock-summary-method { background: #dc2626 !important; }
 
-    /* ===== DENTRO DO BLOCO EXPANDIDO ===== */
     .swagger-ui .opblock-body { background: #171717 !important; }
     .swagger-ui .opblock-section-header { background: #1f1f1f !important; border-color: #262626 !important; }
     .swagger-ui .opblock-section-header h4 { color: #e5e5e5 !important; }
     .swagger-ui .opblock-description-wrapper p,
     .swagger-ui .opblock-external-docs-wrapper p { color: #a3a3a3 !important; }
 
-    /* ===== TABELAS ===== */
     .swagger-ui table thead tr td, .swagger-ui table thead tr th { color: #a3a3a3 !important; border-color: #262626 !important; }
     .swagger-ui .parameter__name { color: #f5f5f5 !important; }
     .swagger-ui .parameter__name.required::after { color: #ef4444 !important; }
     .swagger-ui .parameter__type { color: #22c55e !important; }
     .swagger-ui .parameter__in { color: #737373 !important; }
 
-    /* ===== MODEL / SCHEMA ===== */
     .swagger-ui .model-box { background: #1a1a1a !important; }
     .swagger-ui .model { color: #d4d4d4 !important; }
     .swagger-ui .model-title { color: #f5f5f5 !important; }
     .swagger-ui .prop-type { color: #22c55e !important; }
     .swagger-ui .prop-format { color: #737373 !important; }
 
-    /* ===== INPUTS / TEXTAREA ===== */
     .swagger-ui input[type=text], .swagger-ui textarea, .swagger-ui select {
       background: #1a1a1a !important;
       border: 1px solid #333 !important;
@@ -141,7 +126,6 @@
       box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15) !important;
     }
 
-    /* ===== BOTÕES ===== */
     .swagger-ui .btn {
       border-radius: 8px !important;
       font-weight: 600 !important;
@@ -161,7 +145,6 @@
     }
     .swagger-ui .try-out__btn:hover { background: rgba(34, 197, 94, 0.1) !important; }
 
-    /* ===== RESPOSTAS ===== */
     .swagger-ui .responses-inner { background: transparent !important; }
     .swagger-ui .response-col_status { color: #22c55e !important; font-weight: 600 !important; }
     .swagger-ui .response-col_description { color: #a3a3a3 !important; }
@@ -170,23 +153,19 @@
     .swagger-ui .highlight-code pre { color: #d4d4d4 !important; }
     .swagger-ui .microlight { background: #1a1a1a !important; color: #d4d4d4 !important; border-radius: 8px !important; font-size: 13px !important; }
 
-    /* ===== COPY BUTTON ===== */
     .swagger-ui .copy-to-clipboard { background: #262626 !important; border-radius: 6px !important; }
 
-    /* ===== SCROLLBAR ===== */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #171717; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #444; }
 
-    /* ===== ANIMAÇÃO DE ENTRADA ===== */
     .swagger-ui .opblock-tag-section { opacity: 0; transform: translateY(12px); }
     .swagger-ui .opblock-tag-section.animated { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease, transform 0.4s ease; }
   </style>
 </head>
 <body class="bg-[#0a0a0a] min-h-screen font-sans">
 
-  <!-- ===== HEADER CUSTOM ===== -->
   <header id="custom-header" class="sticky top-0 z-50 border-b border-neutral-800" style="background: rgba(10,10,10,0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -205,7 +184,6 @@
     </div>
   </header>
 
-  <!-- ===== HERO ===== -->
   <section id="hero" class="relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-green-500/5 via-transparent to-transparent pointer-events-none"></div>
     <div class="max-w-7xl mx-auto px-6 py-12 relative">
@@ -227,7 +205,6 @@
           <span class="px-3 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-400 text-xs font-medium">JSON Responses</span>
         </div>
 
-        <!-- Instruções de Uso -->
         <div class="bg-neutral-800/40 border border-neutral-700/50 rounded-xl p-5 backdrop-blur-sm">
           <h3 class="text-white font-semibold text-sm flex items-center gap-2 mb-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -244,12 +221,10 @@
     </div>
   </section>
 
-  <!-- ===== SWAGGER UI CONTAINER ===== -->
   <div class="max-w-7xl mx-auto px-4 pb-16">
     <div id="swagger-ui" class="rounded-2xl border border-neutral-800 bg-[#111111] overflow-hidden"></div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="border-t border-neutral-800 py-8">
     <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-neutral-600 text-xs">© 2026 FoodShare — Compartilhe alimentos. Transforme vidas.</p>
@@ -259,11 +234,8 @@
     </div>
   </footer>
 
-  <!-- ===== SWAGGER UI JS ===== -->
   <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
-  <script>
-    // Inicializa o Swagger UI
-    const ui = SwaggerUIBundle({
+  <script>    const ui = SwaggerUIBundle({
       url: '/api-docs/swagger.json',
       dom_id: '#swagger-ui',
       deepLinking: true,
@@ -278,18 +250,12 @@
         return req;
       },
     });
-
-    // ===== ANIMAÇÕES COM MOTION =====
     document.addEventListener('DOMContentLoaded', () => {
       const { animate, stagger } = window.Motion || {};
-
-      // Anima o header
       if (animate) {
         animate('#custom-header', { opacity: [0, 1], y: [-20, 0] }, { duration: 0.5, easing: 'ease-out' });
         animate('#hero', { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, delay: 0.15, easing: 'ease-out' });
       }
-
-      // Observa quando as seções do Swagger aparecem e anima
       const observer = new MutationObserver(() => {
         const sections = document.querySelectorAll('.swagger-ui .opblock-tag-section:not(.animated)');
         sections.forEach((section, i) => {

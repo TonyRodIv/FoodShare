@@ -1,10 +1,8 @@
-/* Transições entre páginas (auth) */
 
 .page-transition-root {
   min-height: inherit;
 }
 
-/* Desktop — container fixo; só o conteúdo interno anima */
 @media (min-width: 961px) {
   .page-transitions-enabled .auth-panel {
     overflow-x: hidden;

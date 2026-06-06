@@ -1,7 +1,5 @@
-/* Microinterações — app logado (cliques, entradas, modais, dropdowns) */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* ── Entrada da página ── */
   @keyframes appFadeUp {
     from {
       opacity: 0;
@@ -104,7 +102,6 @@
     animation-delay: 320ms;
   }
 
-  /* ── Press scale (clique) ── */
   .app-sidebar__link,
   .app-sidebar__logout button,
   .app-bottom-nav__link,
@@ -153,7 +150,6 @@
     transform: scale(var(--press-scale));
   }
 
-  /* ── Hover cards ── */
   .home-hero-card,
   .home-metric-card,
   .home-panel,
@@ -190,7 +186,6 @@
       background: rgba(93, 202, 165, 0.12);
     }
 
-    /* Sidebar — ícones com movimento leve e personalizado no hover */
     .app-sidebar__nav .app-sidebar__link:nth-child(1):hover .app-icon,
     .app-sidebar__nav .app-sidebar__link:nth-child(1):hover .app-svg-icon {
       animation: sidebarIconHome 560ms var(--ease-spring);
@@ -225,12 +220,10 @@
       background: rgba(93, 202, 165, 0.14);
     }
 
-    /* Sino de notificações — toque de campainha no hover */
     .app-header__notifications-btn:hover .app-icon {
       animation: iconBellRing 720ms var(--ease-out);
     }
 
-    /* Botões com seta → */
     .home-hero-card__btn:hover .app-icon,
     .home-hero-card__btn:hover .app-svg-icon,
     .app-page-header__btn:hover .app-icon,
@@ -239,7 +232,6 @@
       animation: iconArrowNudge 480ms var(--ease-spring);
     }
 
-    /* Botões / links com chevron › */
     .home-panel__action:hover .app-icon,
     .home-panel__action:hover .app-svg-icon,
     .app-settings__link-row:hover .app-settings__chevron,
@@ -271,7 +263,6 @@
     }
   }
 
-  /* ── Listas e tabela ── */
   .home-table__row,
   .home-request,
   .app-history-item,
@@ -290,12 +281,10 @@
     transform: scale(0.97);
   }
 
-  /* ── Badge notificação ── */
   .app-header__badge {
     animation: appBadgePop 480ms var(--ease-spring) 400ms both;
   }
 
-  /* ── Modal — overlay e saída ── */
   .feedback-modal-overlay {
     transition:
       opacity var(--duration-slow) var(--ease-out),
@@ -332,12 +321,10 @@
     opacity: 0;
   }
 
-  /* ── Item do modal doação ── */
   .doacao-modal__item--enter {
     animation: appSlideUp var(--duration-normal) var(--ease-out) both;
   }
 
-  /* ── Sidebar logo ── */
   .app-sidebar__logo {
     transition:
       transform var(--duration-fast) var(--ease-out),
@@ -354,7 +341,6 @@
     transform: scale(var(--press-scale));
   }
 
-  /* ── Sidebar — base dos ícones ── */
   .app-sidebar__link .app-icon,
   .app-sidebar__link .app-svg-icon,
   .app-sidebar__logout button .app-icon,
@@ -409,7 +395,6 @@
     transition: transform 100ms var(--ease-out);
   }
 
-  /* ── Bottom nav mobile — clique expressivo ── */
   .app-bottom-nav__link {
     transition:
       transform 220ms var(--ease-spring),
@@ -466,7 +451,6 @@
     100% { transform: scale(1) rotate(0deg); }
   }
 
-  /* ── Sino e setas — base dos ícones ── */
   .app-header__notifications-btn .app-icon,
   .home-hero-card__btn .app-icon,
   .home-hero-card__btn .app-svg-icon,
@@ -541,7 +525,6 @@
     animation: iconChevronTap 380ms var(--ease-spring);
   }
 
-  /* ── Aceitar / recusar (solicitações mobile) ── */
   .home-icon-action .app-svg-icon {
     transform-origin: center bottom;
     will-change: transform;

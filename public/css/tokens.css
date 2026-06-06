@@ -1,5 +1,4 @@
 :root {
-  /* Marca — alinhado com .rules/design.mdc */
   --green-dark: #0a1a12;
   --green-mid: #1d9e75;
   --green-light: #5dcaa5;
@@ -15,7 +14,6 @@
   --app-bg: #f0f5f3;
   --card: #ffffff;
   --surface: #f0f0ea;
-  /* Divisórias — Figma Line (66:3048): hairline 0.5px, traço translúcido */
   --border-hairline: 0.5px;
   --border-color: color-mix(in srgb, var(--text) 7%, transparent);
   --border: var(--border-color);
@@ -31,14 +29,12 @@
   --radius-full: 9999px;
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
   --sidebar-width: 60px;
-  /* Navbar flutuante mobile: pill (62px) + margem inferior do wrap (20px) + safe area */
   --bottom-nav-pill-height: 62px;
   --bottom-nav-wrap-pad: 20px;
   --bottom-nav-height: calc(var(--bottom-nav-pill-height) + var(--bottom-nav-wrap-pad));
   --app-mobile-safe-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
   --app-sticky-aside-top: 88px;
 
-  /* App — tipografia (escala web, design.mdc) */
   --app-fs-xs: 11px;
   --app-fs-sm: 12px;
   --app-fs-base: 13px;
@@ -55,7 +51,6 @@
   --app-fs-hero-subtitle: 14px;
   --app-fs-metric-value: 26px;
 
-  /* App — espaçamento e dimensões proporcionais */
   --app-gap-dashboard: 20px;
   --app-gap-metrics: 12px;
   --app-gap-panel: 20px;
@@ -78,7 +73,6 @@
   --app-input-px: 16px;
   --app-control-fs: var(--app-fs-md);
   --app-control-radius: var(--radius-md);
-  /* Controles sobre --app-bg → branco; dentro de --card → cor da página */
   --app-control-bg: var(--card);
   --app-inset-bg: var(--app-bg);
   --app-tag-py: 8px;
@@ -111,7 +105,6 @@
   --home-table-col-status: 6rem;
   --home-table-col-action: 4rem;
 
-  /* Error page — Figma 105:373 / 105:785 */
   --error-bg: var(--auth-bg);
   --error-card-bg: rgba(18, 18, 18, 0.8);
   --error-card-max-w: 352px;
@@ -138,7 +131,6 @@
   --error-btn-px: var(--app-btn-px);
   --error-copy-gap: 5px;
 
-  /* Auth (aliases usados nos módulos auth + modal) */
   --auth-bg: #121212;
   --auth-panel: var(--surface-green);
   --auth-green: var(--green-mid);
@@ -149,7 +141,6 @@
   --auth-headline: rgba(27, 30, 31, 0.9);
   --auth-description: rgba(27, 30, 31, 0.7);
 
-  /* Auth — tipografia (desktop padrão) */
   --auth-fs-greeting: 26px;
   --auth-fs-title: 38px;
   --auth-fs-label: 14px;
@@ -159,7 +150,6 @@
   --auth-fs-btn: 15px;
   --auth-fs-alert: 14px;
 
-  /* Motion — microinterações */
   --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
   --duration-fast: 120ms;
@@ -167,16 +157,13 @@
   --duration-slow: 280ms;
   --press-scale: 0.98;
 
-  /* Hover de linhas — tom neutro bem sutil (distinto de --surface-green dos botões) */
   --hover-row-bg: color-mix(in srgb, var(--text) 2%, transparent);
   --hover-btn-secondary-bg: color-mix(in srgb, var(--text) 8%, var(--surface-green));
 
-  /* Truncamento responsivo — nomes longos em tabelas/listas */
   --truncate-table-item: none;
   --truncate-list-title: none;
 }
 
-/* App — escala só da faixa superior (métricas) em telas grandes */
 @media (min-width: 1024px) {
   :root {
     --app-fs-hero-title: 22px;
