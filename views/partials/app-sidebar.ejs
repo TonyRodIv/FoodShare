@@ -36,14 +36,6 @@
 
         </a>
 
-
-
-        <a href="/historico" class="app-sidebar__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
-
-          <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
-
-        </a>
-
       <% } else { %>
 
         <a href="/" class="app-sidebar__link<%= activeNav === 'home' ? ' is-active' : '' %>" aria-label="Início"<%= activeNav === 'home' ? ' aria-current="page"' : '' %>>
@@ -65,14 +57,6 @@
         <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
 
           <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
-
-        </a>
-
-
-
-        <a href="/historico" class="app-sidebar__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
-
-          <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
 
         </a>
 

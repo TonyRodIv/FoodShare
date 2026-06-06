@@ -50,7 +50,9 @@
         <%- include('app-header-action', {
           actionLabel: headerActionLabel,
           actionHref: typeof headerActionHref !== 'undefined' ? headerActionHref : undefined,
+          actionForm: typeof headerActionForm !== 'undefined' ? headerActionForm : undefined,
           actionModal: typeof headerActionModal !== 'undefined' ? headerActionModal : false,
+          actionSecondary: typeof headerActionSecondary !== 'undefined' ? headerActionSecondary : false,
           buttonClass: 'app-header__action',
         }) %>
       <% } %>

@@ -1,7 +1,8 @@
 <%- include('../partials/app-shell-start') %>
+<%- include('../partials/app-page-header') %>
 
 <div class="app-page">
-  <article class="app-page-panel">
+  <article class="app-page-panel app-inbox-panel">
     <% if (notificacoes.length === 0) { %>
       <%- include('../partials/home-empty-state', {
         variant: 'amber',
@@ -12,16 +13,41 @@
         actionHref: isDoador ? '/solicitacoes/recebidas' : '/doacoes'
       }) %>
     <% } else { %>
-      <ul class="app-notifications-list">
-        <% notificacoes.forEach(function(n) { %>
-          <li>
-            <a href="<%= n.href %>" class="app-notifications-list__item<%= n.unread ? ' app-notifications-list__item--unread' : '' %>">
-              <span class="app-notifications-list__dot" aria-hidden="true"></span>
-              <span class="app-notifications-list__body">
-                <span class="app-notifications-list__title"><%= n.title %></span>
-                <span class="app-notifications-list__meta"><%= n.meta %> · <%= timeAgo(n.createdAt) %></span>
+      <div class="app-inbox-toolbar">
+        <p class="app-inbox-toolbar__count">
+          <%= notificacoes.length %> <%= notificacoes.length === 1 ? 'notificação' : 'notificações' %>
+          <% if (typeof unreadCount !== 'undefined' && unreadCount > 0) { %>
+            · <%= unreadCount %> <%= unreadCount === 1 ? 'não lida' : 'não lidas' %>
+          <% } %>
+        </p>
+      </div>
+
+      <ul class="app-inbox-list">
+        <% notificacoes.forEach(function(n) {
+          const pillKey = solicitationPillKey(n.statusKey);
+          const pillLabel = solicitationPillLabel(n.statusKey);
+        %>
+          <li class="app-inbox-item<%= n.unread ? ' app-inbox-item--unread' : '' %>">
+            <a href="<%= n.href %>" class="app-inbox-item__main">
+              <span class="app-inbox-item__icon app-inbox-item__icon--<%= n.statusKey %>" aria-hidden="true">
+                <%- include('../partials/app-icon', { icon: n.statusKey === 'pendente' ? 'hourglass_top' : (n.statusKey === 'aprovado' ? 'check_circle' : (n.statusKey === 'recusado' ? 'cancel' : 'info')), size: 'chevron' }) %>
               </span>
-              <%- include('../partials/app-icon', { icon: 'chevron_right', size: 'chevron', className: 'app-notifications-list__chevron' }) %>
+              <span class="app-inbox-item__body">
+                <span class="app-inbox-item__title"><%= n.title %></span>
+                <span class="app-inbox-item__meta"><%= n.meta %> · <%= timeAgo(n.createdAt) %></span>
+              </span>
+            </a>
+            <span class="home-pill home-pill--<%= pillKey %>"><%= pillLabel %></span>
+            <% if (n.unread) { %>
+              <form action="/notificacoes/<%= n.id %>/lida" method="POST" class="app-inbox-item__read-form">
+                <button type="submit" class="home-btn-secondary home-btn-secondary--sm app-inbox-item__read-btn" aria-label="Marcar como lida">
+                  <span class="app-inbox-item__read-btn-label">Marcar como lida</span>
+                  <%- include('../partials/app-icon', { icon: 'check', size: 'chevron', className: 'app-inbox-item__read-btn-icon' }) %>
+                </button>
+              </form>
+            <% } %>
+            <a href="<%= n.href %>" class="app-inbox-item__chevron-link" aria-label="Abrir notificação">
+              <%- include('../partials/app-icon', { icon: 'chevron_right', size: 'chevron', className: 'app-inbox-item__chevron' }) %>
             </a>
           </li>
         <% }); %>

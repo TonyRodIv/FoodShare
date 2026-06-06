@@ -1,11 +1,19 @@
 <%#
   Botão de ação reutilizável (header desktop + toolbar mobile).
-  Locals: actionLabel, actionHref?, actionModal?, buttonClass
+  Locals: actionLabel, actionHref?, actionModal?, actionForm?, buttonClass, actionSecondary?
 %>
 <%
   const btnClass = typeof buttonClass !== 'undefined' ? buttonClass : 'app-page-header__btn';
+  const isSecondary = typeof actionSecondary !== 'undefined' && actionSecondary;
+  const secondaryClass = isSecondary ? ' app-header__action--secondary' : '';
 %>
-<% if (typeof actionModal !== 'undefined' && actionModal) { %>
+<% if (typeof actionForm !== 'undefined' && actionForm) { %>
+  <form action="<%= actionForm %>" method="POST" class="app-header-action-form">
+    <button type="submit" class="<%= btnClass %><%= secondaryClass %>">
+      <%= actionLabel %>
+    </button>
+  </form>
+<% } else if (typeof actionModal !== 'undefined' && actionModal) { %>
   <button type="button" class="<%= btnClass %>" data-doacao-modal-open>
     <%= actionLabel %>
     <%- include('app-svg-icon', { src: '/images/app/icon-arrow-right.svg', size: 'arrow' }) %>

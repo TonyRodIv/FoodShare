@@ -19,6 +19,9 @@
         <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Editar conta</a>
       </li>
       <li role="none">
+        <a href="/historico" class="app-profile-menu__link" role="menuitem"<%= typeof activeNav !== 'undefined' && activeNav === 'historico' ? ' aria-current="page"' : '' %>>Histórico</a>
+      </li>
+      <li role="none">
         <a href="/configuracoes" class="app-profile-menu__link" role="menuitem">Preferências</a>
       </li>
       <li role="none">

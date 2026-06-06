@@ -346,6 +346,165 @@
   color: var(--muted);
 }
 
+/* ── Caixa de entrada (página notificações) ── */
+.app-inbox-panel {
+  gap: 8px;
+}
+
+.app-inbox-toolbar__count {
+  font-size: var(--app-fs-sm);
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+.app-inbox-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.app-inbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: var(--divider);
+}
+
+.app-inbox-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.app-inbox-item--unread {
+  background: rgba(225, 245, 238, 0.35);
+  margin: 0 calc(-1 * var(--app-panel-padding));
+  padding: 12px var(--app-panel-padding);
+  border-radius: var(--radius-md);
+  border-bottom-color: transparent;
+}
+
+.app-inbox-item__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-inbox-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+}
+
+.app-inbox-item__icon--pendente {
+  background: var(--amber-pale);
+  color: var(--amber-text);
+}
+
+.app-inbox-item__icon--aprovado {
+  background: var(--green-pale);
+  color: var(--green-text);
+}
+
+.app-inbox-item__icon--recusado {
+  background: var(--red-pale);
+  color: var(--red-text);
+}
+
+.app-inbox-item__icon--cancelado {
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.app-inbox-item__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-inbox-item__title {
+  font-size: var(--app-fs-lg);
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-inbox-item__meta {
+  font-size: var(--app-fs-xs);
+  font-weight: 500;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-inbox-item__chevron-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.app-inbox-item__chevron {
+  flex-shrink: 0;
+  opacity: 0.45;
+  color: inherit;
+}
+
+.app-inbox-item__read-form {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.app-inbox-item .home-pill {
+  flex-shrink: 0;
+}
+
+.app-inbox-item__read-btn-icon {
+  display: none;
+}
+
+.app-inbox-item__read-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .app-inbox-item .home-pill {
+    display: none;
+  }
+
+  .app-inbox-item__read-btn {
+    padding: 10px 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .app-inbox-item__read-btn-label {
+    display: none;
+  }
+
+  .app-inbox-item__read-btn-icon {
+    display: block;
+  }
+}
+
 /* ── Configurações ── */
 .app-settings {
   display: flex;
