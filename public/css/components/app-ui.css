@@ -1,0 +1,296 @@
+/**
+ * FoodShare — primitivos de UI (botões, campos, tags, superfícies)
+ * Classes legadas (.home-btn-secondary, .home-pill, etc.) mapeiam aqui.
+ */
+
+/* ── Superfícies (cards / painéis) ── */
+.app-surface,
+.home-panel,
+.app-page-panel,
+.home-metric-card,
+.receptor-food-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-surface-gap);
+  padding: var(--app-surface-padding);
+  background: var(--card);
+  border-radius: var(--app-surface-radius);
+  min-width: 0;
+}
+
+/* ── Botões — base compartilhada ── */
+.app-btn,
+.home-btn-secondary,
+.home-empty-state__btn,
+.app-page-header__btn,
+.app-btn-primary,
+.feedback-modal__btn,
+.home-hero-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--app-space-xs);
+  min-height: var(--app-btn-min-h);
+  padding: var(--app-btn-py) var(--app-btn-px);
+  border: none;
+  border-radius: var(--app-btn-radius);
+  font-family: inherit;
+  font-size: var(--app-fs-base);
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+a.app-btn,
+a.home-btn-secondary,
+a.home-empty-state__btn,
+a.app-page-header__btn,
+a.app-btn-primary,
+a.feedback-modal__btn,
+a.home-hero-card__btn {
+  text-align: center;
+}
+
+/* Primário */
+.app-btn--primary,
+.app-btn-primary,
+.app-page-header__btn:not(.app-header__action--secondary),
+.feedback-modal__btn--primary {
+  background: var(--green-mid);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .app-btn--primary:hover,
+  .app-btn-primary:hover,
+  .app-page-header__btn:not(.app-header__action--secondary):hover,
+  .feedback-modal__btn--primary:hover {
+    background: color-mix(in srgb, var(--green-mid) 88%, #000);
+  }
+}
+
+/* Secundário */
+.app-btn--secondary,
+.home-btn-secondary,
+.home-empty-state__btn,
+.feedback-modal__btn--secondary,
+.app-page-header__btn.app-header__action--secondary,
+.app-header-action-form .app-page-header__btn.app-header__action--secondary {
+  background: var(--surface-green);
+  color: var(--text-muted);
+}
+
+@media (hover: hover) {
+  .app-btn--secondary:hover,
+  .home-btn-secondary:hover,
+  .home-empty-state__btn:hover,
+  .feedback-modal__btn--secondary:hover,
+  .app-page-header__btn.app-header__action--secondary:hover {
+    background: var(--hover-btn-secondary-bg);
+  }
+}
+
+.app-page-header__btn.app-header__action--secondary,
+.app-header-action-form .app-page-header__btn.app-header__action--secondary {
+  color: var(--text);
+  border: var(--divider);
+}
+
+/* Compacto */
+.app-btn--sm,
+.home-btn-secondary--sm {
+  min-height: auto;
+  padding: calc(var(--app-btn-py) - 2px) calc(var(--app-btn-px) - 4px);
+  font-size: var(--app-fs-sm);
+}
+
+/* Sobre fundo escuro (hero) */
+.home-hero-card__btn {
+  align-self: flex-start;
+  width: auto;
+  max-width: 100%;
+  background: rgba(249, 250, 251, 0.2);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .home-hero-card__btn:hover {
+    background: rgba(249, 250, 251, 0.3);
+  }
+}
+
+button.app-btn,
+button.home-btn-secondary,
+button.home-empty-state__btn,
+button.app-page-header__btn,
+button.home-hero-card__btn,
+button.app-btn-primary {
+  font-family: inherit;
+}
+
+.app-page-header__btn .app-icon,
+.app-page-header__btn .app-svg-icon,
+.app-page-header__btn img,
+.home-hero-card__btn .app-icon,
+.home-hero-card__btn .app-svg-icon,
+.home-hero-card__btn img {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Campo de busca / input app ── */
+.app-search,
+.app-field-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--app-input-py) var(--app-input-px);
+  background: var(--app-control-bg);
+  border: none;
+  border-radius: var(--radius-lg);
+  transition: box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.app-search:focus-within,
+.app-field-control:focus-within {
+  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.15);
+}
+
+.app-search__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.app-search__icon .app-icon {
+  font-size: var(--app-icon-header-glyph);
+}
+
+.app-search__input,
+.app-field-control__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--app-control-fs);
+  font-weight: 500;
+  color: var(--text);
+  outline: none;
+}
+
+.app-search__input::placeholder,
+.app-field-control__input::placeholder {
+  color: var(--muted);
+}
+
+/* ── Filtros (chips) ── */
+.app-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-xs);
+}
+
+.app-filter-chip {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--app-control-bg);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--app-fs-sm);
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .app-filter-chip:not(.is-active):hover {
+    background: color-mix(in srgb, var(--text) 6%, var(--app-control-bg));
+  }
+}
+
+.app-filter-chip.is-active {
+  background: var(--green-mid);
+  color: #fff;
+}
+
+/* ── Tags informativas (meta) ── */
+.app-meta-tags,
+.app-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-xs);
+}
+
+.app-meta-tag,
+.app-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: var(--app-tag-py) var(--app-tag-px);
+  border-radius: var(--radius-sm);
+  background: var(--surface-green);
+  color: var(--text-muted);
+  font-size: var(--app-tag-fs);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.app-meta-tag .app-icon {
+  font-size: 14px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+/* ── Pills de status ── */
+.home-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--app-pill-min-w);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--app-fs-sm);
+  font-weight: 600;
+  text-transform: lowercase;
+  justify-self: center;
+}
+
+.home-pill--ativo,
+.home-pill--disponivel,
+.home-pill--entregue,
+.home-pill--aprovado,
+.home-pill--aceito {
+  background: var(--green-pale);
+  color: var(--green-text);
+}
+
+.home-pill--reservado,
+.home-pill--pendente,
+.home-pill--ultimas {
+  background: var(--amber-pale);
+  color: var(--amber-text);
+}
+
+.home-pill--expirado,
+.home-pill--recusado {
+  background: var(--red-pale);
+  color: var(--red-text);
+}
+
+.home-pill--cancelado {
+  background: var(--surface);
+  color: var(--muted);
+}

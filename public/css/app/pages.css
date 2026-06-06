@@ -49,37 +49,7 @@
 }
 
 .app-page-header__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--app-space-xs);
   flex-shrink: 0;
-  padding: var(--app-btn-py) var(--app-btn-px);
-  border-radius: var(--radius-md);
-  background: var(--green-mid);
-  color: #fff;
-  font-size: var(--app-fs-base);
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: opacity var(--duration-normal) var(--ease-out);
-}
-
-.app-page-header__btn .app-icon,
-.app-page-header__btn .app-svg-icon,
-.app-page-header__btn img {
-  display: block;
-  flex-shrink: 0;
-}
-
-.app-page-header__btn:hover {
-  opacity: 0.92;
-}
-
-.app-page-header__btn.app-header__action--secondary,
-.app-header-action-form .app-page-header__btn.app-header__action--secondary {
-  background: var(--surface-green);
-  color: var(--text);
-  border: var(--divider);
 }
 
 .app-header-action-form {
@@ -92,16 +62,9 @@
   }
 }
 
-/* ── Painel de conteúdo (reutiliza home-panel) ── */
+/* ── Painel de conteúdo (reutiliza home-panel / app-surface) ── */
 .app-page-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: var(--app-panel-padding);
-  background: var(--card);
-  border-radius: var(--radius-xl);
   min-height: var(--app-panel-min-h);
-  min-width: 0;
   overflow: hidden;
 }
 
@@ -116,251 +79,6 @@
   font-size: var(--app-panel-fs-title);
   font-weight: 600;
   color: var(--text);
-}
-
-/* ── Busca, filtros e tags (design system) ── */
-.app-search {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: var(--card);
-  border: var(--divider);
-  border-radius: var(--radius-md);
-  transition:
-    border-color var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out);
-}
-
-.app-search:focus-within {
-  border-color: var(--green-mid);
-  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.15);
-}
-
-.app-search__icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  color: var(--muted);
-}
-
-.app-search__icon .app-icon {
-  font-size: var(--app-icon-header-glyph);
-}
-
-.app-search__input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: var(--app-fs-md);
-  font-weight: 500;
-  color: var(--text);
-  outline: none;
-}
-
-.app-search__input::placeholder {
-  color: var(--muted);
-}
-
-.app-filter-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--app-space-xs);
-}
-
-.app-filter-chip {
-  padding: 8px 14px;
-  border: var(--divider);
-  border-radius: var(--radius-md);
-  background: var(--card);
-  color: var(--muted);
-  font-family: inherit;
-  font-size: var(--app-fs-sm);
-  font-weight: 600;
-  text-transform: capitalize;
-  cursor: pointer;
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    color var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out);
-}
-
-.app-filter-chip.is-active {
-  background: var(--green-pale);
-  color: var(--green-text);
-  border-color: #9fe1cb;
-}
-
-.app-meta-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--app-space-xs);
-}
-
-.app-meta-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-green);
-  color: var(--text-muted);
-  font-size: var(--app-fs-sm);
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.app-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: var(--app-btn-py) var(--app-btn-px);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--green-mid);
-  color: #fff;
-  font-family: inherit;
-  font-size: var(--app-fs-base);
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .app-btn-primary:hover {
-    background: color-mix(in srgb, var(--green-mid) 88%, #000);
-  }
-}
-
-/* ── Grid de cards de doação (receptor) ── */
-.app-donation-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--app-gap-metrics);
-}
-
-@media (min-width: 768px) {
-  .app-donation-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1440px) {
-  .app-donation-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.app-donation-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--app-space-sm);
-  padding: var(--app-panel-padding);
-  background: var(--card);
-  border-radius: var(--radius-xl);
-  min-height: 0;
-}
-
-.app-donation-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.app-donation-card__donor {
-  font-size: var(--app-fs-sm);
-  font-weight: 500;
-  color: var(--muted);
-}
-
-.app-donation-card__donor strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.app-donation-card__date {
-  font-size: var(--app-fs-xs);
-  font-weight: 500;
-  color: var(--muted);
-  flex-shrink: 0;
-}
-
-.app-donation-card__items {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  flex: 1;
-}
-
-.app-donation-card__items-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--app-fs-sm);
-  font-weight: 600;
-  color: var(--text);
-}
-
-.app-donation-card__items-count {
-  font-size: var(--app-fs-xs);
-  font-weight: 500;
-  color: var(--muted);
-  padding: 2px 8px;
-  background: var(--card);
-  border-radius: var(--radius-full);
-}
-
-.app-donation-card__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: var(--app-fs-md);
-  font-weight: 500;
-  color: var(--text);
-}
-
-.app-donation-card__item-meta {
-  text-align: right;
-  font-size: var(--app-fs-sm);
-  color: var(--muted);
-}
-
-.app-donation-card__note {
-  margin-top: 4px;
-  padding-top: 8px;
-  border-top: var(--divider);
-  font-size: var(--app-fs-sm);
-  font-weight: 500;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.app-donation-card__action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: var(--app-btn-py) var(--app-btn-px);
-  border-radius: var(--radius-md);
-  background: var(--surface-green);
-  color: var(--text-muted);
-  font-size: var(--app-fs-base);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-.app-donation-card__action:hover {
-  background: #e4ece9;
 }
 
 /* ── Lista de histórico ── */
@@ -436,47 +154,6 @@
   font-size: var(--app-fs-xs);
   font-weight: 500;
   color: var(--muted);
-}
-
-/* Pills extras para status de solicitação */
-.home-pill--pendente {
-  background: var(--amber-pale);
-  color: var(--amber-text);
-}
-
-.home-pill--aprovado {
-  background: var(--green-pale);
-  color: var(--green-text);
-}
-
-.home-pill--recusado {
-  background: var(--red-pale);
-  color: var(--red-text);
-}
-
-.home-pill--cancelado {
-  background: var(--surface);
-  color: var(--muted);
-}
-
-.home-pill--entregue {
-  background: var(--green-pale);
-  color: var(--green-text);
-}
-
-.home-pill--aceito {
-  background: var(--green-pale);
-  color: var(--green-text);
-}
-
-.home-pill--disponivel {
-  background: var(--green-pale);
-  color: var(--green-text);
-}
-
-.home-pill--ultimas {
-  background: var(--amber-pale);
-  color: var(--amber-text);
 }
 
 /* ── Dashboard receptor (/doacoes) ── */
@@ -558,12 +235,11 @@
 }
 
 .receptor-food-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: var(--app-panel-padding);
-  background: var(--card);
-  border-radius: var(--radius-xl);
+  gap: var(--app-surface-gap);
+}
+
+.receptor-food-card.is-filter-hidden {
+  display: none !important;
 }
 
 .receptor-food-card__top {
@@ -776,7 +452,6 @@
   .app-page-header__btn,
   .home-empty-state__btn,
   .home-hero-card__btn,
-  .app-donation-card__action,
   .feedback-modal--form .feedback-modal__btn {
     display: flex;
     align-items: center;
@@ -804,7 +479,7 @@
   }
 
   .app-page-panel,
-  .app-donation-card {
+  .receptor-food-card {
     border-radius: var(--radius-modal);
   }
 }

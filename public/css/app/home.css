@@ -222,36 +222,6 @@
   line-height: 1.2;
 }
 
-.home-hero-card__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--app-space-xs);
-  align-self: flex-start;
-  width: auto;
-  max-width: 100%;
-  padding: var(--app-btn-py) var(--app-btn-px);
-  border-radius: var(--radius-md);
-  background: rgba(249, 250, 251, 0.2);
-  color: #fff;
-  font-size: var(--app-fs-base);
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-.home-hero-card__btn .app-icon,
-.home-hero-card__btn .app-svg-icon,
-.home-hero-card__btn img {
-  display: block;
-  flex-shrink: 0;
-}
-
-.home-hero-card__btn:hover {
-  background: rgba(249, 250, 251, 0.3);
-}
-
 button.home-hero-card__btn,
 button.app-page-header__btn,
 button.app-header__action,
@@ -262,13 +232,9 @@ button.home-empty-state__btn {
 }
 
 .home-metric-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--app-space-sm);
   min-height: var(--app-card-metrics-h);
+  gap: var(--app-space-sm);
   padding: var(--app-metrics-padding);
-  background: var(--card);
-  border-radius: var(--radius-xl);
 }
 
 .home-metric-card__body {
@@ -341,14 +307,7 @@ button.home-empty-state__btn {
 }
 
 .home-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: var(--app-panel-padding);
-  background: var(--card);
-  border-radius: var(--radius-xl);
   min-height: var(--app-panel-min-h);
-  min-width: 0;
 }
 
 .home-panel--table:not(:has(.home-empty-state)),
@@ -482,22 +441,7 @@ button.home-empty-state__btn {
 }
 
 .home-empty-state__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 6px;
-  padding: 10px 18px;
-  border-radius: var(--radius-md);
-  background: var(--surface-green);
-  color: var(--text-muted);
-  font-size: var(--app-empty-btn-fs);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-.home-empty-state__btn:hover {
-  background: #e4ece9;
 }
 
 /* ── Tabela doações ── */
@@ -606,7 +550,6 @@ button.home-empty-state__btn {
   text-decoration: underline;
 }
 
-/* ── Pills de status ── */
 .home-table .home-pill {
   justify-self: center;
   min-width: var(--app-pill-min-w);
@@ -614,39 +557,6 @@ button.home-empty-state__btn {
   max-width: 100%;
   padding: 6px 10px;
   font-size: var(--app-fs-xs);
-}
-
-.home-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--app-pill-min-w);
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  font-size: var(--app-fs-sm);
-  font-weight: 600;
-  text-transform: lowercase;
-  justify-self: center;
-}
-
-.home-pill--ativo {
-  background: var(--green-pale);
-  color: var(--green-text);
-}
-
-.home-pill--reservado {
-  background: var(--amber-pale);
-  color: var(--amber-text);
-}
-
-.home-pill--expirado {
-  background: var(--red-pale);
-  color: var(--red-text);
-}
-
-.home-pill--entregue {
-  background: var(--green-pale);
-  color: var(--green-text);
 }
 
 /* ── Lista solicitações ── */
@@ -715,30 +625,6 @@ button.home-empty-state__btn {
 .home-request__actions--mobile {
   display: none;
   gap: 10px;
-}
-
-.home-btn-secondary {
-  padding: var(--app-btn-py) var(--app-btn-px);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--surface-green);
-  color: var(--text-muted);
-  font-size: var(--app-fs-base);
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .home-btn-secondary:hover {
-    background: var(--hover-btn-secondary-bg);
-  }
-}
-
-.home-btn-secondary--sm {
-  padding: calc(var(--app-btn-py) - 2px) calc(var(--app-btn-px) - 4px);
-  font-size: var(--app-fs-sm);
 }
 
 .home-icon-action {
