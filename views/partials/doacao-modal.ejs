@@ -20,7 +20,9 @@
     </div>
 
     <form method="POST" action="/doacoes/nova" class="doacao-modal__form" id="doacaoForm" novalidate>
-      <div class="doacao-modal__body">
+      <div class="doacao-modal__scroll-wrap" data-doacao-modal-scroll>
+        <div class="doacao-modal__fade doacao-modal__fade--top" aria-hidden="true"></div>
+        <div class="doacao-modal__body">
         <div class="auth-field">
           <label for="doacao-observacoes" class="auth-field__label">Observações (opcional)</label>
           <textarea
@@ -46,6 +48,8 @@
         <% } %>
 
         <div id="itensContainer" class="doacao-modal__items"></div>
+        </div>
+        <div class="doacao-modal__fade doacao-modal__fade--bottom" aria-hidden="true"></div>
       </div>
 
       <div class="feedback-modal__actions feedback-modal__actions--form">

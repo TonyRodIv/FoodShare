@@ -12,6 +12,44 @@
     return overlay;
   }
 
+  function getScrollWrap() {
+    return document.querySelector('[data-doacao-modal-scroll]');
+  }
+
+  function updateScrollFades() {
+    var wrap = getScrollWrap();
+    if (!wrap) return;
+
+    var body = wrap.querySelector('.doacao-modal__body');
+    if (!body) return;
+
+    var scrollable = body.scrollHeight > body.clientHeight + 1;
+    wrap.classList.toggle('is-scrollable', scrollable);
+
+    if (!scrollable) {
+      wrap.classList.remove('is-scrolled', 'at-bottom');
+      return;
+    }
+
+    var atTop = body.scrollTop <= 2;
+    var atBottom = body.scrollHeight - body.scrollTop - body.clientHeight <= 2;
+
+    wrap.classList.toggle('is-scrolled', !atTop);
+    wrap.classList.toggle('at-bottom', atBottom);
+  }
+
+  function bindScrollFades() {
+    var wrap = getScrollWrap();
+    if (!wrap) return;
+
+    var body = wrap.querySelector('.doacao-modal__body');
+    if (!body || body.dataset.scrollFadeBound === 'true') return;
+
+    body.dataset.scrollFadeBound = 'true';
+    body.addEventListener('scroll', updateScrollFades, { passive: true });
+    window.addEventListener('resize', updateScrollFades);
+  }
+
   function open() {
     var el = getOverlay();
     if (!el) return;
@@ -31,6 +69,9 @@
 
     var firstInput = el.querySelector('.auth-field__input, .auth-field__select');
     if (firstInput) firstInput.focus();
+
+    bindScrollFades();
+    requestAnimationFrame(updateScrollFades);
   }
 
   function close() {
@@ -73,6 +114,7 @@
       setTimeout(function () {
         itemDiv.remove();
         recalcularIndices();
+        requestAnimationFrame(updateScrollFades);
       }, 170);
     });
   }
@@ -117,6 +159,7 @@
     container.appendChild(clone);
     itemCount++;
     recalcularIndices();
+    requestAnimationFrame(updateScrollFades);
   }
 
   function populateFromOld() {
@@ -211,6 +254,7 @@
 
   function init() {
     bindEvents();
+    bindScrollFades();
     initAutoOpen();
   }
 
