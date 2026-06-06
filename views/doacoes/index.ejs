@@ -44,53 +44,102 @@
     </article>
 
   <% } else { %>
-    <% if (doacoes.length === 0) { %>
-      <article class="app-page-panel">
-        <%- include('../partials/home-empty-state', {
-          variant: 'blue',
-          icon: 'local_mall',
-          title: 'Nenhuma doação no momento',
-          description: 'Volte mais tarde ou avise a comunidade sobre o FoodShare.',
-          actionLabel: 'Voltar ao início',
-          actionHref: '/'
-        }) %>
-      </article>
-    <% } else { %>
-      <div class="app-donation-grid">
-        <% doacoes.forEach(function(doacao) { %>
-          <article class="app-donation-card">
-            <div class="app-donation-card__top">
-              <p class="app-donation-card__donor">
-                Doador: <strong><%= doacao.usuario.nome %></strong>
-              </p>
-              <span class="app-donation-card__date"><%= formatDateShort(doacao.createdAt) %></span>
-            </div>
+    <div class="receptor-dashboard">
+      <div class="receptor-dashboard__main">
+        <div class="receptor-toolbar">
+          <label class="receptor-search">
+            <span class="receptor-search__icon" aria-hidden="true">
+              <%- include('../partials/app-icon', { icon: 'search', size: 'chevron' }) %>
+            </span>
+            <input
+              type="search"
+              class="receptor-search__input"
+              placeholder="Buscar alimentos disponíveis..."
+              autocomplete="off"
+              data-receptor-search
+            >
+          </label>
 
-            <div class="app-donation-card__items">
-              <div class="app-donation-card__items-head">
-                <span>Itens inclusos</span>
-                <span class="app-donation-card__items-count"><%= doacao.itens.length %> itens</span>
-              </div>
-              <% doacao.itens.forEach(function(item) { %>
-                <div class="app-donation-card__item">
-                  <span><%= item.nome %></span>
-                  <span class="app-donation-card__item-meta">
-                    <%= item.quantidade %> un · Val: <%= formatValidade(item.validade) %>
-                  </span>
-                </div>
-              <% }); %>
-              <% if (doacao.observacoes) { %>
-                <p class="app-donation-card__note">"<%= doacao.observacoes %>"</p>
-              <% } %>
-            </div>
+          <div class="receptor-filters" role="group" aria-label="Filtrar por categoria">
+            <% RECEPTOR_CATEGORY_FILTERS.forEach(function(cat, index) { %>
+              <button
+                type="button"
+                class="receptor-filter-chip<%= index === 0 ? ' is-active' : '' %>"
+                data-receptor-filter="<%= cat.key %>"
+              ><%= cat.label %></button>
+            <% }); %>
+          </div>
+        </div>
 
-            <a href="/solicitacoes/nova?doacaoId=<%= doacao.id %>" class="app-donation-card__action">
-              Solicitar este pacote
-            </a>
+        <p class="receptor-grid-label" data-receptor-count>
+          <%= doacoes.length %> <%= doacoes.length === 1 ? 'doação disponível' : 'doações disponíveis' %>
+        </p>
+
+        <% if (doacoes.length === 0) { %>
+          <article class="app-page-panel receptor-empty-panel">
+            <%- include('../partials/home-empty-state', {
+              variant: 'blue',
+              icon: 'local_mall',
+              title: 'Nenhuma doação no momento',
+              description: 'Volte mais tarde ou avise a comunidade sobre o FoodShare.',
+              actionLabel: 'Voltar ao início',
+              actionHref: '/'
+            }) %>
           </article>
-        <% }); %>
+        <% } else { %>
+          <div class="receptor-food-grid" data-receptor-grid>
+            <% doacoes.forEach(function(item) { %>
+              <%- include('../partials/receptor-donation-card', { item: item }) %>
+            <% }); %>
+          </div>
+
+          <p class="receptor-grid-empty" data-receptor-empty hidden>
+            Nenhum alimento encontrado para esta busca.
+          </p>
+        <% } %>
       </div>
-    <% } %>
+
+      <aside class="receptor-dashboard__aside" aria-label="Resumo das solicitações">
+        <%- include('../partials/receptor-hero-card', {
+          totalSolicitadas: totalSolicitadas,
+          totalRecebidas: totalRecebidas,
+          totalPendentes: totalPendentes,
+          mesAtual: mesAtual
+        }) %>
+
+        <article class="home-panel home-panel--requests receptor-requests-panel">
+          <header class="home-panel__header">
+            <h2 class="home-panel__title">Minhas solicitações</h2>
+          </header>
+
+          <% if (minhasSolicitacoes.length === 0) { %>
+            <%- include('../partials/home-empty-state', {
+              variant: 'amber',
+              icon: 'hourglass_top',
+              title: 'Nenhuma solicitação ainda',
+              description: 'Quando você solicitar um item, ele aparecerá aqui com o status do pedido.'
+            }) %>
+          <% } else { %>
+            <ul class="home-requests">
+              <% minhasSolicitacoes.forEach(function(sol) {
+                const pillKey = solicitationPillKey(sol.status);
+                const pillLabel = solicitationPillLabel(sol.status);
+              %>
+                <li class="home-request home-request--readonly">
+                  <div class="home-request__info">
+                    <p class="home-request__title"><%= sol.itemLabel %></p>
+                    <p class="home-request__meta"><%= sol.doadorNome %> · <%= timeAgo(sol.createdAt) %></p>
+                  </div>
+                  <span class="home-pill home-pill--<%= pillKey %>"><%= pillLabel %></span>
+                </li>
+              <% }); %>
+            </ul>
+          <% } %>
+        </article>
+      </aside>
+    </div>
+
+    <script src="/js/receptor-doacoes.js"></script>
   <% } %>
 </div>
 

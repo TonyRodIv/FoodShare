@@ -8,8 +8,15 @@ const {
   formatValidade,
   timeAgo,
   solicitationDisplayStatus,
+  solicitationPillKey,
+  solicitationPillLabel,
+  RECEPTOR_CATEGORY_FILTERS,
+  categoryFilterKey,
+  categoryIconVariant,
+  formatCategoryLabel,
   formatDateShort,
   donationDisplayStatus,
+  mesAtual,
 } = require('./utils/formatTime');
 const { showHome } = require('./controllers/homeController');
 const { showHistorico } = require('./controllers/historicoController');
@@ -27,8 +34,15 @@ app.locals.resolveErrorPage = resolveErrorPage;
 app.locals.formatValidade = formatValidade;
 app.locals.timeAgo = timeAgo;
 app.locals.solicitationDisplayStatus = solicitationDisplayStatus;
+app.locals.solicitationPillKey = solicitationPillKey;
+app.locals.solicitationPillLabel = solicitationPillLabel;
+app.locals.RECEPTOR_CATEGORY_FILTERS = RECEPTOR_CATEGORY_FILTERS;
+app.locals.categoryFilterKey = categoryFilterKey;
+app.locals.categoryIconVariant = categoryIconVariant;
+app.locals.formatCategoryLabel = formatCategoryLabel;
 app.locals.formatDateShort = formatDateShort;
 app.locals.donationDisplayStatus = donationDisplayStatus;
+app.locals.mesAtual = mesAtual;
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -95,6 +109,7 @@ app.get('/', showHome);
 app.get('/historico', authenticate, showHistorico);
 app.get('/notificacoes', authenticate, showNotificacoes);
 app.get('/configuracoes', authenticate, showConfiguracoes);
+app.get('/perfil', authenticate, (req, res) => res.redirect('/configuracoes'));
 
 app.use('/auth', authRoutes);
 app.use('/doacoes', doacoesRoutes);

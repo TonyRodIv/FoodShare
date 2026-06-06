@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../config/database');
 const { authenticate, authorize } = require('../middlewares/authMiddleware');
-const { donationDisplayStatus } = require('../utils/formatTime');
+const { donationDisplayStatus, isExpired, mesAtual, categoryFilterKey } = require('../utils/formatTime');
 
 function isApiRequest(req) {
   const contentType = req.headers['content-type'] || '';
@@ -78,6 +78,88 @@ async function getDoadorIndexData(userId) {
   return { isDoador: true, itens, doacoes };
 }
 
+async function getReceptorIndexData(userId) {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const [doacoesRaw, solicitacoes, statsMonth] = await Promise.all([
+    prisma.doacao.findMany({
+      where: { status: 'disponivel' },
+      include: {
+        usuario: { select: { nome: true } },
+        itens: { orderBy: { validade: 'asc' } },
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.solicitacao.findMany({
+      where: { usuarioId: userId },
+      include: {
+        doacao: {
+          include: {
+            usuario: { select: { nome: true } },
+            itens: { take: 1, orderBy: { validade: 'asc' } },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 8,
+    }),
+    Promise.all([
+      prisma.solicitacao.count({
+        where: { usuarioId: userId, createdAt: { gte: startOfMonth } },
+      }),
+      prisma.solicitacao.count({
+        where: {
+          usuarioId: userId,
+          status: 'aprovado',
+          updatedAt: { gte: startOfMonth },
+        },
+      }),
+      prisma.solicitacao.count({
+        where: { usuarioId: userId, status: 'pendente' },
+      }),
+    ]),
+  ]);
+
+  const doacoes = doacoesRaw.flatMap((doacao) =>
+    doacao.itens
+      .filter((item) => !isExpired(item.validade))
+      .map((item) => ({
+        id: item.id,
+        doacaoId: doacao.id,
+        nome: item.nome,
+        quantidade: item.quantidade,
+        categoria: item.categoria,
+        categoriaKey: categoryFilterKey(item.categoria),
+        validade: item.validade,
+        doadorNome: doacao.usuario.nome,
+        localizacao: 'Local a combinar',
+        availabilityPill: item.quantidade <= 3 ? 'ultimas' : 'disponivel',
+      }))
+  );
+
+  const minhasSolicitacoes = solicitacoes.map((solic) => ({
+    id: solic.id,
+    status: solic.status,
+    createdAt: solic.createdAt,
+    itemLabel: solic.doacao.itens[0]?.nome || 'Doação',
+    doadorNome: solic.doacao.usuario.nome,
+  }));
+
+  const [totalSolicitadas, totalRecebidas, totalPendentes] = statsMonth;
+
+  return {
+    isDoador: false,
+    itens: [],
+    doacoes,
+    minhasSolicitacoes,
+    totalSolicitadas,
+    totalRecebidas,
+    totalPendentes,
+    mesAtual: mesAtual(),
+  };
+}
+
 /**
  * @swagger
  * tags:
@@ -122,15 +204,14 @@ router.get('/', authenticate, async (req, res) => {
     });
 
     if (isApiRequest(req)) return res.status(200).json(doacoes);
+
+    const data = await getReceptorIndexData(usuario.id);
     return res.render('doacoes/index', {
       title: 'Doações - FoodShare',
       activeNav: 'doacoes',
-      pageHeadingPrefix: 'Esse é o',
-      pageHeadingHighlight: 'catálogo',
-      pageSubtitle: 'Navegue pelas doações da comunidade e solicite o que precisar.',
-      isDoador: false,
-      itens: [],
-      doacoes,
+      headerVariant: 'home',
+      featurePreview: true,
+      ...data,
     });
   } catch (err) {
     console.error('[doacoes] Erro ao listar doações:', err);
@@ -233,6 +314,7 @@ router.get('/:id/editar', authenticate, authorize(['doador', 'admin']), async (r
       pageHeadingPrefix: 'Editar',
       pageHeadingHighlight: 'doação',
       pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
+      featurePreview: true,
       doacao,
       errors: [],
     });
@@ -314,6 +396,7 @@ router.post('/:id/editar', authenticate, authorize(['doador', 'admin']), async (
         pageHeadingPrefix: 'Editar',
         pageHeadingHighlight: 'doação',
         pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
+        featurePreview: true,
         doacao: {
           ...doacao,
           observacoes: observacoes ?? doacao.observacoes,

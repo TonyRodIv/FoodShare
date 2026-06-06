@@ -57,6 +57,47 @@ function solicitationDisplayStatus(status) {
   return map[status] || status;
 }
 
+function solicitationPillKey(status) {
+  if (status === 'aprovado') return 'aceito';
+  return solicitationDisplayStatus(status);
+}
+
+function solicitationPillLabel(status) {
+  if (status === 'aprovado') return 'aceito';
+  return solicitationDisplayStatus(status);
+}
+
+const RECEPTOR_CATEGORY_FILTERS = [
+  { key: 'todos', label: 'Todos' },
+  { key: 'grãos', label: 'Grãos' },
+  { key: 'frutas', label: 'Frutas' },
+  { key: 'laticínios', label: 'Laticínios' },
+  { key: 'padaria', label: 'Padaria' },
+  { key: 'enlatados', label: 'Enlatados' },
+];
+
+function categoryFilterKey(categoria) {
+  const c = String(categoria || '').toLowerCase();
+  if (c.includes('grão') || c.includes('grao') || c.includes('cereal')) return 'grãos';
+  if (c.includes('fruta') || c.includes('vegeta')) return 'frutas';
+  if (c.includes('latic')) return 'laticínios';
+  if (c.includes('padaria')) return 'padaria';
+  if (c.includes('industrial') || c.includes('enlat')) return 'enlatados';
+  return 'outros';
+}
+
+function categoryIconVariant(categoria) {
+  const key = categoryFilterKey(categoria);
+  if (key === 'frutas' || key === 'padaria') return 'amber';
+  if (key === 'enlatados') return 'blue';
+  return 'green';
+}
+
+function formatCategoryLabel(categoria) {
+  if (!categoria) return 'Sem categoria';
+  return categoria.charAt(0).toUpperCase() + categoria.slice(1);
+}
+
 function formatDateShort(date) {
   const d = new Date(date);
   const dia = String(d.getDate()).padStart(2, '0');
@@ -72,5 +113,11 @@ module.exports = {
   isExpired,
   donationDisplayStatus,
   solicitationDisplayStatus,
+  solicitationPillKey,
+  solicitationPillLabel,
+  RECEPTOR_CATEGORY_FILTERS,
+  categoryFilterKey,
+  categoryIconVariant,
+  formatCategoryLabel,
   formatDateShort,
 };

@@ -5,10 +5,14 @@ async function showHome(req, res) {
   const usuario = res.locals.usuario;
   if (!usuario) return res.redirect('/auth');
 
+  const isDoador = usuario.role === 'doador' || usuario.role === 'admin';
+  if (!isDoador && usuario.role === 'receptor') {
+    return res.redirect('/doacoes');
+  }
+
   const userId = usuario.id;
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const isDoador = usuario.role === 'doador' || usuario.role === 'admin';
 
   let stats = {
     familiasAjudadas: 0,

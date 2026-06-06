@@ -1,29 +1,129 @@
-<aside class="app-sidebar" aria-label="Navegação principal">
-  <div class="app-sidebar__top">
-    <a href="/" class="app-sidebar__logo" aria-label="FoodShare">FS</a>
-    <nav class="app-sidebar__nav">
-      <a href="/" class="app-sidebar__link<%= activeNav === 'home' ? ' is-active' : '' %>" aria-label="Início"<%= activeNav === 'home' ? ' aria-current="page"' : '' %>>
-        <%- include('app-svg-icon', { src: '/images/app/icon-home.svg', size: 'nav' }) %>
-      </a>
-      <a href="/doacoes" class="app-sidebar__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Doações"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
-        <%- include('app-svg-icon', { src: '/images/app/icon-gift.svg', size: 'nav' }) %>
-      </a>
-      <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
-        <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
-      </a>
-      <a href="/historico" class="app-sidebar__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
-        <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
-      </a>
-    </nav>
-  </div>
-  <div class="app-sidebar__bottom">
-    <a href="/configuracoes" class="app-sidebar__link<%= activeNav === 'configuracoes' ? ' is-active' : '' %>" aria-label="Configurações"<%= activeNav === 'configuracoes' ? ' aria-current="page"' : '' %>>
-      <%- include('app-svg-icon', { src: '/images/app/icon-settings.svg', size: 'nav' }) %>
-    </a>
-    <form action="/auth/logout" method="POST" class="app-sidebar__logout">
-      <button type="submit" class="app-sidebar__link" aria-label="Sair">
-        <%- include('app-svg-icon', { src: '/images/app/icon-logout.svg', size: 'nav' }) %>
-      </button>
-    </form>
-  </div>
-</aside>
+<%
+
+  const isReceptor = locals.usuario && locals.usuario.role === 'receptor';
+
+%>
+
+<aside class="app-sidebar" aria-label="Navegação principal">
+
+
+
+  <div class="app-sidebar__top">
+
+
+
+    <a href="<%= isReceptor ? '/doacoes' : '/' %>" class="app-sidebar__logo" aria-label="FoodShare">FS</a>
+
+
+
+    <nav class="app-sidebar__nav">
+
+
+
+      <% if (isReceptor) { %>
+
+        <a href="/doacoes" class="app-sidebar__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Buscar doações"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-search.svg', size: 'nav' }) %>
+
+        </a>
+
+
+
+        <a href="/solicitacoes/minhas" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Minhas solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
+
+        </a>
+
+
+
+        <a href="/historico" class="app-sidebar__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
+
+        </a>
+
+      <% } else { %>
+
+        <a href="/" class="app-sidebar__link<%= activeNav === 'home' ? ' is-active' : '' %>" aria-label="Início"<%= activeNav === 'home' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-home.svg', size: 'nav' }) %>
+
+        </a>
+
+
+
+        <a href="/doacoes" class="app-sidebar__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Doações"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-gift.svg', size: 'nav' }) %>
+
+        </a>
+
+
+
+        <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
+
+        </a>
+
+
+
+        <a href="/historico" class="app-sidebar__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
+
+          <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
+
+        </a>
+
+      <% } %>
+
+
+
+    </nav>
+
+
+
+  </div>
+
+
+
+  <div class="app-sidebar__bottom">
+
+
+
+    <a href="/configuracoes" class="app-sidebar__link<%= activeNav === 'configuracoes' ? ' is-active' : '' %>" aria-label="Configurações"<%= activeNav === 'configuracoes' ? ' aria-current="page"' : '' %>>
+
+      <%- include('app-svg-icon', { src: '/images/app/icon-settings.svg', size: 'nav' }) %>
+
+    </a>
+
+
+
+    <form action="/auth/logout" method="POST" class="app-sidebar__logout">
+
+
+
+      <button type="submit" class="app-sidebar__link" aria-label="Sair">
+
+
+
+        <%- include('app-svg-icon', { src: '/images/app/icon-logout.svg', size: 'nav' }) %>
+
+
+
+      </button>
+
+
+
+    </form>
+
+
+
+  </div>
+
+
+
+</aside>
+
+
