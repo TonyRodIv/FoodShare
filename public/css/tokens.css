@@ -15,7 +15,11 @@
   --app-bg: #f0f5f3;
   --card: #ffffff;
   --surface: #f0f0ea;
-  --border: #e0e0da;
+  /* Divisórias — Figma Line (66:3048): hairline 0.5px, traço translúcido */
+  --border-hairline: 0.5px;
+  --border-color: color-mix(in srgb, var(--text) 7%, transparent);
+  --border: var(--border-color);
+  --divider: var(--border-hairline) solid var(--border-color);
   --text: #1a1a1a;
   --text-muted: rgba(26, 26, 26, 0.7);
   --muted: #888780;

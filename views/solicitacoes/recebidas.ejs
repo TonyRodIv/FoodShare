@@ -39,13 +39,13 @@
               </div>
               <div class="home-request__actions home-request__actions--mobile">
                 <form action="/solicitacoes/<%= solic.id %>/aceitar" method="POST">
-                  <button type="submit" class="home-icon-action" aria-label="Aceitar">
-                    <%- include('../partials/app-icon', { icon: 'check_circle', size: 'action' }) %>
+                  <button type="submit" class="home-icon-action home-icon-action--accept" aria-label="Aceitar">
+                    <%- include('../partials/app-svg-icon', { src: '/images/app/icon-thumbs-up.svg', size: 'action' }) %>
                   </button>
                 </form>
                 <form action="/solicitacoes/<%= solic.id %>/recusar" method="POST">
-                  <button type="submit" class="home-icon-action" aria-label="Recusar">
-                    <%- include('../partials/app-icon', { icon: 'cancel', size: 'action' }) %>
+                  <button type="submit" class="home-icon-action home-icon-action--reject" aria-label="Recusar">
+                    <%- include('../partials/app-svg-icon', { src: '/images/app/icon-thumbs-down.svg', size: 'action' }) %>
                   </button>
                 </form>
               </div>

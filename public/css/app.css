@@ -61,7 +61,7 @@
 .form-group textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: var(--divider);
   border-radius: 4px;
   font-size: 1rem;
 }
@@ -116,7 +116,7 @@ table th,
 table td {
   padding: 0.75rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: var(--divider);
 }
 
 table tr:hover {

@@ -528,6 +528,71 @@
   .app-notifications-list__item:active .app-notifications-list__chevron {
     animation: iconChevronTap 380ms var(--ease-spring);
   }
+
+  /* ── Aceitar / recusar (solicitações mobile) ── */
+  .home-icon-action .app-svg-icon {
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+
+  @keyframes iconThumbsUpHover {
+    0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
+    45% { transform: rotate(-4deg) translateY(-1.5px) scale(1.04); }
+    75% { transform: rotate(2deg) translateY(-0.5px) scale(1.02); }
+  }
+
+  @keyframes iconThumbsDownHover {
+    0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
+    45% { transform: rotate(4deg) translateY(1.5px) scale(1.04); }
+    75% { transform: rotate(-2deg) translateY(0.5px) scale(1.02); }
+  }
+
+  @keyframes iconThumbsUpTap {
+    0% { transform: rotate(0deg) translateY(0) scale(1); }
+    35% { transform: rotate(-3deg) translateY(1px) scale(0.94); }
+    65% { transform: rotate(2deg) translateY(-2px) scale(1.05); }
+    100% { transform: rotate(0deg) translateY(0) scale(1); }
+  }
+
+  @keyframes iconThumbsDownTap {
+    0% { transform: rotate(0deg) translateY(0) scale(1); }
+    35% { transform: rotate(3deg) translateY(-1px) scale(0.94); }
+    65% { transform: rotate(-2deg) translateY(2px) scale(1.05); }
+    100% { transform: rotate(0deg) translateY(0) scale(1); }
+  }
+
+  @media (hover: hover) {
+    .home-icon-action--accept,
+    .home-icon-action--reject {
+      transition:
+        transform var(--duration-normal) var(--ease-out),
+        background var(--duration-slow) var(--ease-out);
+    }
+
+    .home-icon-action--accept:hover {
+      background: color-mix(in srgb, var(--green-mid) 12%, var(--surface-green));
+    }
+
+    .home-icon-action--reject:hover {
+      background: color-mix(in srgb, var(--red-text) 8%, var(--surface-green));
+    }
+
+    .home-icon-action--accept:hover .app-svg-icon {
+      animation: iconThumbsUpHover 720ms var(--ease-out);
+    }
+
+    .home-icon-action--reject:hover .app-svg-icon {
+      animation: iconThumbsDownHover 720ms var(--ease-out);
+    }
+  }
+
+  .home-icon-action--accept:active .app-svg-icon {
+    animation: iconThumbsUpTap 560ms var(--ease-out);
+  }
+
+  .home-icon-action--reject:active .app-svg-icon {
+    animation: iconThumbsDownTap 560ms var(--ease-out);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -551,7 +616,8 @@
   .home-panel__action .app-icon,
   .home-panel__action .app-svg-icon,
   .app-settings__chevron,
-  .app-notifications-list__chevron {
+  .app-notifications-list__chevron,
+  .home-icon-action .app-svg-icon {
     animation: none !important;
   }
 

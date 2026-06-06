@@ -198,7 +198,7 @@
 .app-donation-card__note {
   margin-top: 4px;
   padding-top: 8px;
-  border-top: 0.5px solid var(--border);
+  border-top: var(--divider);
   font-size: var(--app-fs-sm);
   font-weight: 500;
   color: var(--muted);
@@ -236,12 +236,15 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--app-gap-metrics);
-  padding: var(--app-space-sm) 0;
-  border-bottom: 0.5px solid var(--border);
+  padding: 0 0 7px;
+  margin-bottom: 7px;
+  border-bottom: var(--divider);
 }
 
 .app-history-item:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .app-history-item__title {
@@ -346,7 +349,7 @@
   gap: 8px;
   padding: 8px 12px;
   background: var(--surface-green);
-  border: 0.5px solid var(--border);
+  border: var(--divider);
   border-radius: var(--radius-sm);
 }
 
@@ -385,7 +388,7 @@
 
 .receptor-filter-chip {
   padding: 8px 12px;
-  border: 0.5px solid var(--border);
+  border: var(--divider);
   border-radius: var(--radius-sm);
   background: var(--surface-green);
   color: var(--muted);
@@ -527,7 +530,7 @@
   gap: 8px;
   margin-top: 4px;
   padding-top: 8px;
-  border-top: 0.5px solid var(--border);
+  border-top: var(--divider);
 }
 
 .receptor-food-card__donor {
@@ -735,7 +738,7 @@
   justify-content: flex-end;
   gap: 12px;
   padding-top: 8px;
-  border-top: 0.5px solid var(--border);
+  border-top: var(--divider);
 }
 
 .auth-alert__title {
@@ -766,5 +769,5 @@
   justify-content: flex-end;
   gap: 12px;
   padding-top: 8px;
-  border-top: 0.5px solid var(--border);
+  border-top: var(--divider);
 }
