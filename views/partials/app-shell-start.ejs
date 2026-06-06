@@ -26,6 +26,10 @@
 
 <body class="app-layout">
 
+  <% if (typeof featurePreview !== 'undefined' && featurePreview) { %>
+    <%- include('app-feature-preview-banner') %>
+  <% } %>
+
   <div class="app-shell">
 
     <%- include('app-sidebar', { activeNav: typeof activeNav !== 'undefined' ? activeNav : '' }) %>
