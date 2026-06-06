@@ -83,6 +83,7 @@ async function showHistorico(req, res) {
     pageSubtitle: isDoador
       ? 'Doações entregues e solicitações já respondidas.'
       : 'Solicitações que você fez e que já foram finalizadas.',
+    featurePreview: true,
     isDoador,
     eventos,
     formatDateShort,

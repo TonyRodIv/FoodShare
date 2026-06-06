@@ -17,6 +17,7 @@ async function showNotificacoes(req, res) {
     pageHeadingPrefix: 'Esse é sua',
     pageHeadingHighlight: 'caixa de entrada',
     pageSubtitle: 'Solicitações recentes e atualizações de status.',
+    featurePreview: true,
     isDoador: isDoador(usuario),
     notificacoes,
   });
