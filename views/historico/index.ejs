@@ -1,0 +1,35 @@
+<%- include('../partials/app-shell-start') %>
+
+<div class="app-page">
+  <article class="app-page-panel">
+    <% if (eventos.length === 0) { %>
+      <%- include('../partials/home-empty-state', {
+        variant: 'blue',
+        icon: 'timeline',
+        title: 'Nenhum registro ainda',
+        description: isDoador
+          ? 'Quando doações forem entregues ou solicitações respondidas, elas aparecem aqui.'
+          : 'Suas solicitações finalizadas serão listadas nesta página.',
+        actionLabel: isDoador ? 'Ver minhas doações' : 'Explorar doações',
+        actionHref: '/doacoes'
+      }) %>
+    <% } else { %>
+      <ul class="app-history-list">
+        <% eventos.forEach(function(evento) { %>
+          <li class="app-history-item">
+            <div class="app-history-item__info">
+              <p class="app-history-item__title"><%= evento.titulo %></p>
+              <p class="app-history-item__meta"><%= evento.meta %></p>
+            </div>
+            <div class="app-history-item__right">
+              <span class="home-pill home-pill--<%= evento.status %>"><%= evento.status %></span>
+              <span class="app-history-item__date"><%= formatDateShort(evento.data) %></span>
+            </div>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </article>
+</div>
+
+<%- include('../partials/app-shell-end') %>
