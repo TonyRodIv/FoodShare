@@ -1,23 +1,21 @@
-(function SolicitacoesRecebidasModule() {
+(function SolicitacoesMinhasModule() {
   'use strict';
+
+  var page = document.querySelector('.solicitacoes-minhas-page');
+  if (!page) return;
 
   var overlay = null;
   var bodyEl = null;
   var actionsEl = null;
   var catalog = {};
+  var listEl = page.querySelector('[data-minhas-solicitacoes-list]');
+  var countEl = page.querySelector('[data-minhas-solicitacoes-count]');
+  var filterEmptyEl = page.querySelector('[data-minhas-solicitacoes-filter-empty]');
+  var filterChips = page.querySelectorAll('[data-minhas-solicitacao-filter]');
   var activeFilter = 'todos';
 
-  var listEl = document.querySelector('[data-solicitacoes-list]');
-  var countEl = document.querySelector('[data-solicitacoes-count]');
-  var filterEmptyEl = document.querySelector('[data-solicitacoes-filter-empty]');
-  var filterChips = document.querySelectorAll('[data-solicitacao-filter]');
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+  function R() {
+    return window.AppDetailModalRender;
   }
 
   function loadCatalog() {
@@ -49,7 +47,7 @@
     });
 
     if (countEl) {
-      countEl.textContent = visible + (visible === 1 ? ' pedido' : ' pedidos');
+      countEl.textContent = visible + (visible === 1 ? ' solicitação' : ' solicitações');
     }
 
     if (filterEmptyEl) {
@@ -63,14 +61,14 @@
         event.preventDefault();
         filterChips.forEach(function (c) { c.classList.remove('is-active'); });
         chip.classList.add('is-active');
-        activeFilter = chip.getAttribute('data-solicitacao-filter') || 'todos';
+        activeFilter = chip.getAttribute('data-minhas-solicitacao-filter') || 'todos';
         updateFilterView();
       });
     });
   }
 
   function renderDetail(detail) {
-    var render = window.AppDetailModalRender;
+    var render = R();
     if (!render) return;
 
     var badges = [
@@ -78,20 +76,17 @@
       { key: 'neutral', label: detail.criadoLabel },
     ];
 
-    var facts = [{ label: 'Pedido em', value: detail.criadoEm }];
+    var facts = [];
     if (!detail.isPendente) {
       facts.push({ label: 'Atualizado em', value: detail.atualizadoEm });
-    }
-    if (detail.receptorEmail) {
-      facts.push({ label: 'E-mail', value: detail.receptorEmail });
     }
 
     bodyEl.innerHTML = render.renderBody({
       titleId: 'solicitacao-detail-title',
       title: detail.title,
-      deNome: detail.receptorNome,
+      deNome: detail.doadorNome,
       badges: badges,
-      noteLabel: detail.observacoes ? 'Mensagem do solicitante' : null,
+      noteLabel: detail.observacoes ? 'Sua mensagem' : null,
       noteText: detail.observacoes,
       factsLabel: 'Informações',
       facts: facts,
@@ -103,11 +98,8 @@
 
     if (detail.isPendente) {
       actionsHtml +=
-        '<form action="/solicitacoes/' + escapeHtml(detail.id) + '/recusar" method="POST" class="solicitacao-detail-modal__form">' +
-          '<button type="submit" class="feedback-modal__btn feedback-modal__btn--secondary">Recusar</button>' +
-        '</form>' +
-        '<form action="/solicitacoes/' + escapeHtml(detail.id) + '/aceitar" method="POST" class="solicitacao-detail-modal__form">' +
-          '<button type="submit" class="feedback-modal__btn feedback-modal__btn--primary">Aceitar</button>' +
+        '<form action="/solicitacoes/' + render.escapeHtml(detail.id) + '/cancelar" method="POST" class="solicitacao-detail-modal__form">' +
+          '<button type="submit" class="feedback-modal__btn feedback-modal__btn--primary">Cancelar solicitação</button>' +
         '</form>';
     }
 
@@ -151,7 +143,7 @@
 
   function shouldIgnoreClick(target) {
     return Boolean(
-      target.closest('a, button, input, select, textarea, label, form, .home-table__edit, .home-table__action')
+      target.closest('a, button, input, select, textarea, label, form, .home-request__actions')
     );
   }
 
@@ -173,7 +165,7 @@
       if (shouldIgnoreClick(event.target)) return;
 
       var row = event.target.closest('[data-solicitacao-id]');
-      if (!row || row.classList.contains('is-filter-hidden')) return;
+      if (!row || !page.contains(row) || row.classList.contains('is-filter-hidden')) return;
 
       var solicitacaoId = row.getAttribute('data-solicitacao-id');
       if (!solicitacaoId || !catalog[solicitacaoId]) return;
@@ -183,16 +175,19 @@
     });
 
     document.addEventListener('keydown', function (event) {
-      if (!overlay || !overlay.classList.contains('is-open')) return;
-      if (event.key === 'Escape') close();
-
-      if (event.key === 'Enter' || event.key === ' ') {
-        var row = event.target.closest('[data-solicitacao-id]');
-        if (!row || shouldIgnoreClick(event.target) || row.classList.contains('is-filter-hidden')) return;
-        if (event.key === ' ') event.preventDefault();
-        var solicitacaoId = row.getAttribute('data-solicitacao-id');
-        if (solicitacaoId && catalog[solicitacaoId]) open(solicitacaoId);
+      if (overlay && overlay.classList.contains('is-open') && event.key === 'Escape') {
+        close();
+        return;
       }
+
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      var row = event.target.closest('[data-solicitacao-id]');
+      if (!row || !page.contains(row) || shouldIgnoreClick(event.target) || row.classList.contains('is-filter-hidden')) return;
+
+      if (event.key === ' ') event.preventDefault();
+      var solicitacaoId = row.getAttribute('data-solicitacao-id');
+      if (solicitacaoId && catalog[solicitacaoId]) open(solicitacaoId);
     });
   }
 
@@ -205,7 +200,7 @@
     bindFilters();
     updateFilterView();
 
-    if (!overlay || !bodyEl || !actionsEl || !window.AppDetailModalRender || Object.keys(catalog).length === 0) return;
+    if (!overlay || !bodyEl || !actionsEl || !R() || Object.keys(catalog).length === 0) return;
     bindModal();
   }
 

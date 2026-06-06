@@ -7,9 +7,9 @@ const {
 
 function doacaoStatusLabel(status) {
   const labels = {
-    disponivel: 'disponível',
-    reservado: 'reservado',
-    entregue: 'entregue',
+    disponivel: 'Disponível',
+    reservado: 'Reservado',
+    entregue: 'Entregue',
   };
   return labels[status] || status;
 }
@@ -40,7 +40,7 @@ function serializeDoacaoForDetail(doacao, { viewerRole = 'receptor' } = {}) {
     doadorNome: doacao.usuario?.nome || null,
     publicadoLabel: doacao.createdAt ? timeAgo(doacao.createdAt) : null,
     itens,
-    solicitarUrl: isReceptor ? `/solicitacoes/nova?doacaoId=${doacao.id}` : null,
+    canSolicitar: isReceptor && doacao.status === 'disponivel',
     editarUrl: !isReceptor ? `/doacoes/${doacao.id}/editar` : null,
   };
 }

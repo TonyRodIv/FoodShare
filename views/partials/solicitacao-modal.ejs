@@ -1,0 +1,81 @@
+<%#
+  Modal de nova solicitação (receptor) — estrutura alinhada ao doacao-modal.
+%>
+<div
+  class="feedback-modal-overlay"
+  id="solicitacao-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="solicitacao-modal-title"
+  aria-hidden="true"
+  data-solicitacao-modal
+  hidden
+>
+  <div class="feedback-modal feedback-modal--form solicitacao-modal">
+    <button type="button" class="doacao-detail-modal__close" data-solicitacao-modal-close aria-label="Fechar">
+      <%- include('app-icon', { icon: 'close', size: 'chevron' }) %>
+    </button>
+    <div class="doacao-modal__header">
+      <div class="feedback-modal__content feedback-modal__content--form">
+        <h3 id="solicitacao-modal-title" class="feedback-modal__title">Solicitar doação</h3>
+        <p class="feedback-modal__description solicitacao-modal__context" data-solicitacao-subtitle></p>
+      </div>
+    </div>
+
+    <form class="doacao-modal__form solicitacao-modal__form" id="solicitacaoForm" novalidate>
+      <div class="doacao-modal__scroll-wrap" data-solicitacao-modal-scroll>
+        <div class="doacao-modal__fade doacao-modal__fade--top" aria-hidden="true"></div>
+        <div class="doacao-modal__body solicitacao-modal__body">
+          <div
+            class="auth-alert auth-alert--error solicitacao-modal__errors"
+            role="alert"
+            data-solicitacao-errors
+            hidden
+          ></div>
+
+          <div class="solicitacao-modal__summary" data-solicitacao-summary hidden></div>
+
+          <input type="hidden" name="doacaoId" data-solicitacao-doacao-id value="">
+
+          <div class="auth-field">
+            <label for="solicitacao-quantidade" class="auth-field__label">Quantidade solicitada</label>
+            <input
+              type="number"
+              id="solicitacao-quantidade"
+              name="quantidade"
+              min="1"
+              value="1"
+              required
+              class="auth-field__input"
+              data-solicitacao-quantidade
+            >
+            <span class="auth-field__hint">Normalmente é 1, caso queira o pacote inteiro.</span>
+          </div>
+
+          <div class="auth-field">
+            <label for="solicitacao-observacoes" class="auth-field__label">Mensagem (opcional)</label>
+            <textarea
+              id="solicitacao-observacoes"
+              name="observacoes"
+              rows="3"
+              maxlength="500"
+              placeholder="Explique brevemente por que você precisa desta doação..."
+              class="auth-field__input auth-field__input--textarea"
+              data-solicitacao-observacoes
+            ></textarea>
+          </div>
+        </div>
+        <div class="doacao-modal__fade doacao-modal__fade--bottom" aria-hidden="true"></div>
+      </div>
+
+      <div class="feedback-modal__actions feedback-modal__actions--form">
+        <button type="button" class="feedback-modal__btn feedback-modal__btn--secondary" data-solicitacao-modal-close>
+          Cancelar
+        </button>
+        <button type="submit" class="feedback-modal__btn feedback-modal__btn--primary" data-solicitacao-submit>
+          Enviar solicitação
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

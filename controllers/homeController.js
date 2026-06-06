@@ -1,6 +1,7 @@
 const prisma = require('../config/database');
 const { mesAtual, donationDisplayStatus } = require('../utils/formatTime');
 const { buildDoacoesDetalheMap } = require('../utils/doacaoDetail');
+const { buildSolicitacoesDetalheMap } = require('../utils/solicitacaoDetail');
 
 async function showHome(req, res) {
   const usuario = res.locals.usuario;
@@ -24,6 +25,7 @@ async function showHome(req, res) {
   let doacoesAtivas = [];
   let solicitacoesRecebidas = [];
   let doacoesDetalhe = {};
+  let solicitacoesDetalhe = {};
 
   try {
     if (isDoador) {
@@ -68,9 +70,12 @@ async function showHome(req, res) {
         },
         include: {
           doacao: {
-            include: { itens: { take: 1, orderBy: { validade: 'asc' } } },
+            include: {
+              itens: { orderBy: { validade: 'asc' } },
+              usuario: { select: { nome: true } },
+            },
           },
-          usuario: { select: { nome: true } },
+          usuario: { select: { id: true, nome: true, email: true } },
         },
         orderBy: { createdAt: 'desc' },
         take: 5,
@@ -106,6 +111,7 @@ async function showHome(req, res) {
         ...s,
         itemLabel: s.doacao.itens[0]?.nome || 'Doação',
       }));
+      solicitacoesDetalhe = buildSolicitacoesDetalheMap(solicitacoes);
     } else {
       const [minhasSolicitacoes, pendentes] = await Promise.all([
         prisma.solicitacao.count({ where: { usuarioId: userId } }),
@@ -134,6 +140,7 @@ async function showHome(req, res) {
     doacoesAtivas,
     solicitacoesRecebidas,
     doacoesDetalhe,
+    solicitacoesDetalhe,
     isDoador,
   });
 }

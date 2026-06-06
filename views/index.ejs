@@ -63,7 +63,7 @@
           <%- include('partials/app-svg-icon', { src: '/images/app/icon-hand-metric.svg', size: 'metric' }) %>
         </div>
         <div class="home-metric-card__body">
-          <p class="home-metric-card__label"><%= isDoador ? 'solicitações pendentes' : 'aguardando resposta' %></p>
+          <p class="home-metric-card__label"><%= isDoador ? 'Solicitações pendentes' : 'Aguardando resposta' %></p>
           <p class="home-metric-card__value<%= stats.solicitacoesPendentes === 0 ? ' home-metric-card__value--zero' : '' %>"><%= stats.solicitacoesPendentes %></p>
           <p class="home-metric-card__hint"><%= hintPendentes %></p>
         </div>
@@ -93,10 +93,10 @@
         <% } else { %>
           <div class="home-table">
             <div class="home-table__head">
-              <span>item</span>
-              <span>quantidade</span>
-              <span class="home-table__head-date">validade</span>
-              <span>status</span>
+              <span>Item</span>
+              <span>Quantidade</span>
+              <span class="home-table__head-date">Validade</span>
+              <span>Status</span>
             </div>
             <% doacoesAtivas.forEach(function(doacao) {
               const itemExpirado = isExpired(doacao.validade);
@@ -105,7 +105,7 @@
                 <span class="home-table__item<%= itemExpirado ? ' home-table__item--expirado' : '' %>" title="<%= doacao.nome %><%= itemExpirado ? ' · validade vencida' : '' %>"><%= doacao.nome %></span>
                 <span class="home-table__qty"><%= doacao.quantidade %> un</span>
                 <span class="home-table__date<%= itemExpirado ? ' home-table__date--expirado' : '' %>"><%= formatValidade(doacao.validade) %></span>
-                <span class="home-pill home-pill--<%= doacao.displayStatus %>"><%= doacao.displayStatus %></span>
+                <span class="home-pill home-pill--<%= doacao.displayStatus %>"><%= donationStatusLabel(doacao.displayStatus) %></span>
               </div>
             <% }); %>
           </div>
@@ -125,32 +125,25 @@
             description: 'Quando alguém pedir um dos seus itens, o pedido aparece aqui para você aceitar ou recusar.'
           }) %>
         <% } else { %>
-          <ul class="home-requests">
-            <% solicitacoesRecebidas.forEach(function(solic) { %>
-              <li class="home-request">
+          <ul class="home-requests" data-solicitacoes-list>
+            <% solicitacoesRecebidas.forEach(function(solic) {
+              const pillKey = solicitationPillKey(solic.status);
+              const pillLabel = solicitationPillLabel(solic.status);
+            %>
+              <li
+                class="home-request home-request--readonly home-request--clickable"
+                data-solicitacao-id="<%= solic.id %>"
+                data-status="<%= solic.status %>"
+                role="button"
+                tabindex="0"
+                aria-label="Ver detalhes do pedido de <%= solic.itemLabel %>"
+              >
                 <div class="home-request__info">
                   <p class="home-request__title"><%= solic.itemLabel %></p>
-                  <p class="home-request__meta"><%= solic.usuario.nome %> - <%= timeAgo(solic.createdAt) %></p>
+                  <p class="home-request__meta"><%= solic.usuario.nome %> · <%= timeAgo(solic.createdAt) %></p>
                 </div>
-                <div class="home-request__actions home-request__actions--desktop">
-                  <form action="/solicitacoes/<%= solic.id %>/aceitar" method="POST">
-                    <button type="submit" class="home-btn-secondary home-btn-secondary--sm">Aceitar</button>
-                  </form>
-                  <form action="/solicitacoes/<%= solic.id %>/recusar" method="POST">
-                    <button type="submit" class="home-btn-secondary home-btn-secondary--sm">Recusar</button>
-                  </form>
-                </div>
-                <div class="home-request__actions home-request__actions--mobile">
-                  <form action="/solicitacoes/<%= solic.id %>/aceitar" method="POST">
-                    <button type="submit" class="home-icon-action home-icon-action--accept" aria-label="Aceitar">
-                      <%- include('partials/app-svg-icon', { src: '/images/app/icon-thumbs-up.svg', size: 'action' }) %>
-                    </button>
-                  </form>
-                  <form action="/solicitacoes/<%= solic.id %>/recusar" method="POST">
-                    <button type="submit" class="home-icon-action home-icon-action--reject" aria-label="Recusar">
-                      <%- include('partials/app-svg-icon', { src: '/images/app/icon-thumbs-down.svg', size: 'action' }) %>
-                    </button>
-                  </form>
+                <div class="home-request__aside">
+                  <span class="home-pill home-pill--<%= pillKey %>"><%= pillLabel %></span>
                 </div>
               </li>
             <% }); %>
@@ -179,5 +172,10 @@
 </div>
 
 <%- include('partials/doacoes-detalhe-data') %>
+<% if (isDoador && typeof solicitacoesDetalhe !== 'undefined' && Object.keys(solicitacoesDetalhe).length) { %>
+  <%- include('partials/solicitacoes-detalhe-data') %>
+  <%- include('partials/solicitacao-detail-modal') %>
+  <script src="/js/solicitacoes-recebidas.js"></script>
+<% } %>
 
 <%- include('partials/app-shell-end') %>

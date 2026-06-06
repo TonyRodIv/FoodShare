@@ -22,7 +22,7 @@
               <p class="app-history-item__meta"><%= evento.meta %></p>
             </div>
             <div class="app-history-item__right">
-              <span class="home-pill home-pill--<%= evento.status %>"><%= evento.status %></span>
+              <span class="home-pill home-pill--<%= evento.statusKey %>"><%= evento.statusLabel %></span>
               <span class="app-history-item__date"><%= formatDateShort(evento.data) %></span>
             </div>
           </li>

@@ -67,7 +67,7 @@ Guia de identidade visual do projeto. Consulte antes de implementar qualquer tel
 --bg:              #F5F5F0;   /* fundo geral das páginas logadas */
 --auth-bg:         #121212;   /* moldura externa auth desktop */
 --card:            #FFFFFF;
---surface:         #F0F0EA;   /* inputs dashboard (não auth) */
+--surface:         #F0F0EA;   /* legado Figma — preferir regra de camadas abaixo */
 --border:          #E0E0DA;
 --text:            #1A1A1A;
 --text-muted:      rgba(26, 26, 26, 0.7);
@@ -77,6 +77,24 @@ Guia de identidade visual do projeto. Consulte antes de implementar qualquer tel
 ```
 
 Tokens CSS em `public/css/tokens.css` (importados via `public/css/style.css`).
+
+### Regra de camadas (superfícies)
+
+**Não usar fundos transparentes nem “sumir” no background da página.** Cada camada contrasta com a anterior:
+
+| Camada pai | Token de fundo | Itens filhos (controles, tags, chips inativos) |
+|---|---|---|
+| Página logada | `--app-bg` (`#F0F5F3`) | `--app-control-bg` → `--card` (`#FFFFFF`) |
+| Card / painel branco | `--card` | `--app-inset-bg` → `--app-bg` (`#F0F5F3`) |
+| Modal branco (`--card`) | `#FFFFFF` | `--app-inset-bg` (inputs, resumos, blocos internos) |
+| Hero / sidebar escura | `--green-dark`, `#121212` | translúcidos ou `--green-mid` — exceção à regra |
+
+**Tokens:** `--app-control-bg` e `--app-inset-bg` em `tokens.css`.  
+**Exemplos:** busca e filtros na home do receptor (sobre `--app-bg`) = branco; meta tags dentro do card de doação = verde-claro da página.
+
+**Chip/filtro ativo:** cor forte `--green-mid` + texto branco (não `--green-pale`).
+
+**Sem bordas** em busca, chips e controles arredondados do app — contraste vem só da cor de fundo sólida.
 
 ### Tokens app (`--app-*`)
 
@@ -102,6 +120,8 @@ Variáveis específicas do dashboard em `tokens.css`. **Não usar px brutos** na
 | `--app-icon-metric` | 45px | Círculo ícone métrica (**escala** 48→54→60) |
 | `--app-icon-empty` | 64px | Ícone empty state (**fixo**) |
 | `--app-btn-py/px` | 10/18px | Botões secundários e CTAs |
+| `--app-control-bg` | `--card` | Busca, chips inativos sobre `--app-bg` |
+| `--app-inset-bg` | `--app-bg` | Tags, inputs dentro de card/modal branco |
 | `--sidebar-width` | 60px | Largura sidebar |
 | `--bottom-nav-height` | 72px | Altura bottom bar |
 
@@ -486,19 +506,28 @@ position:      absolute; top 24px; left 24px;
 
 ---
 
-### Inputs (dashboard — páginas logadas)
+### Inputs e controles (dashboard — páginas logadas)
+
+**Sobre fundo da página (`--app-bg`):** busca, chips de filtro, toolbars.
 
 ```css
-background:    #F0F0EA;
-border:        0.5px solid #E0E0DA;
-border-radius: 10px;
-padding:       8px 12px;
-font:          400 13px 'Onest';
-color:         #1A1A1A;
-width:         100%;
+background:    var(--app-control-bg);   /* = --card (#FFFFFF) */
+border:        none;
+border-radius: var(--radius-lg);        /* busca; chips = var(--radius-sm), igual às meta tags */
+padding:       12px 16px;
+font:          500 14px 'Onest';
+color:         var(--text);
 ```
 
-> Auth usa estilo próprio (fundo branco) — ver seção **Módulo Auth**.
+**Dentro de card ou modal branco:** campos, tags meta, blocos de resumo.
+
+```css
+background:    var(--app-inset-bg);      /* = --app-bg (#F0F5F3) */
+border:        none;                     /* ou hairline sutil em modais de formulário */
+border-radius: var(--radius-sm);        /* tags meta / var(--radius-lg) resumos */
+```
+
+> Auth usa estilo próprio (fundo branco no input) — ver seção **Módulo Auth**.
 
 ---
 

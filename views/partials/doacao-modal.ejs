@@ -11,7 +11,10 @@
   aria-hidden="<%= typeof openDoacaoModal !== 'undefined' && openDoacaoModal ? 'false' : 'true' %>"
   data-doacao-modal
 >
-  <div class="feedback-modal feedback-modal--form">
+  <div class="feedback-modal feedback-modal--form doacao-modal">
+    <button type="button" class="doacao-detail-modal__close" data-doacao-modal-close aria-label="Fechar">
+      <%- include('app-icon', { icon: 'close', size: 'chevron' }) %>
+    </button>
     <div class="doacao-modal__header">
       <div class="feedback-modal__content feedback-modal__content--form">
         <h3 id="doacao-modal-title" class="feedback-modal__title">Nova doação</h3>

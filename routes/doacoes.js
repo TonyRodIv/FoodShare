@@ -4,6 +4,7 @@ const prisma = require('../config/database');
 const { authenticate, authorize } = require('../middlewares/authMiddleware');
 const { donationDisplayStatus, isExpired, mesAtual, categoryFilterKey } = require('../utils/formatTime');
 const { buildDoacoesDetalheMap } = require('../utils/doacaoDetail');
+const { getReceptorMonthStats } = require('../utils/receptorStats');
 
 function isApiRequest(req) {
   const contentType = req.headers['content-type'] || '';
@@ -85,9 +86,6 @@ async function getDoadorIndexData(userId) {
 }
 
 async function getReceptorIndexData(userId) {
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
   const [doacoesRaw, solicitacoes, statsMonth] = await Promise.all([
     prisma.doacao.findMany({
       where: { status: 'disponivel' },
@@ -110,21 +108,7 @@ async function getReceptorIndexData(userId) {
       orderBy: { createdAt: 'desc' },
       take: 8,
     }),
-    Promise.all([
-      prisma.solicitacao.count({
-        where: { usuarioId: userId, createdAt: { gte: startOfMonth } },
-      }),
-      prisma.solicitacao.count({
-        where: {
-          usuarioId: userId,
-          status: 'aprovado',
-          updatedAt: { gte: startOfMonth },
-        },
-      }),
-      prisma.solicitacao.count({
-        where: { usuarioId: userId, status: 'pendente' },
-      }),
-    ]),
+    getReceptorMonthStats(userId),
   ]);
 
   const doacoes = doacoesRaw.flatMap((doacao) =>
@@ -152,7 +136,7 @@ async function getReceptorIndexData(userId) {
     doadorNome: solic.doacao.usuario.nome,
   }));
 
-  const [totalSolicitadas, totalRecebidas, totalPendentes] = statsMonth;
+  const { totalSolicitadas, totalRecebidas, totalPendentes } = statsMonth;
 
   return {
     isDoador: false,
@@ -217,7 +201,7 @@ router.get('/', authenticate, async (req, res) => {
       title: 'Doações - FoodShare',
       activeNav: 'doacoes',
       headerVariant: 'home',
-      featurePreview: true,
+      query: req.query,
       ...data,
     });
   } catch (err) {
@@ -321,7 +305,6 @@ router.get('/:id/editar', authenticate, authorize(['doador', 'admin']), async (r
       pageHeadingPrefix: 'Editar',
       pageHeadingHighlight: 'doação',
       pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
-      featurePreview: true,
       doacao,
       errors: [],
     });
@@ -403,7 +386,6 @@ router.post('/:id/editar', authenticate, authorize(['doador', 'admin']), async (
         pageHeadingPrefix: 'Editar',
         pageHeadingHighlight: 'doação',
         pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
-        featurePreview: true,
         doacao: {
           ...doacao,
           observacoes: observacoes ?? doacao.observacoes,

@@ -36,6 +36,7 @@
   --bottom-nav-wrap-pad: 20px;
   --bottom-nav-height: calc(var(--bottom-nav-pill-height) + var(--bottom-nav-wrap-pad));
   --app-mobile-safe-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  --app-sticky-aside-top: 88px;
 
   /* App — tipografia (escala web, design.mdc) */
   --app-fs-xs: 11px;
@@ -71,6 +72,21 @@
   --app-empty-btn-fs: 13px;
   --app-btn-py: 10px;
   --app-btn-px: 18px;
+  --app-btn-min-h: auto;
+  --app-btn-radius: var(--radius-md);
+  --app-input-py: 12px;
+  --app-input-px: 16px;
+  --app-control-fs: var(--app-fs-md);
+  --app-control-radius: var(--radius-md);
+  /* Controles sobre --app-bg → branco; dentro de --card → cor da página */
+  --app-control-bg: var(--card);
+  --app-inset-bg: var(--app-bg);
+  --app-tag-py: 8px;
+  --app-tag-px: 14px;
+  --app-tag-fs: var(--app-fs-sm);
+  --app-surface-gap: 12px;
+  --app-surface-radius: var(--radius-xl);
+  --app-surface-padding: var(--app-panel-padding);
   --app-space-xs: 6px;
   --app-space-sm: 10px;
   --app-icon-header: 40px;
@@ -86,6 +102,7 @@
   --app-icon-action: 44px;
   --app-icon-action-glyph: 20px;
   --app-pill-min-w: 80px;
+  --app-pill-col-w: 6rem;
   --app-empty-min-h: 200px;
   --app-home-list-max-h: 272px;
   --app-home-items-limit: 5;

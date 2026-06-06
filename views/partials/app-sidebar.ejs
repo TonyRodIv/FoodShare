@@ -22,9 +22,9 @@
 
       <% if (isReceptor) { %>
 
-        <a href="/doacoes" class="app-sidebar__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Buscar doações"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
+        <a href="/doacoes" class="app-sidebar__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Início"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
 
-          <%- include('app-svg-icon', { src: '/images/app/icon-search.svg', size: 'nav' }) %>
+          <%- include('app-svg-icon', { src: '/images/app/icon-home.svg', size: 'nav' }) %>
 
         </a>
 
@@ -54,7 +54,7 @@
 
 
 
-        <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
+        <a href="/solicitacoes/recebidas" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
 
           <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
 

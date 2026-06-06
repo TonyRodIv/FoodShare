@@ -8,7 +8,6 @@ function showConfiguracoes(req, res) {
     pageHeadingPrefix: 'Esse é o seu',
     pageHeadingHighlight: 'painel de ajustes',
     pageSubtitle: 'Gerencie sua conta e preferências do FoodShare.',
-    featurePreview: true,
   });
 }
 

@@ -163,45 +163,14 @@ body.feedback-modal-open {
 
 .feedback-modal__btn {
   flex: 1;
-  min-height: 48px;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.1s ease;
 }
 
 a.feedback-modal__btn {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-sizing: border-box;
 }
 
 .feedback-modal__btn:active {
-  transform: scale(0.98);
-}
-
-.feedback-modal__btn--secondary {
-  background: var(--auth-panel);
-  color: rgba(26, 26, 26, 0.7);
-}
-
-.feedback-modal__btn--secondary:hover {
-  background: #e4ebe8;
-}
-
-.feedback-modal__btn--primary {
-  background: var(--auth-green);
-  color: #fff;
-}
-
-.feedback-modal__btn--primary:hover {
-  background: #178a66;
+  transform: scale(var(--press-scale));
 }
 
 @media (max-width: 960px) {
@@ -226,14 +195,6 @@ a.feedback-modal__btn {
 
   .feedback-modal__description {
     font-size: 14px;
-  }
-
-  .feedback-modal__btn {
-    min-height: 60px;
-    padding: 18px 20px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 20px;
   }
 
   .feedback-modal__actions {

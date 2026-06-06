@@ -1,5 +1,41 @@
 /* Modal de nova doação — estende feedback-modal */
 
+/* Form modals compartilhados — nova doação + solicitar doação */
+.doacao-modal,
+.solicitacao-modal {
+  position: relative;
+}
+
+.doacao-modal .doacao-modal__header,
+.solicitacao-modal .doacao-modal__header {
+  padding: 24px 24px 0;
+  padding-right: 52px;
+}
+
+.doacao-modal .feedback-modal__title,
+.solicitacao-modal .feedback-modal__title {
+  font-size: var(--app-fs-3xl);
+}
+
+.doacao-modal .feedback-modal__description,
+.solicitacao-modal .feedback-modal__description {
+  font-size: var(--app-fs-md);
+}
+
+.doacao-modal .feedback-modal__actions--form,
+.solicitacao-modal .feedback-modal__actions--form {
+  padding: 16px 24px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.doacao-modal .feedback-modal__actions--form .feedback-modal__btn,
+.solicitacao-modal .feedback-modal__actions--form .feedback-modal__btn {
+  font-size: var(--app-fs-md);
+}
+
+.doacao-modal .doacao-modal__body {
+  padding: 16px 24px;
+}
+
 .auth-field__input--textarea {
   min-height: 72px;
   resize: vertical;
@@ -12,7 +48,7 @@
 .doacao-edit-form > .auth-field .custom-select__trigger,
 .doacao-modal__body > .auth-field .auth-field__input,
 .doacao-modal__body > .auth-field .custom-select__trigger {
-  background: var(--surface-green);
+  background: var(--app-inset-bg);
   border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
 }
 
@@ -35,7 +71,6 @@
 
 .doacao-modal__header {
   flex-shrink: 0;
-  padding: 28px 28px 0;
 }
 
 .feedback-modal__content--form {
@@ -53,6 +88,23 @@
   border-top: var(--divider);
   background: #fff;
   border-radius: 0 0 28px 28px;
+}
+
+.feedback-modal__actions--form .feedback-modal__btn {
+  min-height: 48px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 960px) {
+  .feedback-modal__actions--form .feedback-modal__btn {
+    min-height: 60px;
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+  }
 }
 
 .doacao-modal__form {
@@ -217,12 +269,15 @@
     border-radius: 28px 28px 0 0;
   }
 
-  .doacao-modal__header {
-    padding: 24px 24px 0;
+  .doacao-modal .doacao-modal__header,
+  .solicitacao-modal .doacao-modal__header {
+    padding: 24px 20px 0;
+    padding-right: 48px;
   }
 
-  .doacao-modal__body {
-    padding: 16px 24px 12px;
+  .doacao-modal .doacao-modal__body,
+  .solicitacao-modal .doacao-modal__body {
+    padding: 16px 20px 12px;
   }
 
   .feedback-modal__actions--form {

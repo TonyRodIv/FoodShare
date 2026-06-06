@@ -17,11 +17,11 @@
       <% } else { %>
         <div class="home-table home-table--actions">
           <div class="home-table__head">
-            <span>item</span>
-            <span>quantidade</span>
-            <span class="home-table__head-date">validade</span>
-            <span>status</span>
-            <span class="home-table__head-action">ações</span>
+            <span>Item</span>
+            <span>Quantidade</span>
+            <span class="home-table__head-date">Validade</span>
+            <span>Status</span>
+            <span class="home-table__head-action">Ações</span>
           </div>
           <% itens.forEach(function(item) {
             const itemExpirado = isExpired(item.validade);
@@ -30,7 +30,7 @@
               <span class="home-table__item<%= itemExpirado ? ' home-table__item--expirado' : '' %>" title="<%= item.nome %><%= itemExpirado ? ' · validade vencida' : '' %>"><%= item.nome %></span>
               <span class="home-table__qty"><%= item.quantidade %> un</span>
               <span class="home-table__date<%= itemExpirado ? ' home-table__date--expirado' : '' %>"><%= formatValidade(item.validade) %></span>
-              <span class="home-pill home-pill--<%= item.displayStatus %>"><%= item.displayStatus %></span>
+              <span class="home-pill home-pill--<%= item.displayStatus %>"><%= donationStatusLabel(item.displayStatus) %></span>
               <span class="home-table__action">
                 <a href="/doacoes/<%= item.doacaoId %>/editar" class="home-table__edit">Editar</a>
               </span>
@@ -43,25 +43,29 @@
   <% } else { %>
     <div class="receptor-dashboard">
       <div class="receptor-dashboard__main">
+        <% if (typeof query !== 'undefined' && query.solicitacao === 'ok') { %>
+          <p class="solicitacao-flash" role="status">Solicitação enviada com sucesso!</p>
+        <% } %>
+
         <div class="receptor-toolbar">
-          <label class="receptor-search">
-            <span class="receptor-search__icon" aria-hidden="true">
-              <%- include('../partials/app-icon', { icon: 'search', size: 'chevron' }) %>
+          <label class="app-search">
+            <span class="app-search__icon" aria-hidden="true">
+              <%- include('../partials/app-icon', { icon: 'search', size: 'header' }) %>
             </span>
             <input
               type="search"
-              class="receptor-search__input"
+              class="app-search__input"
               placeholder="Buscar alimentos disponíveis..."
               autocomplete="off"
               data-receptor-search
             >
           </label>
 
-          <div class="receptor-filters" role="group" aria-label="Filtrar por categoria">
+          <div class="app-filter-chips" role="group" aria-label="Filtrar por categoria">
             <% RECEPTOR_CATEGORY_FILTERS.forEach(function(cat, index) { %>
               <button
                 type="button"
-                class="receptor-filter-chip<%= index === 0 ? ' is-active' : '' %>"
+                class="app-filter-chip<%= index === 0 ? ' is-active' : '' %>"
                 data-receptor-filter="<%= cat.key %>"
               ><%= cat.label %></button>
             <% }); %>

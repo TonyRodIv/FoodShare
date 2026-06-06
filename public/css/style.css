@@ -1,18 +1,19 @@
 /**
  * FoodShare — ponto de entrada CSS
  *
- * Estrutura:
- *   tokens.css              — variáveis de design
- *   base.css                — reset e body
- *   app.css                 — páginas logadas (legado)
- *   auth/layout.css         — auth desktop
- *   auth/mobile.css         — auth responsivo
- *   components/*.css        — módulos reutilizáveis
+ *   tokens.css           — variáveis de design
+ *   base.css             — reset e body
+ *   components/app-ui.css — botões, inputs, tags, superfícies
+ *   app/layout.css       — shell logado
+ *   app/home.css         — dashboard
+ *   app/pages.css        — páginas internas
+ *   auth/*               — telas de autenticação
+ *   components/*         — módulos específicos
  */
 
 @import url('./tokens.css');
 @import url('./base.css');
-@import url('./app.css');
+@import url('./components/app-ui.css');
 @import url('./app/layout.css');
 @import url('./app/home.css');
 @import url('./app/pages.css');
@@ -24,9 +25,9 @@
 @import url('./components/app-svg-icons.css');
 @import url('./components/feedback-modal.css');
 @import url('./components/doacao-modal.css');
-@import url('./components/doacao-detail-modal.css');
+@import url('./components/solicitacao-modal.css');
+@import url('./components/app-detail-modal.css');
 @import url('./components/app-header-menus.css');
 @import url('./components/app-microinteractions.css');
-@import url('./components/app-feature-preview.css');
 @import url('./components/custom-select.css');
 @import url('./components/microinteractions.css');

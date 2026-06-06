@@ -62,7 +62,7 @@
   .app-main--mounted .home-metrics,
   .app-main--mounted .home-panels,
   .app-main--mounted .app-page-panel,
-  .app-main--mounted .app-donation-grid,
+  .app-main--mounted .receptor-food-grid,
   .app-main--mounted .app-settings,
   .app-main--mounted .app-page-toolbar {
     animation: appFadeUp var(--duration-slow) var(--ease-out) 120ms both;
@@ -85,22 +85,22 @@
   }
 
   .app-main--mounted .home-panel,
-  .app-main--mounted .app-donation-card {
+  .app-main--mounted .receptor-food-card {
     animation: appFadeUp var(--duration-slow) var(--ease-out) both;
   }
 
   .app-main--mounted .home-panel:nth-child(1),
-  .app-main--mounted .app-donation-card:nth-child(1) {
+  .app-main--mounted .receptor-food-card:nth-child(1) {
     animation-delay: 200ms;
   }
 
   .app-main--mounted .home-panel:nth-child(2),
-  .app-main--mounted .app-donation-card:nth-child(2) {
+  .app-main--mounted .receptor-food-card:nth-child(2) {
     animation-delay: 260ms;
   }
 
   .app-main--mounted .home-panel:nth-child(3),
-  .app-main--mounted .app-donation-card:nth-child(3) {
+  .app-main--mounted .receptor-food-card:nth-child(3) {
     animation-delay: 320ms;
   }
 
@@ -114,11 +114,12 @@
   .home-hero-card__btn,
   .home-btn-secondary,
   .home-icon-action,
+  .app-filter-chip,
   .app-page-header__btn,
   .app-header__action,
   .home-empty-state__btn,
   .home-panel__action,
-  .app-donation-card__action,
+  .app-btn-primary,
   .doacao-modal__add-btn,
   .doacao-modal__item-remove,
   .feedback-modal__btn,
@@ -139,6 +140,7 @@
   .app-header__avatar-btn:active,
   .home-hero-card__btn:active,
   .home-btn-secondary:active,
+  .app-filter-chip:active,
   .home-icon-action:active,
   .app-page-header__btn:active,
   .app-header__action:active,
@@ -156,7 +158,7 @@
   .home-metric-card,
   .home-panel,
   .app-page-panel,
-  .app-donation-card,
+  .receptor-food-card,
   .app-settings__card {
     transition:
       transform var(--duration-normal) var(--ease-out),
@@ -167,7 +169,7 @@
     .home-metric-card:hover,
     .home-panel:hover,
     .app-page-panel:hover,
-    .app-donation-card:hover {
+    .receptor-food-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-card);
     }
@@ -264,7 +266,7 @@
     .app-page-header__btn:hover,
     .app-header__action:hover,
     .home-empty-state__btn:hover,
-    .app-donation-card__action:hover {
+    .app-btn-primary:hover {
       transform: translateY(-1px);
     }
   }

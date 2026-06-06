@@ -16,12 +16,12 @@
         <p class="solicitacoes-toolbar__count" data-solicitacoes-count>
           <%= solicitacoes.length %> <%= solicitacoes.length === 1 ? 'pedido' : 'pedidos' %>
         </p>
-        <div class="receptor-filters solicitacoes-filters" role="group" aria-label="Filtrar pedidos">
-          <button type="button" class="receptor-filter-chip is-active" data-solicitacao-filter="todos">Todos</button>
-          <button type="button" class="receptor-filter-chip" data-solicitacao-filter="pendente">Pendentes</button>
-          <button type="button" class="receptor-filter-chip" data-solicitacao-filter="aprovado">Aprovados</button>
-          <button type="button" class="receptor-filter-chip" data-solicitacao-filter="recusado">Recusados</button>
-          <button type="button" class="receptor-filter-chip" data-solicitacao-filter="cancelado">Cancelados</button>
+        <div class="app-filter-chips solicitacoes-filters" role="group" aria-label="Filtrar pedidos">
+          <button type="button" class="app-filter-chip is-active" data-solicitacao-filter="todos">Todos</button>
+          <button type="button" class="app-filter-chip" data-solicitacao-filter="pendente">Pendentes</button>
+          <button type="button" class="app-filter-chip" data-solicitacao-filter="aprovado">Aprovados</button>
+          <button type="button" class="app-filter-chip" data-solicitacao-filter="recusado">Recusados</button>
+          <button type="button" class="app-filter-chip" data-solicitacao-filter="cancelado">Cancelados</button>
         </div>
       </div>
 
@@ -30,11 +30,11 @@
           const itemLabel = solic.doacao.itens && solic.doacao.itens[0]
             ? solic.doacao.itens[0].nome
             : 'Doação';
-          const statusLabel = solicitationDisplayStatus(solic.status);
+          const pillLabel = solicitationPillLabel(solic.status);
           const pillKey = solicitationPillKey(solic.status);
         %>
           <li
-            class="home-request home-request--clickable"
+            class="home-request home-request--readonly home-request--clickable"
             data-solicitacao-id="<%= solic.id %>"
             data-status="<%= solic.status %>"
             role="button"
@@ -48,31 +48,9 @@
                 <% if (solic.observacoes) { %> · "<%= solic.observacoes %>"<% } %>
               </p>
             </div>
-
-            <% if (solic.status === 'pendente') { %>
-              <div class="home-request__actions home-request__actions--desktop">
-                <form action="/solicitacoes/<%= solic.id %>/aceitar" method="POST">
-                  <button type="submit" class="home-btn-secondary home-btn-secondary--sm">Aceitar</button>
-                </form>
-                <form action="/solicitacoes/<%= solic.id %>/recusar" method="POST">
-                  <button type="submit" class="home-btn-secondary home-btn-secondary--sm">Recusar</button>
-                </form>
-              </div>
-              <div class="home-request__actions home-request__actions--mobile">
-                <form action="/solicitacoes/<%= solic.id %>/aceitar" method="POST">
-                  <button type="submit" class="home-icon-action home-icon-action--accept" aria-label="Aceitar">
-                    <%- include('../partials/app-svg-icon', { src: '/images/app/icon-thumbs-up.svg', size: 'action' }) %>
-                  </button>
-                </form>
-                <form action="/solicitacoes/<%= solic.id %>/recusar" method="POST">
-                  <button type="submit" class="home-icon-action home-icon-action--reject" aria-label="Recusar">
-                    <%- include('../partials/app-svg-icon', { src: '/images/app/icon-thumbs-down.svg', size: 'action' }) %>
-                  </button>
-                </form>
-              </div>
-            <% } else { %>
-              <span class="home-pill home-pill--<%= pillKey %>"><%= statusLabel %></span>
-            <% } %>
+            <div class="home-request__aside">
+              <span class="home-pill home-pill--<%= pillKey %>"><%= pillLabel %></span>
+            </div>
           </li>
         <% }); %>
       </ul>

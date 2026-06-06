@@ -1,6 +1,8 @@
 const {
   timeAgo,
   formatDateShort,
+  formatCategoryLabel,
+  formatValidade,
   solicitationPillKey,
   solicitationPillLabel,
 } = require('./formatTime');
@@ -24,7 +26,8 @@ function sortSolicitacoesRecebidas(solicitacoes) {
   });
 }
 
-function serializeSolicitacaoForDetail(solic) {
+function serializeSolicitacaoForDetail(solic, { viewerRole = 'doador' } = {}) {
+  const isReceptor = viewerRole === 'receptor';
   const itens = solic.doacao?.itens || [];
   const itemLabel = itens[0]?.nome || 'Doação';
   const title = itens.length === 1
@@ -40,25 +43,29 @@ function serializeSolicitacaoForDetail(solic) {
     statusKey: solicitationPillKey(solic.status),
     statusLabel: solicitationPillLabel(solic.status),
     observacoes: solic.observacoes || null,
-    receptorNome: solic.usuario?.nome || null,
-    receptorEmail: solic.usuario?.email || null,
+    receptorNome: !isReceptor ? solic.usuario?.nome || null : null,
+    receptorEmail: !isReceptor ? solic.usuario?.email || null : null,
+    doadorNome: isReceptor ? solic.doacao?.usuario?.nome || null : null,
     doacaoId: solic.doacaoId,
     doacaoStatus: solic.doacao?.status || null,
     criadoLabel: timeAgo(solic.createdAt),
     criadoEm: formatDateShort(solic.createdAt),
     atualizadoEm: formatDateShort(solic.updatedAt),
     isPendente: solic.status === 'pendente',
+    viewerRole,
     itens: itens.map((item) => ({
       nome: item.nome,
       quantidade: item.quantidade,
+      categoriaLabel: formatCategoryLabel(item.categoria),
+      validadeLabel: formatValidade(item.validade),
     })),
   };
 }
 
-function buildSolicitacoesDetalheMap(solicitacoes) {
+function buildSolicitacoesDetalheMap(solicitacoes, options = {}) {
   const map = {};
   for (const solic of solicitacoes) {
-    map[solic.id] = serializeSolicitacaoForDetail(solic);
+    map[solic.id] = serializeSolicitacaoForDetail(solic, options);
   }
   return map;
 }

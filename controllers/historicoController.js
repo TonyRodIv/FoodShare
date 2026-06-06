@@ -1,5 +1,5 @@
 const prisma = require('../config/database');
-const { solicitationDisplayStatus, formatDateShort } = require('../utils/formatTime');
+const { solicitationPillKey, solicitationPillLabel, formatDateShort, donationStatusLabel } = require('../utils/formatTime');
 
 async function showHistorico(req, res) {
   const usuario = res.locals.usuario;
@@ -34,15 +34,17 @@ async function showHistorico(req, res) {
         ...doacoesEntregues.map((d) => ({
           tipo: 'doacao',
           titulo: d.itens[0]?.nome || 'Doação entregue',
-          meta: `${d.itens.length} item(ns) · entregue`,
-          status: 'entregue',
+          meta: `${d.itens.length} item(ns) · Entregue`,
+          statusKey: 'entregue',
+          statusLabel: donationStatusLabel('entregue'),
           data: d.updatedAt,
         })),
         ...solicitacoesResolvidas.map((s) => ({
           tipo: 'solicitacao',
           titulo: s.doacao.itens[0]?.nome || 'Solicitação',
           meta: `${s.usuario.nome} · ${s.quantidade} un`,
-          status: solicitationDisplayStatus(s.status),
+          statusKey: solicitationPillKey(s.status),
+          statusLabel: solicitationPillLabel(s.status),
           data: s.updatedAt,
         })),
       ].sort((a, b) => new Date(b.data) - new Date(a.data));
@@ -66,8 +68,9 @@ async function showHistorico(req, res) {
       eventos = solicitacoes.map((s) => ({
         tipo: 'solicitacao',
         titulo: s.doacao.itens[0]?.nome || 'Solicitação',
-        meta: `Doador: ${s.doacao.usuario.nome} · ${s.quantidade} un`,
-        status: solicitationDisplayStatus(s.status),
+        meta: `${s.doacao.usuario.nome} · ${s.quantidade} un`,
+        statusKey: solicitationPillKey(s.status),
+        statusLabel: solicitationPillLabel(s.status),
         data: s.updatedAt,
       }));
     }
@@ -83,7 +86,6 @@ async function showHistorico(req, res) {
     pageSubtitle: isDoador
       ? 'Doações entregues e solicitações já respondidas.'
       : 'Solicitações que você fez e que já foram finalizadas.',
-    featurePreview: true,
     isDoador,
     eventos,
     formatDateShort,

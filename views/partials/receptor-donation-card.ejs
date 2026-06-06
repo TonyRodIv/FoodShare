@@ -22,7 +22,7 @@
       <%- include('app-icon', { icon: iconName, size: 'metric' }) %>
     </div>
     <span class="home-pill home-pill--<%= item.availabilityPill %>">
-      <%= item.availabilityPill === 'ultimas' ? 'últimas unid.' : 'disponível' %>
+      <%= donationStatusLabel(item.availabilityPill) %>
     </span>
   </div>
 
@@ -31,19 +31,19 @@
     <%= formatCategoryLabel(item.categoria) %> · <%= item.quantidade %> un
   </p>
 
-  <ul class="receptor-food-card__meta">
-    <li>
-      <%- include('app-icon', { icon: 'calendar_today', size: 'chevron' }) %>
-      Val: <%= formatValidade(item.validade) %>
-    </li>
-    <li>
-      <%- include('app-icon', { icon: 'location_on', size: 'chevron' }) %>
+  <div class="app-meta-tags">
+    <span class="app-meta-tag">
+      <%- include('app-icon', { icon: 'calendar_today', size: 'meta' }) %>
+      Val. <%= formatValidade(item.validade) %>
+    </span>
+    <span class="app-meta-tag">
+      <%- include('app-icon', { icon: 'location_on', size: 'meta' }) %>
       <%= item.localizacao %>
-    </li>
-  </ul>
+    </span>
+  </div>
 
   <div class="receptor-food-card__footer">
     <span class="receptor-food-card__donor"><%= item.doadorNome %></span>
-    <a href="/solicitacoes/nova?doacaoId=<%= item.doacaoId %>" class="receptor-food-card__btn">Solicitar</a>
+    <button type="button" class="app-btn-primary" data-solicitacao-open="<%= item.doacaoId %>">Solicitar</button>
   </div>
 </article>
