@@ -54,7 +54,7 @@
 
 
 
-        <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
+        <a href="/solicitacoes/recebidas" class="app-sidebar__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
 
           <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
 

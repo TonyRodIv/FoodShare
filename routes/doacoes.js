@@ -305,7 +305,6 @@ router.get('/:id/editar', authenticate, authorize(['doador', 'admin']), async (r
       pageHeadingPrefix: 'Editar',
       pageHeadingHighlight: 'doação',
       pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
-      featurePreview: true,
       doacao,
       errors: [],
     });
@@ -387,7 +386,6 @@ router.post('/:id/editar', authenticate, authorize(['doador', 'admin']), async (
         pageHeadingPrefix: 'Editar',
         pageHeadingHighlight: 'doação',
         pageSubtitle: 'Atualize os itens, observações e status do pacote publicado.',
-        featurePreview: true,
         doacao: {
           ...doacao,
           observacoes: observacoes ?? doacao.observacoes,

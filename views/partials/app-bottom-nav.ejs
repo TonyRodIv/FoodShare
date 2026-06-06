@@ -10,9 +10,6 @@
       <a href="/solicitacoes/minhas" class="app-bottom-nav__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Minhas solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
         <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
       </a>
-      <a href="/historico" class="app-bottom-nav__link<%= activeNav === 'historico' ? ' is-active' : '' %>" aria-label="Histórico"<%= activeNav === 'historico' ? ' aria-current="page"' : '' %>>
-        <%- include('app-svg-icon', { src: '/images/app/icon-history.svg', size: 'nav' }) %>
-      </a>
     <% } else { %>
       <a href="/" class="app-bottom-nav__link<%= activeNav === 'home' ? ' is-active' : '' %>" aria-label="Início"<%= activeNav === 'home' ? ' aria-current="page"' : '' %>>
         <%- include('app-svg-icon', { src: '/images/app/icon-home.svg', size: 'nav' }) %>
@@ -20,10 +17,10 @@
       <a href="/doacoes" class="app-bottom-nav__link<%= activeNav === 'doacoes' ? ' is-active' : '' %>" aria-label="Doações"<%= activeNav === 'doacoes' ? ' aria-current="page"' : '' %>>
         <%- include('app-svg-icon', { src: '/images/app/icon-gift.svg', size: 'nav' }) %>
       </a>
-      <a href="<%= locals.usuario && (locals.usuario.role === 'doador' || locals.usuario.role === 'admin') ? '/solicitacoes/recebidas' : '/solicitacoes/minhas' %>" class="app-bottom-nav__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
+      <a href="/solicitacoes/recebidas" class="app-bottom-nav__link<%= activeNav === 'solicitacoes' ? ' is-active' : '' %>" aria-label="Solicitações"<%= activeNav === 'solicitacoes' ? ' aria-current="page"' : '' %>>
         <%- include('app-svg-icon', { src: '/images/app/icon-hand.svg', size: 'nav' }) %>
       </a>
     <% } %>
   </nav>
 </div>
-
+

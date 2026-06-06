@@ -283,6 +283,20 @@
 
     loadCatalog();
     bindEvents();
+    initDeepLink();
+  }
+
+  function initDeepLink() {
+    var params = new URLSearchParams(window.location.search);
+    var doacaoId = params.get('solicitar');
+    if (!doacaoId || !catalog[doacaoId]) return;
+
+    open(doacaoId);
+    params.delete('solicitar');
+    var url = new URL(window.location.href);
+    url.searchParams.delete('solicitar');
+    var qs = url.searchParams.toString();
+    window.history.replaceState({}, '', url.pathname + (qs ? '?' + qs : '') + url.hash);
   }
 
   if (document.readyState === 'loading') {

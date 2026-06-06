@@ -68,7 +68,7 @@ async function showHistorico(req, res) {
       eventos = solicitacoes.map((s) => ({
         tipo: 'solicitacao',
         titulo: s.doacao.itens[0]?.nome || 'Solicitação',
-        meta: `Doador: ${s.doacao.usuario.nome} · ${s.quantidade} un`,
+        meta: `${s.doacao.usuario.nome} · ${s.quantidade} un`,
         statusKey: solicitationPillKey(s.status),
         statusLabel: solicitationPillLabel(s.status),
         data: s.updatedAt,
@@ -86,7 +86,6 @@ async function showHistorico(req, res) {
     pageSubtitle: isDoador
       ? 'Doações entregues e solicitações já respondidas.'
       : 'Solicitações que você fez e que já foram finalizadas.',
-    featurePreview: true,
     isDoador,
     eventos,
     formatDateShort,

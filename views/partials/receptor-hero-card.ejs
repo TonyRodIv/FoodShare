@@ -1,8 +1,9 @@
 <article class="home-hero-card home-hero-card--receptor">
+  <% const mesAtualLabel = typeof mesAtual === 'function' ? mesAtual() : mesAtual; %>
   <div class="home-hero-card__text">
     <p class="home-hero-card__title">Suas solicitações deste mês 📦</p>
     <p class="home-hero-card__subtitle home-hero-card__subtitle--receptor">
-      Você recebeu <%= totalRecebidas %> <%= totalRecebidas === 1 ? 'doação' : 'doações' %> em <%= mesAtual %>
+      Você recebeu <%= totalRecebidas %> <%= totalRecebidas === 1 ? 'doação' : 'doações' %> em <%= mesAtualLabel %>
     </p>
   </div>
 
