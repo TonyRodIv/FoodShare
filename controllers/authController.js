@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const prisma = require('../config/database');
-const supabase = require('../config/supabase');
+const { createSupabaseClient } = require('../config/supabase');
 const { registerSchema, loginSchema } = require('../validators/authValidator');
 
 const SALT_ROUNDS = 12;
@@ -212,6 +212,7 @@ async function logout(req, res) {
 
 // GET /auth/google
 async function loginGoogle(req, res) {
+  const supabase = createSupabaseClient(req, res);
   if (!supabase) {
     return res.status(500).send('Supabase não configurado');
   }
@@ -233,6 +234,11 @@ async function googleCallback(req, res) {
   const { code } = req.query;
   if (!code) {
     return res.redirect('/auth/login?error=Nenhum código recebido do Google');
+  }
+
+  const supabase = createSupabaseClient(req, res);
+  if (!supabase) {
+    return res.status(500).send('Supabase não configurado');
   }
 
   try {
