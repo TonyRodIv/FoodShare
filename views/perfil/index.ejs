@@ -1,0 +1,536 @@
+<%- include('../partials/app-shell-start', { title: 'Meu Perfil - FoodShare', activeNav: 'perfil', pageSubtitle: 'Mural Solidário e Conquistas' }) %>
+
+<div class="app-page profile-page-wrap">
+  <div class="perfil-container">
+      
+      <!-- Cabeçalho do Perfil -->
+      <section class="perfil-hero">
+        <div class="perfil-hero__avatar-wrapper" style="position: relative; z-index: 1;">
+          <form id="avatarForm" action="/perfil/avatar" method="POST" enctype="multipart/form-data">
+            <label for="avatarInput" class="perfil-hero__avatar" style="cursor: pointer; overflow: hidden; position: relative; margin: 0;">
+              <% if (locals.usuario.avatar) { %>
+                <img src="<%= locals.usuario.avatar %>" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />
+              <% } else { %>
+                <span><%= locals.usuario.nome.charAt(0).toUpperCase() %></span>
+              <% } %>
+              <div class="avatar-overlay">
+                <span style="display: flex; align-items: center; gap: 0.4rem;">
+                  <span class="material-symbols-rounded" style="font-size: 1.2rem;">add_a_photo</span> Alterar
+                </span>
+              </div>
+            </label>
+            <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;" onchange="if(this.files[0].size > 2 * 1024 * 1024){ alert('A imagem deve ter no máximo 2MB'); this.value = ''; } else { document.getElementById('avatarForm').submit(); }" />
+          </form>
+        </div>
+        <div class="perfil-hero__info">
+          <h1 class="perfil-hero__name"><%= locals.usuario.nome %></h1>
+          <p class="perfil-hero__email"><%= locals.usuario.email %></p>
+          <div class="perfil-hero__stats">
+            <div class="stat-badge">
+              <span class="stat-badge__icon">📦</span>
+              <strong><%= totalDoacoes %></strong> doações realizadas
+            </div>
+            <div class="stat-badge">
+              <span class="stat-badge__icon">⭐</span>
+              <strong>Membro ativo</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção de Badges (Conquistas) -->
+      <section class="perfil-section">
+        <h2 class="perfil-section__title">Minhas Conquistas</h2>
+        <div class="badges-grid">
+          <% badges.forEach(badge => { %>
+            <div class="badge-card <%= badge.atingida ? 'badge-card--active' : 'badge-card--locked' %>">
+              <div class="badge-card__icon" style="background-color: <%= badge.atingida ? badge.cor + '20' : '#f1f5f9' %>; color: <%= badge.atingida ? badge.cor : '#94a3b8' %>;">
+                <%= badge.icon %>
+              </div>
+              <div class="badge-card__content">
+                <div class="badge-card__header">
+                  <h3><%= badge.nome %></h3>
+                  <% if (badge.atingida) { %>
+                    <span class="badge-card__stamp" style="background-color: <%= badge.cor %>;">Concluído</span>
+                  <% } %>
+                </div>
+                <p><%= badge.descricao %></p>
+                <% if (!badge.atingida) { %>
+                  <div class="badge-progress-info">
+                    <span>Progresso:</span>
+                    <strong><%= totalDoacoes %> / <%= badge.meta %></strong>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-bar__fill" style="width: <%= badge.progresso %>%; background-color: <%= badge.cor %>;"></div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </section>
+
+      <!-- Mural do Perfil (Posts) -->
+      <section class="perfil-section">
+        <h2 class="perfil-section__title">Meu Mural Solidário</h2>
+        
+        <!-- Formulário para nova postagem -->
+        <div class="post-creator">
+          <form action="/perfil/post" method="POST">
+            <textarea name="texto" rows="3" placeholder="Compartilhe como foi doar hoje, ou escreva uma mensagem positiva..." required></textarea>
+            <div class="post-creator__actions">
+              <button type="submit" class="app-btn app-btn--primary">Publicar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Feed de Posts -->
+        <div class="feed-timeline">
+          <% if (posts.length > 0) { %>
+            <% posts.forEach(post => { %>
+              <div class="feed-item">
+                <div class="feed-item__avatar">
+                  <%= locals.usuario.nome.charAt(0).toUpperCase() %>
+                </div>
+                <div class="feed-item__content">
+                  <div class="feed-item__header">
+                    <strong><%= locals.usuario.nome %></strong>
+                    <span class="feed-item__time"><%= new Date(post.createdAt).toLocaleDateString() %></span>
+                    <form action="/perfil/post/<%= post.id %>/delete" method="POST" style="margin-left: auto;">
+                      <button type="submit" class="feed-item__delete" title="Excluir" onclick="return confirm('Tem certeza?')">🗑️</button>
+                    </form>
+                  </div>
+                  <p class="feed-item__text"><%= post.texto %></p>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <div class="feed-empty">
+              <div class="feed-empty__icon">📝</div>
+              <p>Seu mural está vazio. Que tal compartilhar algo agora?</p>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+  </div>
+</div>
+
+<style>
+  /* CSS Premium & Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .profile-page-wrap {
+    padding: 0 1rem;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .perfil-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+  }
+
+  .perfil-hero {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem;
+    background: linear-gradient(145deg, #ffffff, #f9fafb);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,1);
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .perfil-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .perfil-hero__avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 30%;
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px -5px rgba(16, 185, 129, 0.4);
+    z-index: 1;
+  }
+
+  .avatar-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .perfil-hero__avatar:hover .avatar-overlay {
+    opacity: 1;
+  }
+
+  .perfil-hero__info {
+    z-index: 1;
+  }
+
+  .perfil-hero__name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+    background: linear-gradient(90deg, #0f172a, #334155);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .perfil-hero__email {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .perfil-hero__stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-badge {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    color: #1e293b;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+  }
+
+  .stat-badge:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+  }
+
+  .perfil-section {
+    margin-bottom: 3rem;
+  }
+
+  .perfil-section__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .perfil-section__title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, #e2e8f0, transparent);
+    margin-left: 1rem;
+  }
+
+  .badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .badge-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    background: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .badge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  }
+
+  .badge-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: currentColor;
+    opacity: 0.1;
+  }
+
+  .badge-card--active {
+    border-color: transparent;
+  }
+
+  .badge-card--active::before {
+    opacity: 1;
+  }
+
+  .badge-card--locked {
+    filter: grayscale(100%);
+    opacity: 0.65;
+    background: #f8fafc;
+  }
+
+  .badge-card--locked:hover {
+    filter: grayscale(50%);
+    opacity: 0.9;
+  }
+
+  .badge-card__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .badge-card__content {
+    flex: 1;
+  }
+
+  .badge-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-card__header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .badge-card__content p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .badge-progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.4rem;
+  }
+
+  .badge-progress-info strong {
+    color: #334155;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-bar__fill {
+    height: 100%;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .badge-card__stamp {
+    display: inline-flex;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .post-creator {
+    background: white;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .post-creator:focus-within {
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+    border-color: #34d399;
+  }
+
+  .post-creator textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-family: 'Onest', inherit;
+    font-size: 1.1rem;
+    color: #1e293b;
+    outline: none;
+    min-height: 80px;
+  }
+
+  .post-creator textarea::placeholder {
+    color: #94a3b8;
+  }
+
+  .post-creator__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .feed-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .feed-item {
+    display: flex;
+    gap: 1.25rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .feed-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+  }
+
+  .feed-item__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+  }
+
+  .feed-item__content {
+    flex: 1;
+  }
+
+  .feed-item__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feed-item__header strong {
+    font-size: 1.05rem;
+    color: #0f172a;
+  }
+
+  .feed-item__time {
+    font-size: 0.85rem;
+    color: #94a3b8;
+  }
+
+  .feed-item__delete {
+    background: #f1f5f9;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+  }
+
+  .feed-item:hover .feed-item__delete {
+    opacity: 1;
+  }
+
+  .feed-item__delete:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    transform: scale(1.1);
+  }
+
+  .feed-item__text {
+    color: #334155;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    font-size: 1.05rem;
+  }
+
+  .feed-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+    border-radius: 24px;
+    color: #64748b;
+    border: 2px dashed #cbd5e1;
+  }
+
+  .feed-empty__icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    filter: grayscale(100%);
+    opacity: 0.3;
+  }
+
+  .feed-empty p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+</style>
+
+<%- include('../partials/app-shell-end') %>

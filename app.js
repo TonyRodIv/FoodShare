@@ -101,18 +101,19 @@ const authRoutes = require('./routes/auth');
 const doacoesRoutes = require('./routes/doacoes');
 const solicitacoesRoutes = require('./routes/solicitacoes');
 const notificacoesRoutes = require('./routes/notificacoes');
+const perfilRoutes = require('./routes/perfil');
 const errortestRoutes = require('./routes/errortest');
 
 app.get('/', showHome);
 app.get('/historico', authenticate, showHistorico);
 app.get('/notificacoes', authenticate, showNotificacoes);
 app.get('/configuracoes', authenticate, showConfiguracoes);
-app.get('/perfil', authenticate, (req, res) => res.redirect('/configuracoes'));
 
 app.use('/auth', authRoutes);
 app.use('/doacoes', doacoesRoutes);
 app.use('/solicitacoes', solicitacoesRoutes);
 app.use('/notificacoes', notificacoesRoutes);
+app.use('/perfil', perfilRoutes);
 
 if (process.env.NODE_ENV !== 'production') {
   app.use('/errortest', errortestRoutes);

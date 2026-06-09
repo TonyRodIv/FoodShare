@@ -1,7 +1,11 @@
 <div class="app-dropdown app-dropdown--profile" id="profile-dropdown" hidden>
   <div class="app-dropdown__panel app-dropdown__panel--profile" role="menu" aria-label="Menu do perfil">
     <div class="app-profile-menu__user">
-      <div class="home-avatar app-profile-menu__avatar" aria-hidden="true"><%= inicial %></div>
+      <% if (locals.usuario.avatar) { %>
+        <img src="<%= locals.usuario.avatar %>" alt="Avatar" class="home-avatar app-profile-menu__avatar" style="object-fit: cover;" aria-hidden="true" />
+      <% } else { %>
+        <div class="home-avatar app-profile-menu__avatar" aria-hidden="true"><%= inicial %></div>
+      <% } %>
       <div>
         <p class="app-profile-menu__name"><%= nomeUsuario %></p>
         <p class="app-profile-menu__email"><%= locals.usuario.email %></p>
@@ -10,7 +14,7 @@
 
     <ul class="app-profile-menu__list" role="none">
       <li role="none">
-        <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Meu perfil</a>
+        <a href="/perfil" class="app-profile-menu__link" role="menuitem"<%= typeof activeNav !== 'undefined' && activeNav === 'perfil' ? ' aria-current="page"' : '' %>>Meu perfil</a>
       </li>
       <li role="none">
         <a href="#" class="app-profile-menu__link" role="menuitem" data-placeholder-link>Editar conta</a>

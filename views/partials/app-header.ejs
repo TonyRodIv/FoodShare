@@ -99,7 +99,11 @@
 
       >
 
-        <%= inicial %>
+        <% if (locals.usuario.avatar) { %>
+          <img src="<%= locals.usuario.avatar %>" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+        <% } else { %>
+          <%= inicial %>
+        <% } %>
 
       </button>
 
@@ -129,7 +133,11 @@
 
       >
 
-        <%= inicial %>
+        <% if (locals.usuario.avatar) { %>
+          <img src="<%= locals.usuario.avatar %>" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+        <% } else { %>
+          <%= inicial %>
+        <% } %>
 
       </button>
 

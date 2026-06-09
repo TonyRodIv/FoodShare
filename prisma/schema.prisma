@@ -13,6 +13,7 @@ model Usuario {
   senha         String
   telefone      String
   role          String         @default("doador") // doador, receptor, admin
+  avatar        String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   refreshTokens RefreshToken[]
@@ -20,6 +21,7 @@ model Usuario {
   solicitacoes  Solicitacao[]
   notificacoesLidas NotificacaoLida[]
   passwordResetTokens PasswordResetToken[]
+  postsPerfil   PostPerfil[]
 }
 
 model RefreshToken {
@@ -84,4 +86,13 @@ model NotificacaoLida {
 
   @@unique([usuarioId, solicitacaoId])
   @@index([usuarioId])
+}
+
+model PostPerfil {
+  id        String   @id @default(uuid())
+  texto     String
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
