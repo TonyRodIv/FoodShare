@@ -361,3 +361,46 @@
   color: #922b21;
   border: 1px solid rgba(231, 76, 60, 0.25);
 }
+
+@media (min-width: 961px) {
+  .auth-layout {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .auth-layout .page-transition-root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .auth-screen {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .auth-screen--welcome .auth-desktop {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .auth-hero {
+    min-height: 0;
+  }
+
+  .auth-panel {
+    min-height: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .auth-panel__inner {
+    margin-block: auto;
+    flex-shrink: 0;
+  }
+}

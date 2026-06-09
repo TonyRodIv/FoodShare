@@ -296,7 +296,7 @@ button.home-empty-state__btn {
   display: grid;
   grid-template-columns: 1fr minmax(340px, 36%);
   gap: var(--app-gap-panel);
-  align-items: stretch;
+  align-items: start;
   min-width: 0;
 }
 
@@ -312,7 +312,7 @@ button.home-empty-state__btn {
 
 .home-panel--table .home-table,
 .home-panel--requests .home-requests {
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
   max-height: var(--app-home-list-max-h);
   overflow-x: hidden;
@@ -320,6 +320,10 @@ button.home-empty-state__btn {
   overscroll-behavior: contain;
   scroll-padding-bottom: 8px;
   padding-bottom: 4px;
+}
+
+.home-panel--table .home-table {
+  align-content: start;
 }
 
 .home-panel--table .home-table__head {
