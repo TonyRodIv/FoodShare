@@ -12,6 +12,10 @@ const {
   googleCallback,
   showCompleteGoogle,
   completeGoogle,
+  showForgotPassword,
+  forgotPassword,
+  showResetPassword,
+  resetPassword,
 } = require('../controllers/authController');
 
 router.get('/', showWelcome);
@@ -201,5 +205,11 @@ router.get('/google', loginGoogle);
 router.get('/callback', googleCallback);
 router.get('/google/complete', showCompleteGoogle);
 router.post('/google/complete', completeGoogle);
+
+// Rotas de Recuperação de Senha
+router.get('/forgot-password', showForgotPassword);
+router.post('/forgot-password', forgotPassword);
+router.get('/reset-password', showResetPassword);
+router.post('/reset-password', resetPassword);
 
 module.exports = router;

@@ -15,6 +15,10 @@
         <div class="auth-alert auth-alert--success">
           Conta criada com sucesso! Faça login para continuar.
         </div>
+      <% } else if (typeof reset !== 'undefined' && reset) { %>
+        <div class="auth-alert auth-alert--success">
+          Senha alterada com sucesso! Faça login com a nova senha.
+        </div>
       <% } %>
 
       <form action="/auth/login" method="POST" class="auth-form" novalidate>
@@ -37,7 +41,10 @@
           </div>
 
           <div class="auth-field">
-            <label for="senha" class="auth-field__label">Senha:</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label for="senha" class="auth-field__label" style="margin-bottom: 0;">Senha:</label>
+              <a href="/auth/forgot-password" style="font-size: 0.85rem; color: #16a34a; text-decoration: none;">Esqueci a senha</a>
+            </div>
             <input
               type="password"
               id="senha"

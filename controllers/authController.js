@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const prisma = require('../config/database');
 const { createSupabaseClient } = require('../config/supabase');
 const { registerSchema, loginSchema } = require('../validators/authValidator');
+const { sendPasswordResetEmail } = require('../services/emailService');
 
 const SALT_ROUNDS = 12;
 const ACCESS_TOKEN_EXPIRY = '15m';
@@ -83,7 +84,8 @@ async function register(req, res) {
 
 async function showLogin(req, res) {
   const registered = req.query.registered === '1';
-  res.render('auth/login', { title: 'Entrar - FoodShare', errors: [], old: {}, registered });
+  const reset = req.query.reset === '1';
+  res.render('auth/login', { title: 'Entrar - FoodShare', errors: [], old: {}, registered, reset });
 }
 
 async function login(req, res) {
@@ -96,6 +98,7 @@ async function login(req, res) {
       errors,
       old: req.body,
       registered: false,
+      reset: false,
     });
   }
 
@@ -112,6 +115,7 @@ async function login(req, res) {
         ],
         old: req.body,
         registered: false,
+        reset: false,
       });
     }
 
@@ -125,6 +129,7 @@ async function login(req, res) {
         ],
         old: req.body,
         registered: false,
+        reset: false,
       });
     }
 
@@ -149,6 +154,7 @@ async function login(req, res) {
       errors: [{ field: null, message: 'Não conseguimos concluir agora. Tente novamente em instantes.' }],
       old: req.body,
       registered: false,
+      reset: false,
     });
   }
 }
@@ -342,6 +348,96 @@ async function completeGoogle(req, res) {
   }
 }
 
+// GET /auth/forgot-password
+async function showForgotPassword(req, res) {
+  res.render('auth/forgot-password', { title: 'Esqueci Minha Senha - FoodShare', error: null, success: null });
+}
+
+// POST /auth/forgot-password
+async function forgotPassword(req, res) {
+  const { email } = req.body;
+  if (!email) {
+    return res.render('auth/forgot-password', { title: 'Esqueci Minha Senha - FoodShare', error: 'Por favor, informe seu e-mail.', success: null });
+  }
+
+  try {
+    const usuario = await prisma.usuario.findUnique({ where: { email } });
+    if (!usuario) {
+      // Retorna sucesso de qualquer forma para não vazar emails
+      return res.render('auth/forgot-password', { title: 'Esqueci Minha Senha - FoodShare', error: null, success: 'Se o e-mail existir em nossa base, um link de recuperação foi enviado.' });
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hora
+
+    await prisma.passwordResetToken.create({
+      data: {
+        token,
+        usuarioId: usuario.id,
+        expiresAt,
+      },
+    });
+
+    await sendPasswordResetEmail(usuario.email, token);
+
+    res.render('auth/forgot-password', { title: 'Esqueci Minha Senha - FoodShare', error: null, success: 'Se o e-mail existir em nossa base, um link de recuperação foi enviado.' });
+  } catch (err) {
+    console.error('[forgotPassword] Erro:', err);
+    res.render('auth/forgot-password', { title: 'Esqueci Minha Senha - FoodShare', error: 'Ocorreu um erro ao processar sua solicitação.', success: null });
+  }
+}
+
+// GET /auth/reset-password
+async function showResetPassword(req, res) {
+  const { token } = req.query;
+  if (!token) {
+    return res.redirect('/auth/login');
+  }
+  
+  try {
+    const resetToken = await prisma.passwordResetToken.findUnique({ where: { token } });
+    if (!resetToken || resetToken.expiresAt < new Date()) {
+      return res.render('auth/login', { title: 'Entrar - FoodShare', errors: [{field: null, message: 'O link de recuperação de senha é inválido ou expirou.'}], old: {}, registered: false, reset: false });
+    }
+    
+    res.render('auth/reset-password', { title: 'Redefinir Senha - FoodShare', token, error: null });
+  } catch(err) {
+    return res.redirect('/auth/login');
+  }
+}
+
+// POST /auth/reset-password
+async function resetPassword(req, res) {
+  const { token, senha, confirmacaoSenha } = req.body;
+  
+  if (!token || !senha || senha !== confirmacaoSenha) {
+    return res.render('auth/reset-password', { title: 'Redefinir Senha - FoodShare', token, error: 'As senhas não coincidem ou são inválidas.' });
+  }
+  
+  try {
+    const resetToken = await prisma.passwordResetToken.findUnique({ where: { token } });
+    if (!resetToken || resetToken.expiresAt < new Date()) {
+      return res.render('auth/login', { title: 'Entrar - FoodShare', errors: [{field: null, message: 'O link de recuperação de senha é inválido ou expirou.'}], old: {}, registered: false, reset: false });
+    }
+    
+    const senhaHash = await bcrypt.hash(senha, SALT_ROUNDS);
+    
+    await prisma.usuario.update({
+      where: { id: resetToken.usuarioId },
+      data: { senha: senhaHash }
+    });
+    
+    await prisma.passwordResetToken.deleteMany({
+      where: { usuarioId: resetToken.usuarioId }
+    });
+    
+    res.redirect('/auth/login?reset=1');
+  } catch (err) {
+    console.error('[resetPassword] Erro:', err);
+    res.render('auth/reset-password', { title: 'Redefinir Senha - FoodShare', token, error: 'Erro ao redefinir a senha. Tente novamente.' });
+  }
+}
+
 module.exports = { 
   showWelcome, 
   showRegister, 
@@ -353,5 +449,9 @@ module.exports = {
   loginGoogle,
   googleCallback,
   showCompleteGoogle,
-  completeGoogle
+  completeGoogle,
+  showForgotPassword,
+  forgotPassword,
+  showResetPassword,
+  resetPassword
 };

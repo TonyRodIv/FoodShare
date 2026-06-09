@@ -19,9 +19,19 @@ model Usuario {
   doacoes       Doacao[]
   solicitacoes  Solicitacao[]
   notificacoesLidas NotificacaoLida[]
+  passwordResetTokens PasswordResetToken[]
 }
 
 model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
   id        String   @id @default(uuid())
   token     String   @unique
   usuarioId String
